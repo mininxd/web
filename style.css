@@ -24,12 +24,13 @@ fieldset {
 }
 #imgWrapper {
   padding: 1em;
-  background: #fff;
+  background: transparent;
   max-width: 100%;
 }
 #bratImg {
   width: inherit;
   max-width: inherit;
+  opacity: 0;
 }
 
 

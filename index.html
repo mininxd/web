@@ -47,6 +47,7 @@
 <br>
 
   <div class="flex-end">
+        <button style="display:none" id="downBtn">Download</button>
       <a href="https://github.com/mininxd/web/tree/brat">
         <button>Source Code</button>
       </a>
@@ -63,5 +64,26 @@
 <center>
  <p>&copy; 2024 - Present. </p>
 </center>
+
+
+
+
+<script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+<script type="module">
+downBtn.addEventListener('click', () => {
+  let filename = localStorage.getItem("filename").split("/").pop();
+ 
+try { 
+    if (window.saveAs) {
+        window.saveAs(bratImg.src, filename);
+      } else {
+        FileSaver.saveAs(bratImg.src, filename);
+      };
+    } catch(e) {
+    alert(e)
+  }
+})
+</script>
 </body>
 </html>
