@@ -14,10 +14,11 @@ input {
   width: 90%;
 }
 #windowEl {
-  height: 75vh;
+  height: fit-content;
 }
 .window-body {
-  height: 50vh;
+  height: calc(fit-content + 10px);
+  padding-bottom: 1em;
 }
 button {
   margin: 0 0.3em 0 0.3em;
