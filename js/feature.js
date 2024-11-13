@@ -1,8 +1,12 @@
 let body = document.getElementById('bodyEl')
 let windows = document.getElementById('windowEl')
+let img = document.getElementById('bratImg')
+let imgWrapper = document.getElementById('imgWrapper')
   
 if(!navigator.userAgent.includes("Mobile")) {
     body.classList.add("desktop")
+    img.classList.add("desktop")
+    imgWrapper.classList.add("desktop")
 }
 
 maximize.addEventListener("click", () => {
@@ -26,4 +30,5 @@ inputText.addEventListener('focus', () => {
 inputText.addEventListener('blur', () => {
   bratImg.style.width = "inherit"
 })
+img.classList.add("desktop")
 }

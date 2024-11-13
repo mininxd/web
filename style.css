@@ -7,6 +7,9 @@ body {
   padding: 1em;
   background: #008080;
 }
+body.desktop {
+  padding: 1em 25% 1em 25%;
+}
 input {
   width: 90%;
 }
@@ -25,14 +28,19 @@ fieldset {
 #imgWrapper {
   padding: 1em;
   background: transparent;
-  max-width: 100%;
+  max-width: 90%;
+}
+#imgWrapper.desktop {
+  max-width: 75%;
 }
 #bratImg {
   width: inherit;
   max-width: inherit;
   opacity: 0;
 }
-
+#bratImg.desktop {
+  max-width: 250px !important;
+}
 .flex {
   display: flex;
 }
@@ -66,9 +74,6 @@ hr {
 
 
 
-body.desktop {
-  padding: 1em 25% 1em 25%;
-}
 .no-padding {
   padding:0;
   margin:0;
