@@ -19,7 +19,9 @@ generateBtn.addEventListener('click', () => {
       }).then(data => {
         if(!data.url) {
          bratImg.style.opacity = 0;
-         msg.innerHTML = "<strong style='color:red'>Error, coba lagi</strong>"
+         msgBar.style.display = "block";
+         msg.innerHTML = "<strong style='color:red'>Error, kesalahan server atau koneksi error</strong>"
+         generateBtn.removeAttribute('disabled');
         } else {
          localStorage.setItem("filename", data.path);
          bratImg.src = data.url;
