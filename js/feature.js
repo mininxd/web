@@ -12,7 +12,6 @@ maximize.addEventListener("click", () => {
     body.classList.toggle("no-padding");
     windows.classList.toggle("no-padding")
     windows.classList.toggle("full-w-h");
-    windows.classList.toggle("full-w-h");
     footer.classList.toggle("hidden");
     maximize.ariaLabel = maximize.ariaLabel === "Maximize" ? "Restore" : "Maximize"
 }
