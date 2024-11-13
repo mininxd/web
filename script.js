@@ -14,7 +14,7 @@ generateBtn.addEventListener('click', () => {
     } else {
       imgWrapper.style.background = "#0000";
       bratImg.style.opacity = 1;
-      generateBtn.disabled;
+      generateBtn.disabled = false ? false : true;
       bratImg.src = "./assets/Program_wait.ico";
       fetch(`https://api.mininxd.my.id/brat?txt=${inputText.value}`)
         .then(res => {
@@ -30,15 +30,19 @@ generateBtn.addEventListener('click', () => {
          localStorage.setItem("filename", data.path);
          bratImg.src = data.url;
           bratImg.addEventListener('load', () => {
-            downBtn.style.display = "block";
-            imgWrapper.style.background = "#fff";
-            msg.innerHTML = `<marquee>Cara simpan gambar cukup di hold lalu <strong>Simpan Gambar</strong>, &nbsp; untuk desktop klik kanan lalu <strong>Save As</strong>, &nbsp; atau pencet tombol <strong>Download</strong></marquee>`
+            if(bratImg.src.includes("https://")) {
+              downBtn.style.display = "block";
+              imgWrapper.style.background = "#fff";
+              msg.innerHTML = `<marquee>Cara simpan gambar cukup di hold lalu <strong>Simpan Gambar</strong>, &nbsp; untuk desktop klik kanan lalu <strong>Save As</strong>, &nbsp; atau pencet tombol <strong>Download</strong></marquee>`
+              }
           })
         }
       }).finally(() => {
         bratImg.addEventListener('load', () => {
+         if(bratImg.src.includes("https://")) {
            msgBar.style.display = "block";
            generateBtn.disabled = false;
+         }
         })
       })
   }
