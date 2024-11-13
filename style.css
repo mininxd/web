@@ -10,7 +10,7 @@ body {
 input {
   width: 90%;
 }
-.window {
+#windowEl {
   height: 75vh;
 }
 .window-body {
@@ -44,4 +44,26 @@ fieldset {
 .flex-end {
   display: flex;
   justify-content: flex-end;
+}
+
+
+
+body.desktop {
+  padding: 1em 25% 1em 25%;
+}
+.no-padding {
+  padding:0;
+  margin:0;
+}
+.full-w-h {
+  width: 100% !important;
+  height: 100vh !important;
+}
+.full-w-h-desktop {
+  width: 100vh !important;
+  height: 100vh !important;
+}
+
+.hidden {
+  display: none;
 }

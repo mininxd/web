@@ -1,3 +1,5 @@
+import "./js/feature.js";
+
 // reset filename each enter websites
 if(localStorage.getItem("filename")) {
   localStorage.removeItem("filename");
@@ -11,12 +13,14 @@ generateBtn.addEventListener('click', () => {
       msgBar.style.display = "block";
     } else {
       bratImg.style.opacity = 1;
+      imgWrapper.style.background = "transparent";
       generateBtn.setAttribute('disabled', true);
       bratImg.src = "./assets/Program_wait.ico";
       fetch(`https://api.mininxd.my.id/brat?txt=${inputText.value}`)
         .then(res => {
          return res.json() 
       }).then(data => {
+     //   console.log(data)
         if(!data.url) {
          bratImg.style.opacity = 0;
          msgBar.style.display = "block";
@@ -41,7 +45,7 @@ generateBtn.addEventListener('click', () => {
 })
 
 inputText.addEventListener('focus', () => {
-  bratImg.style.height = "8vh"
+  bratImg.style.height = "5vh"
 })
 inputText.addEventListener('blur', () => {
   bratImg.style.height = "auto"
