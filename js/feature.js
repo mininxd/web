@@ -15,3 +15,14 @@ maximize.addEventListener("click", () => {
     footer.classList.toggle("hidden");
 }
 })
+
+
+// disable resize when in desktop
+if(navigator.userAgent.includes("Mobile")) {
+inputText.addEventListener('focus', () => {
+  bratImg.style.width = "10%"
+})
+inputText.addEventListener('blur', () => {
+  bratImg.style.width = "inherit"
+})
+}

@@ -12,9 +12,9 @@ generateBtn.addEventListener('click', () => {
       msg.innerHTML = "Masukan teks dulu";
       msgBar.style.display = "block";
     } else {
+      imgWrapper.style.background = "#0000";
       bratImg.style.opacity = 1;
-      imgWrapper.style.background = "transparent";
-      generateBtn.setAttribute('disabled', true);
+      generateBtn.disabled;
       bratImg.src = "./assets/Program_wait.ico";
       fetch(`https://api.mininxd.my.id/brat?txt=${inputText.value}`)
         .then(res => {
@@ -25,7 +25,7 @@ generateBtn.addEventListener('click', () => {
          bratImg.style.opacity = 0;
          msgBar.style.display = "block";
          msg.innerHTML = "<strong style='color:red'>Error, kesalahan server atau koneksi error</strong>"
-         generateBtn.removeAttribute('disabled');
+         generateBtn.disabled = false;
         } else {
          localStorage.setItem("filename", data.path);
          bratImg.src = data.url;
@@ -38,15 +38,8 @@ generateBtn.addEventListener('click', () => {
       }).finally(() => {
         bratImg.addEventListener('load', () => {
            msgBar.style.display = "block";
-           generateBtn.removeAttribute('disabled')
+           generateBtn.disabled = false;
         })
       })
   }
-})
-
-inputText.addEventListener('focus', () => {
-  bratImg.style.height = "5vh"
-})
-inputText.addEventListener('blur', () => {
-  bratImg.style.height = "auto"
 })
