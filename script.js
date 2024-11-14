@@ -16,7 +16,7 @@ generateBtn.addEventListener('click', () => {
       bratImg.style.opacity = 1;
       generateBtn.disabled = false ? false : true;
       bratImg.src = "./assets/Program_wait.ico";
-      fetch(`https://api.mininxd.my.id/brat?txt=${inputText.value}`)
+      fetch(`https://api-mininxd.vercel.app/brat?txt=${inputText.value}`)
         .then(res => {
          return res.json() 
       }).then(data => {
