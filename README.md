@@ -3,4 +3,4 @@
 
 
 Try Online :
-[https://brat.mininxd.my.id](https://brat.mininxd.my.id)
+[https://brat-mininxd.vercel.app/](https://brat-mininxd.vercel.app/)
