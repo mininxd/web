@@ -32,7 +32,9 @@
     <legend>Result</legend>
       <center>
         <div id="imgWrapper">
-          <img src="./assets/Blank_sheet.ico" id="bratImg">
+          <div id="canvas">
+            <img src="./assets/Blank_sheet.ico" id="bratImg">
+          </div>
         </div>
       </center>
   </fieldset>
@@ -65,7 +67,7 @@
 </div>
 
 
-
+<script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
 <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 
 <script type="module">
@@ -73,11 +75,11 @@ downBtn.addEventListener('click', () => {
   let filename = localStorage.getItem("filename").split("/").pop();
  
 try { 
-    if (window.saveAs) {
-        window.saveAs(bratImg.src, filename);
-      } else {
-        FileSaver.saveAs(bratImg.src, filename);
-      };
+ htmlToImage.toPng(document.getElementById('canvas')).then(function (blob) {
+     FileSaver.saveAs(blob, filename);
+  }).catch(e => {
+    window.open(bratImg.src, "_blank");
+  })
     } catch(e) {
     alert(e)
   }
