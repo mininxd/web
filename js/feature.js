@@ -32,3 +32,13 @@ inputText.addEventListener('blur', () => {
 })
 img.classList.add("desktop")
 }
+
+
+if(localStorage.getItem("changelogs") == "closed") {
+  changelogs.classList.add("hidden")
+}
+
+closeChangelog.addEventListener('click', () => {
+  changelogs.classList.add("hidden")
+  localStorage.setItem("changelogs", "closed")
+})

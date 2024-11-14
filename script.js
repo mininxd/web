@@ -1,5 +1,5 @@
 import "./js/feature.js";
-
+import "./js/gsap.js"
 // reset filename each enter websites
 if(localStorage.getItem("filename")) {
   localStorage.removeItem("filename");
@@ -10,9 +10,11 @@ if(localStorage.getItem("filename")) {
 generateBtn.addEventListener('click', () => {
     if(!inputText.value) {
       msg.innerHTML = "Masukan teks dulu";
-      msgBar.style.display = "block";
+      msgBar.classList.remove("hidden")
     } else {
-      imgWrapper.style.background = "#0000";
+      downBtn.classList.add("hidden")
+      msgBar.classList.add("hidden")
+      imgWrapper.style.background = "transparent";
       bratImg.style.opacity = 1;
       generateBtn.disabled = false ? false : true;
       bratImg.src = "./assets/Program_wait.ico";
@@ -23,7 +25,7 @@ generateBtn.addEventListener('click', () => {
      //   console.log(data)
         if(!data.url) {
          bratImg.style.opacity = 0;
-         msgBar.style.display = "block";
+         msgBar.classList.remove("hidden")
          msg.innerHTML = "<strong style='color:red'>Error, kesalahan server atau koneksi error</strong>"
          generateBtn.disabled = false;
         } else {
@@ -31,7 +33,7 @@ generateBtn.addEventListener('click', () => {
          bratImg.src = data.url;
           bratImg.addEventListener('load', () => {
             if(bratImg.src.includes("https://")) {
-              downBtn.style.display = "block";
+              downBtn.classList.remove("hidden")
               imgWrapper.style.background = "#fff";
               msg.innerHTML = `<marquee>Cara simpan gambar cukup di hold lalu <strong>Simpan Gambar</strong>, &nbsp; untuk desktop klik kanan lalu <strong>Save As</strong>, &nbsp; atau pencet tombol <strong>Download</strong></marquee>`
               }
@@ -40,7 +42,7 @@ generateBtn.addEventListener('click', () => {
       }).finally(() => {
         bratImg.addEventListener('load', () => {
          if(bratImg.src.includes("https://")) {
-           msgBar.style.display = "block";
+           msgBar.classList.remove("hidden")
            generateBtn.disabled = false;
          }
         })

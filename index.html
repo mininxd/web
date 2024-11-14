@@ -5,6 +5,9 @@
 <meta name="theme-color" content="#222" />
 <link rel="stylesheet" href="./style.css">
 <script type="module" src="./script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+
 <link rel="icon" type="image/x-icon" href="/assets/Program.ico">
 </head>
   
@@ -14,12 +17,12 @@
       <div class="title-bar-text">
         <img style="width:12px; margin-right:8px" src="/assets/Program.ico"> Brat Generator</div>
     <div class="title-bar-controls">
-      <button aria-label="Minimize"></button>
       <button id="maximize" aria-label="Maximize"></button>
       <button aria-label="Close"></button>
     </div>
   </div>
-  
+
+
 <div class="window-body">
   <fieldset>
     <legend>Settings</legend>
@@ -40,7 +43,7 @@
   </fieldset>
 </fieldset>
 
-<div style="display:none" id="msgBar" class="status-bar">
+<div id="msgBar" class="status-bar hidden">
   <p class="status-bar-field">
       <span id="msg"></span>
     </p>
@@ -48,7 +51,7 @@
 <br>
 
   <div class="flex-end">
-        <button style="display:none" id="downBtn">Download</button>
+        <button class="hidden" id="downBtn">Download</button>
       <a target="_blank" href="https://github.com/mininxd/web/tree/brat">
         <button>Source Code</button>
       </a>
@@ -60,11 +63,59 @@
 
 </div>
 
+
+
+
+
+
 <div id="footer">
 <center>
  <p>&copy; 2024 - Present. </p>
 </center>
 </div>
+
+
+
+
+
+<!---GSAP Content--->
+<div style="width:fit-content; max-width:50vw; transform:translate(35vw, -20vh)" id="changelogs" class="window">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img style="width:12px; margin-right:8px" src="/assets/Program.ico">
+        Changelogs
+      </div>
+    <div class="title-bar-controls">
+      <button id="closeChangelog" aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="window-body">
+   <fieldset>
+     <legend>Items :</legend>
+     <ul class="tree-view">
+     <details open>
+      <summary>Fitur :</summary>
+        <ul>
+          <li>tombol download</li>
+          <li>fungsi maximize</li>
+        </ul>
+      </details>
+      <details open>
+        <summary>Perubahan :</summary>
+        <ul>
+          <li>Hapus tombol minimize</li>
+          <li>Latar background berwarna #008080</li>
+        </ul>
+      </details>
+     </ul>
+   </fieldset>
+</div>
+</div>
+
+
+
+
+
 
 
 <script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
