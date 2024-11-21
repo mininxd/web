@@ -93,3 +93,12 @@ hr {
 .hidden {
   display: none;
 }
+
+#changelogs, #warning {
+  position: absolute;
+  width:65vw; 
+  max-width:65vw; 
+  top: 50%;
+  left: 50%;
+  transform:translate(-50%, -50%)
+}

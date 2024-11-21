@@ -79,7 +79,7 @@
 
 
 <!---GSAP Content--->
-<div style="width:fit-content; max-width:50vw; transform:translate(35vw, -20vh)" id="changelogs" class="window">
+<div id="changelogs" class="window">
     <div class="title-bar">
       <div class="title-bar-text">
         <img style="width:12px; margin-right:8px" src="/assets/Program.ico">
@@ -98,6 +98,7 @@
         <ul>
           <li>tombol download</li>
           <li>fungsi maximize</li>
+          <li>Peringatan ketika pakai browser bawaan facebook</li>
         </ul>
       </details>
       <details open>
@@ -115,10 +116,21 @@
 
 
 
+<div id="warning" style="max-width:50vw" class="window ">
+  <div class="title-bar">
+      <div class="title-bar-text">
+        <img style="width:12px; margin-right:8px" src="/assets/Program.ico">
+        Warning
+      </div>
+  </div>
+  <div class="window-body">
+     <p id="warnMsg"></p>
+  </div>
+</div>
 
 
 
-<script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
+
 <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 
 <script type="module">

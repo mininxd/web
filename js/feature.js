@@ -1,3 +1,8 @@
+import  "./changelogs.js";
+import  "./warn.js";
+
+
+
 let body = document.getElementById('bodyEl')
 let windows = document.getElementById('windowEl')
 let img = document.getElementById('bratImg')
@@ -33,12 +38,3 @@ inputText.addEventListener('blur', () => {
 img.classList.add("desktop")
 }
 
-
-if(localStorage.getItem("changelogs") == "closed") {
-  changelogs.classList.add("hidden")
-}
-
-closeChangelog.addEventListener('click', () => {
-  changelogs.classList.add("hidden")
-  localStorage.setItem("changelogs", "closed")
-})
