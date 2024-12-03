@@ -1,0 +1,9 @@
+#navbar {
+  position: sticky;
+  top: 0;
+  height: calc(fit-content + 1vh);
+  background: #eee;
+  border-radius: 8px;
+  padding: 5px;
+  margin-bottom: 1.5em;
+}

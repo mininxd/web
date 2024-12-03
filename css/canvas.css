@@ -1,0 +1,28 @@
+ul {
+  list-style: "";
+    margin: 0 auto;
+    text-align: center;
+}
+
+li {
+    display: inline-block;
+    vertical-align: top;
+    margin:5px;
+}
+
+.qrisCanvas {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  background: #fff;
+  max-width: 128px;
+  height: 185px;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+  color: #222;
+}
+.qrisCanvas canvas {
+  width: 100px;
+  max-width: 100px;
+  max-height: 100px;
+}

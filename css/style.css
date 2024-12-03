@@ -1,0 +1,42 @@
+@import url("./bulma-no-dark-mode.min.css");
+@import url("./navbar.css");
+@import url("./canvas.css");
+@import url("./fonts.css");
+* {
+  scroll-behavior: smooth;
+  transition: all 0.3s ease-out;
+}
+body {
+  font-family: "Roboto", sans-serif;
+  padding: 0.5em;
+  padding-top: 15vh;
+  background: #eee;
+}
+p {
+  line-height: 18px;
+}
+button {
+  font-family: "Poppins", sans-serif;
+  border: none;
+  background: #222;
+  text-align: center;
+  border-radius: 4px;
+  padding: 10px;
+  color: #eee;
+  font-weight: 600;
+}
+.modal-content {
+  padding: 2em;
+}
+.modal-content .card {
+  padding: 1.5em !important;
+}
+#loginFirst {
+  padding: 1em;
+}
+#dataTersimpan {
+  overflow: scroll;
+  word-wrap: break-word;
+  font-size: 14px;
+  opacity: 0.5;
+}
