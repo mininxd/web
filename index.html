@@ -1,6 +1,7 @@
 <html>
   <head>
   <meta charset="UTF-8">
+  <title>QRIS Sticker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <script type="module" src="/js/script.js"></script>
@@ -14,7 +15,10 @@
 <div id="loginFirst">
   <h1 class="is-2 title">QRIS Sticker</h1>
   <div class="p-4 card">
-    Kode QRIS merchant
+    <label>Upload QRIS</label>
+    <input type="file" class="input">
+    <br><br>
+    <center>atau masukan kode manual</center>
     <input autocomplete="off" id="inputLogin" placeholder="00021010..." class="input is-fullwidth my-1">
     <button id="submitLogin" class="button is-dark is-fullwidth">Login</button>
     <br>
@@ -44,11 +48,14 @@
 
 <div class="canvasWrapper">
 
-<div class="fixed-grid has-3-cols">
+<div id="gridCanvas" class="fixed-grid has-3-cols">
 <div id="listQrisCanvas" class="grid">
 </div>
+
+<div id="canvasBtn">
 <button id="downloadAll" class="button is-fullwidth is-dark">Download Semua Stiker (.png)</button>
-<button class="js-modal-trigger button is-danger is-fullwidth" data-target="modalHapusItem">Hapus</button>
+<button class="button js-modal-trigger is-danger is-fullwidth" data-target="modalHapusItem">Hapus</button>
+</div>
 </div>
 
 </div>
@@ -94,6 +101,7 @@
         <h1 class="is-3 title">Ubah Kode QRIS</h1>
         <input id="inputGantiQris" autocomplete="off" placeholder="Kode QRIS baru" class="input is-fullwidth my-1">
         <button id="submitGantiQris" class="button is-fullwidth is-dark">Ubah</button>
+          <span class="msg is-danger">Mengubah kode menghapus semua stiker</span>
       </div>
   </div>
 </div>

@@ -7,7 +7,6 @@ function addSticker(nama, QR, harga) {
   obj[itemKey] = { nama, QR, harga };
   localStorage.setItem("stickerStorage", JSON.stringify(obj));
 }
-
 function deleteSticker(item) {
   const obj = JSON.parse(localStorage.getItem("stickerStorage")) || {};
   for (const key in obj) {
@@ -36,11 +35,17 @@ if(inputHargaItem.value.length < 1 || inputNamaItem.value.length < 1) {
     buatStikerMsg.innerHTML = "input field masih kosong"
     },1000)
 } else {
-  generateQris(inputNamaItem.value, inputHargaItem.value);
+(async() => { 
+  try {
+await generateQris(inputNamaItem.value, inputHargaItem.value)
   setTimeout(() => {
     window.location.reload();
     submitTambahItem.classList.remove("is-loading")
     },1000)
+  } catch(e) {
+    
+  }
+})()
 }
 })
   

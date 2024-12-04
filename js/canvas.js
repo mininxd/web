@@ -1,9 +1,18 @@
 import QRCode from "qrcode";
 
-let stickerData = JSON.parse(localStorage.getItem("stickerStorage"));
-let stickerLength = JSON.stringify(Object.keys(stickerData).length);
-
-
+if(!JSON.parse(localStorage.getItem("stickerStorage"))) {
+listQrisCanvas.innerHTML = `
+<div class="item">
+      <div class="qrisCanvas">
+        <span class="namaBarang">Buat Stiker</span>
+        <canvas id="dummyQR"></canvas>
+        <span class="hargaBarang"> Untuk membuat stiker</span>
+      </div>
+    </div>`
+    QRCode.toCanvas(dummyQR, "mininxd");
+}  else {
+  let stickerData = JSON.parse(localStorage.getItem("stickerStorage"));
+  let stickerLength = JSON.stringify(Object.keys(stickerData).length);
 
 for (let i = 0; i < Number(stickerLength); i++) {
   const itemDiv = document.createElement("div");
@@ -48,3 +57,6 @@ for (let i = 0; i < Number(stickerLength); i++) {
     }
   });
 }
+}
+
+

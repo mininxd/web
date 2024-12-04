@@ -5,11 +5,12 @@
 * {
   scroll-behavior: smooth;
   transition: all 0.3s ease-out;
+  -webkit-tap-highlight-color: transparent;
 }
 body {
   font-family: "Roboto", sans-serif;
   padding-top: 15vh;
-  background: #eee;
+  background: #eeeff2;
 }
 div.header {
   padding: 0.75em;
@@ -20,6 +21,7 @@ p {
 }
 div#navbar {
   margin-top: 5em;
+  z-index: 2;
 }
 div#navbar button {
   font-family: "Poppins", sans-serif;
@@ -32,6 +34,12 @@ div#navbar button {
 }
 button {
   margin-top: 3px;
+}
+#canvasBtn {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .modal-content {
   padding: 2em;

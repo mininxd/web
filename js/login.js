@@ -3,11 +3,20 @@ if(localStorage.getItem("QRIS_Utama")) {
 } else {
   loginFirst.style.display = "block";
   content.style.display = "none";
+  
+    submitLogin.disabled = true;
+inputLogin.addEventListener('input', () => {
+  if(inputLogin.value.length < 10) {
+    submitLogin.disabled = true;
+  } else {
+    submitLogin.disabled = false;
 submitLogin.addEventListener("click", () => {
   localStorage.setItem("QRIS_Utama", inputLogin.value);
   submitLogin.classList.add("is-loading");
   setTimeout(() => {
     window.location.reload();
     },1000)
+})
+}
 })
 }

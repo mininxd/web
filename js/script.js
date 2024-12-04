@@ -1,14 +1,18 @@
-import {qris} from "../lib/qris.js";
+import QRCode from "qrcode";
+// import QrCode from "qrcode-reader";
+// const qr = new QrCode();
+import {qris} from "/lib/qris.js";
 import "/lib/modal.js";
 import "./login.js";
 import "./localStorage.js";
 import "./canvas.js";
-import QRCode from "qrcode";
+import "./isDesktop.js";
 
 
 // Get Header
 downloadAll.disabled = true;
 downloadAll.classList.add("is-loading");
+
 qris(localStorage.getItem("QRIS_Utama"), 0)
 .then(data => {
 downloadAll.disabled = false;
@@ -36,8 +40,15 @@ downloadAll.addEventListener("click", () => {
       alert(e);
     }
 })
-
-}).catch(e => {
-  alert(e)
 })
 
+
+submitGantiQris.addEventListener("click", () => {
+  submitGantiQris.classList.add("is-loading")
+  setTimeout(() => {
+  localStorage.setItem("QRIS_Utama", inputGantiQris.value);
+  localStorage.removeItem("stickerStorage");
+  submitGantiQris.classList.remove("is-loading")
+  window.location.reload();
+}, 500)
+})
