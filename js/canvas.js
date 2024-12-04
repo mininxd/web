@@ -1,12 +1,13 @@
 import QRCode from "qrcode";
 
 if(!JSON.parse(localStorage.getItem("stickerStorage"))) {
+  downloadAll.style.display = "none";
 listQrisCanvas.innerHTML = `
 <div class="item">
       <div class="qrisCanvas">
-        <span class="namaBarang">Buat Stiker</span>
+        <span class="namaBarang">Masih Kosong</span>
         <canvas id="dummyQR"></canvas>
-        <span class="hargaBarang"> Untuk membuat stiker</span>
+        <span class="hargaBarang">-</span>
       </div>
     </div>`
     QRCode.toCanvas(dummyQR, "mininxd");

@@ -33,19 +33,17 @@ if(inputHargaItem.value.length < 1 || inputNamaItem.value.length < 1) {
   setTimeout(() => {
     submitTambahItem.classList.remove("is-loading")
     buatStikerMsg.innerHTML = "input field masih kosong"
-    },1000)
+    },500)
 } else {
-(async() => { 
   try {
-await generateQris(inputNamaItem.value, inputHargaItem.value)
+  generateQris(inputNamaItem.value, inputHargaItem.value)
   setTimeout(() => {
     window.location.reload();
     submitTambahItem.classList.remove("is-loading")
-    },1000)
+    },1300)
   } catch(e) {
-    
+    console.log(e)
   }
-})()
 }
 })
   

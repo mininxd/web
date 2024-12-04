@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <script type="module" src="/js/script.js"></script>
-<script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
-<script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<script src="https://unpkg.com/html-to-image@latest/dist/html-to-image.js"></script>
+<script src="https://unpkg.com/file-saver@latest/dist/FileSaver.min.js"></script>
+
 
 <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -16,11 +17,13 @@
   <h1 class="is-2 title">QRIS Sticker</h1>
   <div class="p-4 card">
     <label>Upload QRIS</label>
-    <input type="file" class="input">
+    <input id="fileInput" accept="image/*" type="file" class="input">
+    <span id="fileInputMsg" class="msg"></span>
     <br><br>
     <center>atau masukan kode manual</center>
-    <input autocomplete="off" id="inputLogin" placeholder="00021010..." class="input is-fullwidth my-1">
+    <input autocomplete="off" id="inputLogin" placeholder="0002010..." class="input is-fullwidth my-1">
     <button id="submitLogin" class="button is-dark is-fullwidth">Login</button>
+    <span id="submitLoginMsg" class="msg"></span>
     <br>
   </div>
   <br>
@@ -33,7 +36,7 @@
   
 
 
-<div id="content">
+<div style="display:none" id="content">
   <div class="header">
 <h1 class="is-3 subtitle">Halo,</h1>
 <h1 id="namaMerchant" class="is-2 is-skeleton title">Merchant</h1>
@@ -41,8 +44,8 @@
 
 <div id="navbar">
 <button class="js-modal-trigger button is-dark" data-target="modalBuatStiker">Buat Stiker</button>
-<button class="js-modal-trigger button is-dark" data-target="modalBuatPembayaran">Buat QR Pembayaran</button>
   <button class="js-modal-trigger button is-dark" data-target="modalGantiQris">Ubah kode QRIS</button>
+<button class="js-modal-trigger button is-danger" data-target="modalLogout">Logout</button>
 </div>
 
 
@@ -54,7 +57,6 @@
 
 <div id="canvasBtn">
 <button id="downloadAll" class="button is-fullwidth is-dark">Download Semua Stiker (.png)</button>
-<button class="button js-modal-trigger is-danger is-fullwidth" data-target="modalHapusItem">Hapus</button>
 </div>
 </div>
 
@@ -62,7 +64,7 @@
 
 <div id="dataTersimpan">
     <div class="p-4">
- Backup Kode : 
+ Backup Kode : <br>
  <span class="js-modal-trigger" data-target="merchantQRIS" id="dataQris"></span>
 </div>
 </div>
@@ -84,13 +86,12 @@
       </div>
   </div>
 </div>
-<div id="modalBuatPembayaran" class="modal">
+<div id="modalLogout" class="modal">
   <div class="modal-background"></div>
   <div class="modal-content">
       <div class="p-3 card">
-        <h1 class="is-3 title">Buat Pembayaran</h1>
-        <input id="inputHargaPembayaran" type="number" autocomplete="off" placeholder="Harga" class="input is-fullwidth my-1">
-        <button id="submitHargaPembayaran" class="button is-fullwidth is-dark">Buat</button>
+        <h1 class="is-4 title">Keluar akan menghapus semua stiker!</h1>
+        <button id="submitLogout" class="button is-fullwidth is-dark">Logout</button>
       </div>
   </div>
 </div>
@@ -101,7 +102,7 @@
         <h1 class="is-3 title">Ubah Kode QRIS</h1>
         <input id="inputGantiQris" autocomplete="off" placeholder="Kode QRIS baru" class="input is-fullwidth my-1">
         <button id="submitGantiQris" class="button is-fullwidth is-dark">Ubah</button>
-          <span class="msg is-danger">Mengubah kode menghapus semua stiker</span>
+          <span id="gantiQrisMsg" class="msg is-danger">Mengubah kode menghapus semua stiker</span>
       </div>
   </div>
 </div>

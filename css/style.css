@@ -35,6 +35,9 @@ div#navbar button {
 button {
   margin-top: 3px;
 }
+#listQrisCanvas {
+  padding: 5px;
+}
 #canvasBtn {
   width: 100%;
   display: flex;
