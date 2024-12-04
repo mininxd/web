@@ -6,8 +6,8 @@ listQrisCanvas.innerHTML = `
 <div class="item">
       <div class="qrisCanvas">
         <span class="namaBarang">Masih Kosong</span>
-        <canvas id="dummyQR"></canvas>
-        <span class="hargaBarang">-</span>
+        <canvas id="dummyQR"></canvas><br>
+        <span class="hargaBarang">---</span>
       </div>
     </div>`
     QRCode.toCanvas(dummyQR, "mininxd");

@@ -1,4 +1,5 @@
 if(!navigator.userAgent.includes("Mobile")) {
+  body.style.paddingTop = "5vh"
   gridCanvas.classList.remove("has-3-cols");
   gridCanvas.classList.add("has-5-cols");
   listQrisCanvas.style.padding = "1em 8vw 1em 8vw";
@@ -10,5 +11,6 @@ if(!navigator.userAgent.includes("Mobile")) {
   document.querySelectorAll('.modal-content').forEach(div => {
    div.style.width = "40%"
 });
-
+loginFirst.style.marginLeft = "25%"
+loginWrapper.style.width = "50vw"
 }
