@@ -4,20 +4,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <script type="module" src="/js/script.js"></script>
+<script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="roboto-regular">
   
 <div id="loginFirst">
-  <h1 class="is-3 title">Selamat datang di QRIS Sticker</h1>
+  <h1 class="is-2 title">QRIS Sticker</h1>
   <div class="p-4 card">
     Kode QRIS merchant
-    <input autocomplete="off" id="inputLogin" placeholder="00020101021226570011ID..." class="input is-fullwidth my-1">
+    <input autocomplete="off" id="inputLogin" placeholder="00021010..." class="input is-fullwidth my-1">
     <button id="submitLogin" class="button is-dark is-fullwidth">Login</button>
     <br>
   </div>
   <br>
-  <center style="opacity:0.90">mininxd &copy; 2024 - Present.</center>
+  <center style="opacity:0.90">mininxd &copy;2024 - Present.</center>
 </div>
   
   
@@ -27,33 +30,32 @@
 
 
 <div id="content">
+  <div class="header">
 <h1 class="is-3 subtitle">Halo,</h1>
-<h1 id="namaMerchant" class="is-3 title">{{merchant}}</h1>
-
-<div id="navbar">
-<button class="js-modal-trigger" data-target="modalBuatStiker">Buat Stiker</button>
-  <button class="js-modal-trigger" data-target="modalGantiQris">Ubah kode QRIS</button>
+<h1 id="namaMerchant" class="is-2 is-skeleton title">Merchant</h1>
 </div>
 
+<div id="navbar">
+<button class="js-modal-trigger button is-dark" data-target="modalBuatStiker">Buat Stiker</button>
+<button class="js-modal-trigger button is-dark" data-target="modalBuatPembayaran">Buat QR Pembayaran</button>
+  <button class="js-modal-trigger button is-dark" data-target="modalGantiQris">Ubah kode QRIS</button>
+</div>
+
+
+<div class="canvasWrapper">
 
 <div class="fixed-grid has-3-cols">
 <div id="listQrisCanvas" class="grid">
-  <div class="item">
-  <div class="qrisCanvas">
-    <span class="namaBarang">Lorem Ipsum</span>
-      <canvas id="qrTest"></canvas>
-    <span class="hargaBarang">Rp.0</span>
-  </div>
 </div>
-</div>
+<button id="downloadAll" class="button is-fullwidth is-dark">Download Semua Stiker (.png)</button>
+<button class="js-modal-trigger button is-danger is-fullwidth" data-target="modalHapusItem">Hapus</button>
 </div>
 
-
-
+</div>
 
 <div id="dataTersimpan">
     <div class="p-4">
- Kode QRIS Tersimpan : 
+ Backup Kode : 
  <span class="js-modal-trigger" data-target="merchantQRIS" id="dataQris"></span>
 </div>
 </div>
@@ -68,9 +70,20 @@
   <div class="modal-content">
       <div class="p-3 card">
         <h1 class="is-3 title">Buat Stiker</h1>
-        <input id="inputNamaItem" autocomplete="off" placeholder="Nama Item" class="input is-fullwidth my-1">
-        <input id="inputHargaItem" autocomplete="off" placeholder="Harga" class="input is-fullwidth my-1">
+        <input id="inputNamaItem" autocomplete="off" placeholder="Nama" class="input is-fullwidth my-1">
+        <input id="inputHargaItem" type="number" autocomplete="off" placeholder="Harga" class="input is-fullwidth my-1">
         <button id="submitTambahItem" class="button is-fullwidth is-dark">Buat</button>
+        <span class="msg" id="buatStikerMsg"></span>
+      </div>
+  </div>
+</div>
+<div id="modalBuatPembayaran" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+      <div class="p-3 card">
+        <h1 class="is-3 title">Buat Pembayaran</h1>
+        <input id="inputHargaPembayaran" type="number" autocomplete="off" placeholder="Harga" class="input is-fullwidth my-1">
+        <button id="submitHargaPembayaran" class="button is-fullwidth is-dark">Buat</button>
       </div>
   </div>
 </div>
@@ -79,7 +92,7 @@
   <div class="modal-content">
       <div class="p-3 card">
         <h1 class="is-3 title">Ubah Kode QRIS</h1>
-        <input input="inputGantiQris" autocomplete="off" placeholder="Kode QRIS baru" class="input is-fullwidth my-1">
+        <input id="inputGantiQris" autocomplete="off" placeholder="Kode QRIS baru" class="input is-fullwidth my-1">
         <button id="submitGantiQris" class="button is-fullwidth is-dark">Ubah</button>
       </div>
   </div>
@@ -88,7 +101,22 @@
   <div class="modal-background"></div>
   <div class="modal-content">
       <div class="p-3 card">
+        <h1 class="is-3 title">Merchant QRIS</h1>
+        <center>
         <canvas id="merchantQRIScanvas"></canvas>
+        </center>
+      </div>
+  </div>
+</div>
+<div id="modalHapusItem" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+      <div id="itemListToDelete" class="p-3 card">
+      <ul>
+        <li>List 1</li>
+        <li></li>
+      </ul>
+      <button class="is-fullwidth button is-dark">OK</button>
       </div>
   </div>
 </div>

@@ -1,0 +1,1 @@
+itemListToDelete.innerHTML += ``

@@ -1,28 +1,31 @@
-ul {
-  list-style: "";
-    margin: 0 auto;
-    text-align: center;
-}
-
-li {
-    display: inline-block;
-    vertical-align: top;
-    margin:5px;
-}
-
 .qrisCanvas {
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   background: #fff;
   max-width: 128px;
-  height: 185px;
+  min-height: 185px;
   padding: 5px;
   border-radius: 5px;
   text-align: center;
   color: #222;
+  border: 2px solid #000;
 }
 .qrisCanvas canvas {
   width: 100px;
   max-width: 100px;
   max-height: 100px;
+}
+
+
+.canvasWrapper {
+  background: #fff;
+  border-radius: 30px 30px 0 0;
+  padding: 1em;
+  padding-top: 3em;
+  min-height: 60vh;
+  padding-bottom: 40vh;
+}
+
+.item:hover {
+  transform: scale(1.025)
 }

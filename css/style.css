@@ -8,22 +8,30 @@
 }
 body {
   font-family: "Roboto", sans-serif;
-  padding: 0.5em;
   padding-top: 15vh;
   background: #eee;
+}
+div.header {
+  padding: 0.75em;
+  margin: 0.25em;
 }
 p {
   line-height: 18px;
 }
-button {
+div#navbar {
+  margin-top: 5em;
+}
+div#navbar button {
   font-family: "Poppins", sans-serif;
   border: none;
-  background: #222;
   text-align: center;
   border-radius: 4px;
   padding: 10px;
-  color: #eee;
+  margin:3px;
   font-weight: 600;
+}
+button {
+  margin-top: 3px;
 }
 .modal-content {
   padding: 2em;
@@ -34,9 +42,19 @@ button {
 #loginFirst {
   padding: 1em;
 }
-#dataTersimpan {
+div#dataTersimpan {
+  width: 100%;
   overflow: scroll;
   word-wrap: break-word;
   font-size: 14px;
-  opacity: 0.5;
+  color: #d1d1d1;
+  background: #fff !important;
+}
+.msg {
+  font-size: 14px;
+  text-align: center;
+}
+.is-danger {
+  background: #b43327;
+  color: white;
 }
