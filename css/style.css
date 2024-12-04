@@ -69,3 +69,12 @@ div#dataTersimpan {
   background: #b43327;
   color: white;
 }
+.buttonBawah {
+  display: flex;
+  justify-content: center;
+  
+}
+.buttonBawah button {
+  margin: 5px;
+  width: 30vw;
+}
