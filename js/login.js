@@ -11,22 +11,18 @@ if(localStorage.getItem("QRIS_Utama")) {
   content.style.display = "none";
   
     submitLogin.addEventListener("click", () => {
-      try {
-        submitLogin.classList.add("is-loading");
-        qris(inputLogin.value, 0).then(data => {
-          if(data.merchant === undefined) {
-            submitLoginMsg.innerHTML = "Login Gagal, Periksa kode QRIS"
-            submitLogin.classList.remove("is-loading");
-          } else {
-            localStorage.setItem("QRIS_Utama", inputLogin.value);
-            setTimeout(() => {
-              window.location.reload();
-            },1000)
-          }
-        })
-      } catch(e) {
-        console.log(e)
-      }
+      submitLogin.classList.add("is-loading");
+      qris(inputLogin.value, 0).then(data => {
+        if(data.merchant === undefined) {
+          submitLoginMsg.innerHTML = "Login Gagal, Periksa kode QRIS"
+          submitLogin.classList.remove("is-loading");
+        } else {
+          localStorage.setItem("QRIS_Utama", inputLogin.value);
+          setTimeout(() => {
+            window.location.reload();
+          },1000)
+        }
+      })
     })
   }
 
@@ -42,6 +38,7 @@ fileInput.addEventListener("input", (e) => {
         if(decoded == null) {
          fileInputMsg.innerHTML = "QR Tidak Valid"
         } else {
+        fileInputMsg.innerHTML = "";
         inputLogin.value = decoded.data;
         }
         });

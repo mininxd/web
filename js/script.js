@@ -66,3 +66,11 @@ submitGantiQris.addEventListener("click", () => {
 }, 500)
 }
 })
+
+
+source.addEventListener("click", () => {
+  window.open("https://github.com/mininxd/web/tree/qris", "_blank")
+})
+donate.addEventListener("click", () => {
+  window.open("https://saweria.co/mininxd", "_blank")
+})

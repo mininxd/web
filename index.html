@@ -16,11 +16,11 @@
 <div id="loginFirst">
   <h1 class="is-2 title">QRIS Sticker</h1>
   <div class="p-4 card">
-    <label>Upload QRIS</label>
-    <input id="fileInput" accept="image/*" type="file" class="input">
+    <label>Upload QRIS atau QRIS Sticker</label>
+     <input id="fileInput" accept="image/*" type="file" class="input">
     <span id="fileInputMsg" class="msg"></span>
     <br><br>
-    <center>atau masukan kode manual</center>
+    atau masukan kode QRIS manual
     <input autocomplete="off" id="inputLogin" placeholder="0002010..." class="input is-fullwidth my-1">
     <button id="submitLogin" class="button is-dark is-fullwidth">Login</button>
     <span id="submitLoginMsg" class="msg"></span>
@@ -40,6 +40,7 @@
   <div class="header">
 <h1 class="is-3 subtitle">Halo,</h1>
 <h1 id="namaMerchant" class="is-2 is-skeleton title">Merchant</h1>
+<span>Klik pada stiker untuk mendownload stiker satuan</span>
 </div>
 
 <div id="navbar">
@@ -63,8 +64,8 @@
 
 <div id="dataTersimpan">
 <div class="buttonBawah">
-  <button class="button is-dark">Source Code</button>
-  <button class="button is-dark">Donate</button>
+  <button id="source" class="button is-dark">Source Code</button>
+  <button id="donate" class="button is-dark">Donate</button>
 </div>
   <div class="p-4">
  Backup Kode : <br>
