@@ -45,6 +45,14 @@ downloadAll.addEventListener("click", () => {
 submitLogout.addEventListener('click', () => {
   try {
   localStorage.removeItem("QRIS_Utama");
+//  localStorage.removeItem("stickerStorage");
+  window.location.reload();
+  } catch(e) {
+  }
+})
+submitLogoutHapus.addEventListener('click', () => {
+  try {
+  localStorage.removeItem("QRIS_Utama");
   localStorage.removeItem("stickerStorage");
   window.location.reload();
   } catch(e) {
@@ -60,7 +68,7 @@ submitGantiQris.addEventListener("click", () => {
   } else {
   setTimeout(() => {
   localStorage.setItem("QRIS_Utama", inputGantiQris.value);
-  localStorage.removeItem("stickerStorage");
+//  localStorage.removeItem("stickerStorage");
   submitGantiQris.classList.remove("is-loading")
   window.location.reload();
 }, 500)

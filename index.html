@@ -91,9 +91,10 @@
 <div id="modalLogout" class="modal">
   <div class="modal-background"></div>
   <div class="modal-content">
-      <div class="p-3 card">
-        <h1 class="is-4 title">Keluar akan menghapus semua stiker!</h1>
-        <button id="submitLogout" class="button is-fullwidth is-dark">Logout</button>
+    <div class="p-3 card">
+        <h1 class="is-4 title">Logout dengan hapus semua stiker?</h1>
+        <button id="submitLogoutHapus" class="button is-fullwidth is-danger">Hapus</button>
+        <button id="submitLogout" class="button is-fullwidth is-dark">Tidak</button>
       </div>
   </div>
 </div>
@@ -104,7 +105,7 @@
         <h1 class="is-3 title">Ubah Kode QRIS</h1>
         <input id="inputGantiQris" autocomplete="off" placeholder="Kode QRIS baru" class="input is-fullwidth my-1">
         <button id="submitGantiQris" class="button is-fullwidth is-dark">Ubah</button>
-          <span id="gantiQrisMsg" class="msg is-danger">Mengubah kode menghapus semua stiker</span>
+          <span id="gantiQrisMsg" class="msg is-danger">Sticker yang tersimpan tidak terubah dengan kode QRIS baru</span>
       </div>
   </div>
 </div>

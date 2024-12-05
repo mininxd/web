@@ -8,6 +8,7 @@ listQrisCanvas.innerHTML = `
         <span class="namaBarang">Masih Kosong</span>
         <canvas id="dummyQR"></canvas><br>
         <span class="hargaBarang">---</span>
+        <p class="namaToko">merchant</p>
       </div>
     </div>`
     QRCode.toCanvas(dummyQR, "mininxd");
@@ -31,11 +32,16 @@ for (let i = 0; i < Number(stickerLength); i++) {
 
   const hargaBarangSpan = document.createElement("span");
   hargaBarangSpan.classList.add("hargaBarang");
-  hargaBarangSpan.textContent = `Rp.${stickerData[i].harga}`;
-
+  hargaBarangSpan.textContent = `Rp${Number(stickerData[i].harga).toLocaleString("id-ID")}`;
+  
+  const namaTokoP = document.createElement("p");
+  namaTokoP.classList.add("namaToko");
+  namaTokoP.textContent = `${stickerData[i].merchant}`
+  
   qrisCanvasDiv.appendChild(namaBarangSpan);
   qrisCanvasDiv.appendChild(canvasElement);
   qrisCanvasDiv.appendChild(hargaBarangSpan);
+  qrisCanvasDiv.appendChild(namaTokoP);
   itemDiv.appendChild(qrisCanvasDiv);
 
   listQrisCanvas.appendChild(itemDiv);

@@ -81,3 +81,7 @@ div#dataTersimpan {
 .pointer {
   cursor: pointer;
 }
+.namaToko {
+  font-size: 8px;
+  transform: translateY(2px);
+}

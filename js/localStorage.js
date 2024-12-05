@@ -1,10 +1,10 @@
 import {qris} from "/lib/qris.js";
 
 
-function addSticker(nama, QR, harga) {
+function addSticker(nama, QR, harga, merchant) {
   const obj = JSON.parse(localStorage.getItem("stickerStorage")) || {};
   const itemKey = Object.keys(obj).length || 0;
-  obj[itemKey] = { nama, QR, harga };
+  obj[itemKey] = { nama, QR, harga, merchant };
   localStorage.setItem("stickerStorage", JSON.stringify(obj));
 }
 function deleteSticker(item) {
@@ -17,10 +17,10 @@ function deleteSticker(item) {
   }
   localStorage.setItem("stickerStorage", JSON.stringify(obj));
 }
-function generateQris(nama, harga) {
+function generateQris(nama, harga, merchant) {
   qris(localStorage.getItem("QRIS_Utama"), harga)
 .then(data => {
-  addSticker(nama, data.QR, harga);
+  addSticker(nama, data.QR, harga, merchant);
 }).catch(e => {alert(e)})
 }
 
@@ -36,7 +36,7 @@ if(inputHargaItem.value.length < 1 || inputNamaItem.value.length < 1) {
     },500)
 } else {
   try {
-  generateQris(inputNamaItem.value, inputHargaItem.value)
+  generateQris(inputNamaItem.value, inputHargaItem.value, namaMerchant.textContent)
   setTimeout(() => {
     window.location.reload();
     submitTambahItem.classList.remove("is-loading")
