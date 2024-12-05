@@ -17,7 +17,7 @@ listQrisCanvas.innerHTML = `
 
 for (let i = 0; i < Number(stickerLength); i++) {
   const itemDiv = document.createElement("div");
-  itemDiv.classList.add("item");
+  itemDiv.classList.add("item pointer");
 
   const qrisCanvasDiv = document.createElement("div");
   qrisCanvasDiv.classList.add("qrisCanvas");

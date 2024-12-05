@@ -78,3 +78,6 @@ div#dataTersimpan {
   margin: 5px;
   width: 30vw;
 }
+.pointer {
+  cursor: pointer;
+}
