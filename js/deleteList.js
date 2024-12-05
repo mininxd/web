@@ -1,25 +1,39 @@
 function reindex(obj) {
   const newObj = {};
-  Object.values(obj).forEach((item, index) => {
-    newObj[index] = item;
+  Object.keys(obj).forEach((_, index) => {
+    const key = Object.keys(obj)[index];
+    newObj[index] = obj[key];
   });
   return newObj;
 }
 
-function deleteSticker(items) {
+
+try {
+let obj = JSON.parse(localStorage.getItem("stickerStorage")) || {};
+let reindexedObj = reindex(obj);
+for(let i = 0; i < Object.keys(obj).length; i++) {
+  if(!obj[i]) {
+    localStorage.setItem("stickerStorage", JSON.stringify(reindexedObj));
+   setTimeout(() => {
+    window.location.reload();
+   }, 100)
+  }
+}
+} catch(e) {
+  
+}
+
+
+async function deleteSticker(items) {
   let obj = JSON.parse(localStorage.getItem("stickerStorage")) || {};
   try {
-    items.forEach(({ id, item }) => {
-      for (const key in obj) {
-        if (key === id && obj[key].nama === item) {
-          delete obj[key];
-          break;
-        }
+  await items.forEach(({ id, item }) => {
+      if (obj[id] && obj[id].nama === item) {
+        delete obj[id];
       }
-    });
-    obj = reindex(obj);
-    localStorage.setItem("stickerStorage", JSON.stringify(obj));
-
+    })
+    localStorage.setItem("stickerStorage", JSON.stringify(reindex(obj)));
+    window.location.reload();
   } catch (e) {
     console.log(e);
   }
@@ -86,10 +100,7 @@ itemListToDelete.querySelectorAll('li input[type="checkbox"]:checked').forEach(c
   const item = checkbox.value.split(".qris.")[1];
   delItemArr.push({ id, item });
   deleteSticker(delItemArr)
-  setTimeout(() => {
-  window.location.reload();
-  },750);
-  });
+})
 } catch(e) {
   console.log(e)
 }

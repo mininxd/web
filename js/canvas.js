@@ -16,8 +16,10 @@ listQrisCanvas.innerHTML = `
 }  else {
   let stickerData = JSON.parse(localStorage.getItem("stickerStorage"));
   let stickerLength = JSON.stringify(Object.keys(stickerData).length);
-
+console.log(stickerData);
 for (let i = 0; i < Number(stickerLength); i++) {
+if(!stickerData[i]) {
+} else {
   const itemDiv = document.createElement("div");
   itemDiv.classList.add("item","pointer");
 
@@ -64,7 +66,7 @@ for (let i = 0; i < Number(stickerLength); i++) {
       alert(e);
     }
   });
-}
+}}
 }
 
 
