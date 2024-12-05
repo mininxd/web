@@ -78,6 +78,7 @@ itemListToDelete.appendChild(li);
 
 deleteItemBtn.addEventListener('click', () => {
   deleteItemBtn.classList.add("is-loading");
+try {
   const delItemArr = [];
   
 itemListToDelete.querySelectorAll('li input[type="checkbox"]:checked').forEach(checkbox => {
@@ -89,4 +90,7 @@ itemListToDelete.querySelectorAll('li input[type="checkbox"]:checked').forEach(c
   window.location.reload();
   },750);
   });
+} catch(e) {
+  console.log(e)
+}
 });
