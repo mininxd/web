@@ -1,5 +1,7 @@
 ## Qris Sticker
-sebuah webapp pembuat sticker payment __(QRIS)__, yang ukurannya kecil seperti label harga pada makanan/minuman yang sering kita temui saat memasuki pasar swalayan seperti alfa indo, kini kamu bisa membuatnya dengan versi QRIS
+sebuah webapp pembuat label harga dengan payment __(QRIS)__, 
+sangat praktis digunakan untuk pelanggan yang suka pakai qris tapi belinya satuan
+
 
 ### Contoh QRIS Sticker
 ![1000452489](https://github.com/user-attachments/assets/41ecc63d-0bec-4a19-8c0c-24047fbc7e44)
