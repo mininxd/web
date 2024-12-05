@@ -5,6 +5,7 @@ import "./login.js";
 import "./localStorage.js";
 import "./canvas.js";
 import "./isDesktop.js";
+import "./deleteList.js";
 
 
 // Get Header

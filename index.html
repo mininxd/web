@@ -58,6 +58,7 @@
 
 <div id="canvasBtn">
 <button id="downloadAll" class="button is-fullwidth is-dark">Download Semua Stiker (.png)</button>
+<button id="hapusItem" class="js-modal-trigger button is-fullwidth is-danger" data-target="modalHapusItem">Hapus Item</button>
 </div>
 </div>
 </div>
@@ -123,12 +124,11 @@
 <div id="modalHapusItem" class="modal">
   <div class="modal-background"></div>
   <div class="modal-content">
-      <div id="itemListToDelete" class="p-3 card">
-      <ul>
-        <li>List 1</li>
-        <li></li>
+      <div class="p-3 card">
+          <h1 class="is-3 title">Hapus Item</h1>
+      <ul id="itemListToDelete">
       </ul>
-      <button class="is-fullwidth button is-dark">OK</button>
+      <button id="deleteItemBtn" class="is-fullwidth button is-dark">OK</button>
       </div>
   </div>
 </div>

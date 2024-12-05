@@ -2,6 +2,7 @@
 @import url("./navbar.css");
 @import url("./canvas.css");
 @import url("./fonts.css");
+@import url("./checkbox.css");
 * {
   scroll-behavior: smooth;
   transition: all 0.3s ease-out;
@@ -69,6 +70,10 @@ div#dataTersimpan {
   background: #b43327;
   color: white;
 }
+span.is-danger {
+  border-radius: 2px;
+  padding: 0 4px 0 4px;
+}
 .buttonBawah {
   display: flex;
   justify-content: center;
@@ -84,4 +89,11 @@ div#dataTersimpan {
 .namaToko {
   font-size: 8px;
   transform: translateY(2px);
+}
+input[type="checkbox"] + label div {
+  padding: 6px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: 1px solid #777;
+  font-weight: 500;
 }

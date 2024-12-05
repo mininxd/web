@@ -1,7 +1,8 @@
 import QRCode from "qrcode";
 
-if(!JSON.parse(localStorage.getItem("stickerStorage"))) {
+if(!JSON.parse(localStorage.getItem("stickerStorage")) || localStorage.getItem("stickerStorage") == "{}") {
   downloadAll.style.display = "none";
+  hapusItem.style.display = "none";
 listQrisCanvas.innerHTML = `
 <div class="item">
       <div class="qrisCanvas">

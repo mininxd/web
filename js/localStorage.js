@@ -7,16 +7,9 @@ function addSticker(nama, QR, harga, merchant) {
   obj[itemKey] = { nama, QR, harga, merchant };
   localStorage.setItem("stickerStorage", JSON.stringify(obj));
 }
-function deleteSticker(item) {
-  const obj = JSON.parse(localStorage.getItem("stickerStorage")) || {};
-  for (const key in obj) {
-    if (obj[key].name === item) {
-      delete obj[key];
-      break;
-    }
-  }
-  localStorage.setItem("stickerStorage", JSON.stringify(obj));
-}
+
+
+
 function generateQris(nama, harga, merchant) {
   qris(localStorage.getItem("QRIS_Utama"), harga)
 .then(data => {
