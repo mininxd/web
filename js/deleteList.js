@@ -16,7 +16,7 @@ for(let i = 0; i < Object.keys(obj).length; i++) {
     localStorage.setItem("stickerStorage", JSON.stringify(reindexedObj));
    setTimeout(() => {
     window.location.reload();
-   }, 100)
+   }, Math.round(Object.keys(obj).length * 120))
   }
 }
 } catch(e) {
@@ -92,14 +92,18 @@ itemListToDelete.appendChild(li);
 
 deleteItemBtn.addEventListener('click', () => {
   deleteItemBtn.classList.add("is-loading");
+  setTimeout(() => {
+  deleteItemBtn.classList.remove("is-loading");
+  },1000)
 try {
   const delItemArr = [];
-  
+
+
 itemListToDelete.querySelectorAll('li input[type="checkbox"]:checked').forEach(checkbox => {
   const id = checkbox.value.split(".qris.")[0];
   const item = checkbox.value.split(".qris.")[1];
   delItemArr.push({ id, item });
-  deleteSticker(delItemArr)
+  deleteSticker(delItemArr);
 })
 } catch(e) {
   console.log(e)
