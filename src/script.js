@@ -5,3 +5,11 @@ if(!navigator.userAgent.includes("Mobile")) {
 sendBtn.addEventListener('click', () => {
   location.href = `https://wa.me/6283898772118/?text=${inputMsg.value}`
 })
+
+const referrer = document.referrer;
+
+if (referrer) {
+  alert(`Redirected from: ${referrer}`);
+} else {
+  alert("No referrer detected.");
+}
