@@ -1,0 +1,1 @@
+test.innerHTML = window.location.href
