@@ -9,7 +9,6 @@ sendBtn.addEventListener('click', () => {
 const referrer = document.referrer;
 
 if (referrer) {
-  alert(`Redirected from: ${referrer}`);
+  
 } else {
-  alert("No referrer detected.");
 }
