@@ -7,8 +7,7 @@ sendBtn.addEventListener('click', () => {
 })
 
 const referrer = document.referrer;
-
 if (referrer) {
-  
+  referMsg.innerHTML = referrer;
 } else {
 }
