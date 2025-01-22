@@ -13,7 +13,7 @@
     <div class="max-w-md">
       <h1 class="text-3xl font-bold">
         <span class="text-red-600 material-icons">report</span>
-      Situs Berbahaya!
+    <span id="judul">Situs Berbahaya!</span>
       </h1>
     </div>
   </div>
@@ -25,7 +25,7 @@
 </div>
   
 <div class="card">
-<span class="p-2 m-5 font-medium">
+<span id="informasi" class="p-2 m-5 font-medium">
   Situs ini teridentifikasi mengandung konten berpotensi berbahaya. Demi melindungi Anda, akses ke situs ini telah dihentikan.
 </span>
 <span class="px-2 text-center my-5">
@@ -38,11 +38,13 @@
  <span class="flex justify-end px-6 opacity-70">
    Mau request buka blokir situs?
  </span>
-<div class="flex join justify-end min-w-full px-4">
-  <input id="inputMsg" class="join-item w-40 border-gray-900 focus:w-full focus:outline-0 px-3" placeholder="hubungi kami"/>
-  <button id="sendBtn" class="join-item btn">
-            <span class="material-icons">send</span>
-  </button>
+<div class="flex justify-end min-w-full px-4">
+  <form class="join">
+    <input required id="inputMsg" autocomplete="off" class="join-item w-40 border-gray-900 focus:w-full focus:outline-0 px-3" placeholder="hubungi kami"/>
+    <button id="sendBtn" class="join-item btn">
+      <span class="material-icons">send</span>
+    </button>
+  </form>
 </div>
 </div>
 
