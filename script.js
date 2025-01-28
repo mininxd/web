@@ -26,6 +26,7 @@ generateBtn.addEventListener('click', () => {
         if(!data.url) {
          bratImg.style.opacity = 0;
          msgBar.classList.remove("hidden")
+         alert(data)
          msg.innerHTML = "<strong style='color:red'>Error, kesalahan server atau koneksi error</strong>"
          generateBtn.disabled = false;
         } else {
