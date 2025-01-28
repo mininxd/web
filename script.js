@@ -24,9 +24,8 @@ generateBtn.addEventListener('click', () => {
       bratImg.src = "./assets/Program_wait.ico";
     
     brat(inputText.value).then(data => {
-     logs.value = JSON.stringify(data, null, 2);
-     checkLogs();
      generateBtn.disabled = false;
+     console.log(data)
         if(!data) {
          bratImg.style.opacity = 0;
          msgBar.classList.remove("hidden")
@@ -34,9 +33,11 @@ generateBtn.addEventListener('click', () => {
          generateBtn.disabled = false;
         } else if(data.message) {
          bratImg.style.opacity = 0;
+         logs.value = JSON.stringify(data, null, 2);
+         checkLogs();
         } else {
          localStorage.setItem("filename", data.path);
-    //     bratImg.src = data;
+          bratImg.src = data;
           bratImg.addEventListener('load', () => {
             if(bratImg.src.includes("https://")) {
               downBtn.classList.remove("hidden")

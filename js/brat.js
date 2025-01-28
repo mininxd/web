@@ -1,11 +1,22 @@
 import axios from "axios";
 
+
 export async function brat(text) {
   try {
-  let { data } = await axios.get(`https://brat.caliphdev.com/api/brat?text=${encodeURIComponent(text)}`, {responseType: "arraybuffer"})
-  return data;
-
-  } catch(e) {
-  return e;
+    const { data } = await axios.get(
+      `https://cors-anywhere.herokuapp.com/https://brat.caliphdev.com/api/brat?text=${encodeURIComponent(text)}`,
+      {
+        responseType: "arraybuffer",
+        headers: {
+          Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+        }
+      }
+    );
+    const blob = new Blob([data], { type: 'image/jpeg' });
+  const url = URL.createObjectURL(blob);
+    return url;
+  } catch (e) {
+    throw new Error(e);
+    return e;
   }
 }
