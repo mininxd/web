@@ -7,3 +7,4 @@ closeChangelog.addEventListener('click', () => {
   changelogs.classList.add("hidden")
   localStorage.setItem("changelogs", version)
 })
+
