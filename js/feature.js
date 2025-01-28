@@ -37,4 +37,3 @@ inputText.addEventListener('blur', () => {
 })
 img.classList.add("desktop")
 }
-

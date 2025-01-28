@@ -12,6 +12,7 @@ Draggable.create(elem, {
 
 drag("#changelogs")
 drag("#warning")
+drag("#errLogs")
 
 if(!navigator.userAgent.includes("Mobile")) {
   drag("#windowEl")

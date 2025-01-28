@@ -1,0 +1,9 @@
+div#errLogs {
+  width: 65vw;
+  height: 40vh;
+}
+textarea#logs {
+  width: 100%;
+  height:88%;
+  resize: none;
+}

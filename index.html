@@ -66,8 +66,6 @@
 
 
 
-
-
 <div id="footer">
 <center>
  <p>&copy; 2024 - Present. </p>
@@ -83,7 +81,7 @@
     <div class="title-bar">
       <div class="title-bar-text">
         <img style="width:12px; margin-right:8px" src="/assets/Program.ico">
-        Changelogs
+        Changelogs v1.2.1
       </div>
     <div class="title-bar-controls">
       <button id="closeChangelog" aria-label="Close"></button>
@@ -106,6 +104,7 @@
         <ul>
           <li>Hapus tombol minimize</li>
           <li>Latar background berwarna #008080</li>
+          <li>nambah error logs <strong>v1.2.1</strong></li>
         </ul>
       </details>
      </ul>
@@ -113,6 +112,21 @@
 </div>
 </div>
 
+<div id="errLogs" class="window">
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img style="width:12px; margin-right:8px" src="/assets/Program.ico">
+        Error Logs
+      </div>
+    <div class="title-bar-controls">
+      <button id="closeErrLogs" aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="window-body">
+  <textarea readonly id="logs">
+  </textarea>
+  </div>
+</div>
 
 
 
@@ -126,6 +140,7 @@
   <div class="window-body">
      <p id="warnMsg"></p>
   </div>
+
 </div>
 
 

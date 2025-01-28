@@ -1,6 +1,8 @@
 import axios from "axios";
 import "./js/feature.js";
 import "./js/gsap.js";
+import "./js/utils.js";
+import { checkLogs } from "./js/utils.js";
 import {brat} from "./js/brat.js";
 // reset filename each enter websites
 if(localStorage.getItem("filename")) {
@@ -20,18 +22,21 @@ generateBtn.addEventListener('click', () => {
       bratImg.style.opacity = 1;
       generateBtn.disabled = false ? false : true;
       bratImg.src = "./assets/Program_wait.ico";
-      brat(inputText.value).then(data => {
-     //   console.log(data)
-     alert(data);
-        if(!data.url) {
+    
+    brat(inputText.value).then(data => {
+     logs.value = JSON.stringify(data, null, 2);
+     checkLogs();
+     generateBtn.disabled = false;
+        if(!data) {
          bratImg.style.opacity = 0;
          msgBar.classList.remove("hidden")
-         alert(data)
          msg.innerHTML = "<strong style='color:red'>Error, kesalahan server atau koneksi error</strong>"
          generateBtn.disabled = false;
+        } else if(data.message) {
+         bratImg.style.opacity = 0;
         } else {
          localStorage.setItem("filename", data.path);
-         bratImg.src = data.url;
+    //     bratImg.src = data;
           bratImg.addEventListener('load', () => {
             if(bratImg.src.includes("https://")) {
               downBtn.classList.remove("hidden")
@@ -41,7 +46,9 @@ generateBtn.addEventListener('click', () => {
           })
         }
       }).catch(e => {
-        alert(e);
+        logs.value = JSON.stringify(e, null, 2);
+        checkLogs();
+        bratImg.style.opacity = 0;
       }).finally(() => {
         bratImg.addEventListener('load', () => {
          if(bratImg.src.includes("https://")) {
@@ -55,3 +62,6 @@ generateBtn.addEventListener('click', () => {
 
 
 
+closeErrLogs.addEventListener('click', () => {
+  errLogs.classList.add("hidden");
+})
