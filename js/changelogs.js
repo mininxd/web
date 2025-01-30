@@ -1,4 +1,4 @@
-let version = "1.2.1ads"
+let version = "1.3"
 if(localStorage.getItem("changelogs") == version) {
   changelogs.classList.add("hidden")
 }
