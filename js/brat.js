@@ -4,7 +4,7 @@ import axios from "axios";
 export async function brat(text) {
   try {
     const { data } = await axios.get(
-      `https://cors-anywhere.herokuapp.com/https://brat.caliphdev.com/api/brat?text=${encodeURIComponent(text)}`,
+      `https://api-mininxd.vercel.app/brat?txt=${encodeURIComponent(text)}`,
       {
         responseType: "arraybuffer",
         headers: {
@@ -14,6 +14,7 @@ export async function brat(text) {
     );
     const blob = new Blob([data], { type: 'image/jpeg' });
   const url = URL.createObjectURL(blob);
+  console.log(data, blob, url)
     return url;
   } catch (e) {
     throw new Error(e);
