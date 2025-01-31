@@ -1,2 +1,6 @@
- @import url("./src/tailwind.css");
- @import url("./src/icons.css");
+@import url("./src/tailwind.css");
+@import url("./leaflet/leaflet.css");
+
+.hidden, .skeleton.hidden {
+  display: none !important;
+}

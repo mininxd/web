@@ -1,57 +1,46 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="cmyk">
+<html lang="id" data-theme="dracula">
 <head>
 <link rel="stylesheet" href="./style.css">
 <script src="./src/script.js" type="module"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blocked Pages</title>
+<title>Public IP Inspector</title>
 </head>
 <body id="body" class="p-4 bg-base-100">
-  <div data-theme="light" class="my-7 rounded-xl hero shadow-xl">
-  <div class="hero-content">
-    <div class="max-w-md">
-      <h1 class="text-3xl font-bold">
-        <span class="text-red-600 material-icons">report</span>
-    <span id="judul">Situs Berbahaya!</span>
-      </h1>
-    </div>
+  Masih WIP
+  <div class="content m-2">
+    <fieldset class="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">
+      <legend class="w-full fieldset-legend">Public IP  <span id="ipv" class="text-right text-xs"></span></legend>
+      <div class="skeleton h-12 w-full"></div>
+      <h1 id="pubIp" class="text-center text-4xl font-black mb-5"></h1>
+      <br>
+      Network / CIDR :
+       <div class="skeleton h-32 w-full"></div>
+      <h1 id="networkIp" class="font-medium text-2xl"></h1>
+      ISP :
+      <h1 id="org" class="text-2xl"></h1>
+     
+    
+    </fieldset>
+    <fieldset class="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">
+      <legend class="fieldset-legend">Geolocation</legend>
+      <div class="skeleton h-24 w-full"></div>
+      <h1 id="city" class="text-4xl font-medium"></h1>
+      <h1 id="region" class="text-2xl"></h1>
+      <h1 id="country" class="text-xl"></h1>
+      
+      <div class="flex justify-around mt-5">
+        <span id="lat" class="text-md">Lat: </span>
+        <span id="lon" class="text-md">Lon: </span>
+      </div>
+      <div id="map" class="w-full h-32 rounded-box"></div> 
+    </fieldset>
+    <fieldset class="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">
+      <legend class="fieldset-legend">Information</legend>
+      Population :
+      <h1 id="population" class="text-2xl font-medium"></h1>
+    </fieldset>
   </div>
-</div>
-<div class="flex justify-center w-full">
-  <div data-theme="light" class="w-fit px-2 rounded">
-  <span id="referMsg" class="flex justify-center text-center text-red-600"></span>
-  </div>
-</div>
-  
-<div class="card">
-<span id="informasi" class="p-2 m-5 font-medium">
-  Situs ini teridentifikasi mengandung konten berpotensi berbahaya. Demi melindungi Anda, akses ke situs ini telah dihentikan.
-</span>
-<span class="px-2 text-center my-5">
- &mdash; Tetaplah aman berseluncur di internet &mdash;
-</span> 
-</div>
-
-
-<div class="justify-end my-20 w-full">
- <span class="flex justify-end px-6 opacity-70">
-   Mau request buka blokir situs?
- </span>
-<div class="flex justify-end min-w-full px-4">
-  <form class="join">
-    <input required id="inputMsg" autocomplete="off" class="join-item w-40 border-gray-900 focus:w-full focus:outline-0 px-3" placeholder="hubungi kami"/>
-    <button id="sendBtn" class="join-item btn">
-      <span class="material-icons">send</span>
-    </button>
-  </form>
-</div>
-</div>
-
-<div class="opacity-25 my-5 font-light w-full text-center">
-&copy; 2025 - Present
-<br>
-dns.mininxd.web.id
-</div>
 </body>
 </html>
