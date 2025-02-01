@@ -14,7 +14,26 @@ export async function brat(text) {
     );
     const blob = new Blob([data], { type: 'image/jpeg' });
   const url = URL.createObjectURL(blob);
-  console.log(data, blob, url)
+ 
+ downBtn.classList.remove("hidden"); 
+downBtn.addEventListener('click', () => {
+  let filename = url + ".png";
+  try { 
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch (e) {
+    alert(e);
+    window.open(bratImg.src, "_blank");
+  }
+});
+
+
+
+//  console.log(data, blob, url)
     return url;
   } catch (e) {
     throw new Error(e);

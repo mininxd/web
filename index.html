@@ -81,7 +81,7 @@
     <div class="title-bar">
       <div class="title-bar-text">
         <img style="width:12px; margin-right:8px" src="/assets/Program.ico">
-        Changelogs v1.2.3
+        Changelogs v1.4
       </div>
     <div class="title-bar-controls">
       <button id="closeChangelog" aria-label="Close"></button>
@@ -105,7 +105,8 @@
           <li>Hapus tombol minimize</li>
           <li>Latar background berwarna #008080</li>
           <li>nambah error logs <strong>v1.2.1</strong></li>
-          <li>fix CORS</li>
+          <li>fix CORS <strong>v1.3</strong></li>
+          <li>Improved download button <strong>v1.4</strong></li>
         </ul>
       </details>
       <details open>
@@ -154,25 +155,5 @@
   </div>
 </div>
 
-
-
-<script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
-<script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-
-<script type="module">
-downBtn.addEventListener('click', () => {
-  let filename = localStorage.getItem("filename").split("/").pop();
- 
-try { 
- htmlToImage.toPng(document.getElementById('canvas')).then(function (blob) {
-     FileSaver.saveAs(blob, filename);
-  }).catch(e => {
-    window.open(bratImg.src, "_blank");
-  })
-    } catch(e) {
-    alert(e)
-  }
-})
-</script>
 </body>
 </html>
