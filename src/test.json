@@ -1,0 +1,106 @@
+{
+  "data": {
+    "ip": "36.65.213.64",
+    "network": "36.65.208.0/20",
+    "version": "IPv4",
+    "city": "Kudus",
+    "region": "Central Java",
+    "region_code": "JT",
+    "country": "ID",
+    "country_name": "Indonesia",
+    "country_code": "ID",
+    "country_code_iso3": "IDN",
+    "country_capital": "Jakarta",
+    "country_tld": ".id",
+    "continent_code": "AS",
+    "in_eu": false,
+    "postal": "59332",
+    "latitude": -6.8048,
+    "longitude": 110.8374,
+    "timezone": "Asia/Jakarta",
+    "utc_offset": "+0700",
+    "country_calling_code": "+62",
+    "currency": "IDR",
+    "currency_name": "Rupiah",
+    "languages": "id,en,nl,jv",
+    "country_area": 1919440,
+    "country_population": 267663435,
+    "asn": 7713,
+    "org": "PT Telekomunikasi Indonesia",
+    "contacts": {
+      "policy": {
+        "email": "peering@telin.net",
+        "name": "Peering Team Global",
+        "phone": "+62213810000",
+        "url": ""
+      },
+      "technical": {
+        "email": "abuse@telin.net",
+        "name": "Abuse",
+        "phone": "+62213810000",
+        "url": ""
+      }
+    },
+    "info": {
+      "aka": "TELIN",
+      "info_ipv6": true,
+      "info_multicast": false,
+      "info_never_via_route_servers": false,
+      "info_prefixes4": 10000,
+      "info_prefixes6": 2200,
+      "info_ratio": "Heavy Inbound",
+      "info_scope": "Asia Pacific",
+      "info_traffic": "10-20Tbps",
+      "info_types": [
+        "NSP"
+      ],
+      "info_unicast": true,
+      "irr_as_set": "AS7713:AS-TELKOM-TRANSIT",
+      "looking_glass": "http://lg.telin.co.id",
+      "name": "Telekomunikasi Indonesia Int (TELIN)",
+      "name_long": "",
+      "notes": "We manage international traffic of Group ASNs: \n- 7713: Global Network\n- 17974: Local Network ID\n- 23693: Mobile Network ID\n- 56308: Local Network SG\n- 58731: Local Network TL",
+      "policy_contracts": "Not Required",
+      "policy_general": "Restrictive",
+      "policy_locations": "Required - International",
+      "policy_ratio": true,
+      "policy_url": "",
+      "rir_status": "ok",
+      "rir_status_updated": "2024-06-26 04:47:55",
+      "route_server": "",
+      "social_media": [
+        {
+          "identifier": "http://www.telin.net",
+          "service": "website"
+        }
+      ],
+      "status": "ok",
+      "status_dashboard": "",
+      "website": "http://www.telin.net"
+    },
+    "organization": {
+      "address1": "Telkom Landmark Tower, Tower 2,",
+      "address2": "The Telkom Hub Jl. Jend. Gatot Subroto kav. 52",
+      "aka": "",
+      "city": "Jakarta",
+      "country": "ID",
+      "floor": "16th & 17th floor",
+      "latitude": -6.23029804229736,
+      "longitude": 106.818313598633,
+      "name": "PT Telekomunikasi Indonesia Int",
+      "name_long": "",
+      "notes": "",
+      "social_media": [
+        {
+          "identifier": "http://www.telin.net",
+          "service": "website"
+        }
+      ],
+      "state": "DKI Jakarta",
+      "status": "ok",
+      "suite": "",
+      "website": "http://www.telin.net",
+      "zipcode": "12710"
+    }
+  }
+}
