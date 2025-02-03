@@ -17,6 +17,7 @@
     "vite": "^6.0.5"
   },
   "dependencies": {
+    "@egstad/detect-theme": "^1.4.0",
     "axios": "^1.7.9"
   }
 }

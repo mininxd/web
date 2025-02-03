@@ -2,6 +2,8 @@ import axios from "axios";
 import { getIP } from "./ip.js"
 import {map} from "./map.js";
 import "./desktop.js";
+import theme from '@egstad/detect-theme'
+
 
 
 (async() => {
@@ -52,3 +54,23 @@ orgNotes.innerHTML = data.data.organization.notes.replaceAll("\n", "<br>") || "-
 
 
 })();
+
+
+
+
+
+
+// watch for `colorSchemeUpdated` events
+window.addEventListener('colorSchemeUpdated', (e) => {
+  switch (e.detail.theme) {
+    case 'light':
+      root.setAttribute("data-theme", "light");
+      contentTheme.setAttribute("content", "#ffffff");
+
+    break;
+    default:
+      root.setAttribute("data-theme", "dark");
+    break;
+  }
+})
+theme.watch()
