@@ -1,5 +1,12 @@
-export async function getIP() {
-  let res = await fetch("https://api.seeip.org/jsonip");
-  let ip = await res.json();
-  return ip.ip;
+import axios from "axios";
+
+export async function ipv4() {
+let {data} = await axios.get("https://api-mininxd.vercel.app/ip");
+return data.ip.ipv4;
 }
+
+export async function ipv6() {
+  let {data} = await axios.get("https://api-mininxd.vercel.app/ip");
+  return data.ip.ipv6;
+}
+

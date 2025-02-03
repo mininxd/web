@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getIP } from "./ip.js"
+import { ipv4, ipv6 } from "./ip.js"
 import {map} from "./map.js";
 import "./desktop.js";
 import theme from '@egstad/detect-theme'
@@ -7,7 +7,8 @@ import theme from '@egstad/detect-theme'
 
 
 (async() => {
-let ipAddr = await getIP();
+let ipAddr = await ipv4();
+let ipAddr6 = await ipv6();
 let {data} = await axios.get(`https://api-mininxd.vercel.app/ip/${ipAddr}`);
 
 if(data) {
@@ -16,9 +17,12 @@ if(data) {
 })
 }
 // body.append(JSON.stringify(data))
-
+if(data.data.version == "IPv6") {
+  pubIp.classList.replace("text-4xl", "text-3xl");
+}
 
 pubIp.append(data.data.ip|| "-");
+pubIp6.append(ipAddr6 || "");
 networkIp.append(data.data.network|| "-");
 ipv.append(data.data.version|| "-");
 org.append(data.data.org|| "-");

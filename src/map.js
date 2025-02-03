@@ -1,11 +1,11 @@
 import "/leaflet/leaflet-src.js";
 import axios from "axios";
-import { getIP } from "./ip.js"
+import { ipv4 } from "./ip.js"
 
 
 // ISP map
 export async function map(name) {
-  const ipAddr = await getIP();
+  const ipAddr = await ipv4();
   let {data} = await axios.get(`https://api-mininxd.vercel.app/ip/${ipAddr}`);
   let lat = data.data.latitude;
   let lon = data.data.longitude;
