@@ -51,4 +51,4 @@ orgNotes.innerHTML = data.data.organization.notes.replaceAll("\n", "<br>") || "-
 
 
 
-})() 
+})();
