@@ -1,11 +1,11 @@
 {
   "data": {
-    "ip": "36.65.213.64",
-    "network": "36.65.208.0/20",
+    "ip": "103.67.79.157",
+    "network": "103.67.78.0/23",
     "version": "IPv4",
-    "city": "Kudus",
-    "region": "Central Java",
-    "region_code": "JT",
+    "city": "Cileunyi",
+    "region": "West Java",
+    "region_code": "JB",
     "country": "ID",
     "country_name": "Indonesia",
     "country_code": "ID",
@@ -14,9 +14,9 @@
     "country_tld": ".id",
     "continent_code": "AS",
     "in_eu": false,
-    "postal": "59332",
-    "latitude": -6.8048,
-    "longitude": 110.8374,
+    "postal": null,
+    "latitude": -6.93889,
+    "longitude": 107.75278,
     "timezone": "Asia/Jakarta",
     "utc_offset": "+0700",
     "country_calling_code": "+62",
@@ -25,82 +25,96 @@
     "languages": "id,en,nl,jv",
     "country_area": 1919440,
     "country_population": 267663435,
-    "asn": 7713,
-    "org": "PT Telekomunikasi Indonesia",
+    "asn": 136052,
+    "org": "PT Cloud Hosting Indonesia",
     "contacts": {
-      "policy": {
-        "email": "peering@telin.net",
-        "name": "Peering Team Global",
-        "phone": "+62213810000",
-        "url": ""
-      },
-      "technical": {
-        "email": "abuse@telin.net",
+      "abuse": {
+        "email": "abuse@idcloudhost.com",
         "name": "Abuse",
-        "phone": "+62213810000",
+        "phone": "",
         "url": ""
       }
     },
     "info": {
-      "aka": "TELIN",
+      "aka": "IDCloudHost",
       "info_ipv6": true,
       "info_multicast": false,
       "info_never_via_route_servers": false,
-      "info_prefixes4": 10000,
-      "info_prefixes6": 2200,
-      "info_ratio": "Heavy Inbound",
+      "info_prefixes4": 250,
+      "info_prefixes6": 100,
+      "info_ratio": "Mostly Outbound",
       "info_scope": "Asia Pacific",
-      "info_traffic": "10-20Tbps",
+      "info_traffic": "50-100Gbps",
       "info_types": [
-        "NSP"
+        "Content"
       ],
       "info_unicast": true,
-      "irr_as_set": "AS7713:AS-TELKOM-TRANSIT",
-      "looking_glass": "http://lg.telin.co.id",
-      "name": "Telekomunikasi Indonesia Int (TELIN)",
-      "name_long": "",
-      "notes": "We manage international traffic of Group ASNs: \n- 7713: Global Network\n- 17974: Local Network ID\n- 23693: Mobile Network ID\n- 56308: Local Network SG\n- 58731: Local Network TL",
+      "irr_as_set": "AS-IDCLOUDHOST-ID",
+      "looking_glass": "http://lg.cloudhost.id",
+      "name": "IDCloudHost",
+      "name_long": "PT Cloud Hosting Indonesia",
+      "notes": "one of the most preferred Cloud Hosting Provider in Indonesia\ncontinuously delivering One Stop Platform to Go Digital",
       "policy_contracts": "Not Required",
-      "policy_general": "Restrictive",
-      "policy_locations": "Required - International",
-      "policy_ratio": true,
+      "policy_general": "Open",
+      "policy_locations": "Not Required",
+      "policy_ratio": false,
       "policy_url": "",
       "rir_status": "ok",
       "rir_status_updated": "2024-06-26 04:47:55",
       "route_server": "",
       "social_media": [
         {
-          "identifier": "http://www.telin.net",
+          "identifier": "idcloudhost",
+          "service": "instagram"
+        },
+        {
+          "identifier": "Idcloudhostcom",
+          "service": "facebook"
+        },
+        {
+          "identifier": "Idcloudhostcom",
+          "service": "x"
+        },
+        {
+          "identifier": "idcloudhost",
+          "service": "linkedin"
+        },
+        {
+          "identifier": "idcloudhost",
+          "service": "tiktok"
+        },
+        {
+          "identifier": "https://idcloudhost.com",
           "service": "website"
         }
       ],
       "status": "ok",
       "status_dashboard": "",
-      "website": "http://www.telin.net"
+      "website": "https://idcloudhost.com"
     },
     "organization": {
-      "address1": "Telkom Landmark Tower, Tower 2,",
-      "address2": "The Telkom Hub Jl. Jend. Gatot Subroto kav. 52",
-      "aka": "",
-      "city": "Jakarta",
+      "address1": "Jl. Raya Bojonggenteng No.2,",
+      "address2": "Bojong Genteng, Kec. Bojong Genteng",
+      "aka": "IDCloudHost",
+      "city": "Kabupaten Sukabumi,",
       "country": "ID",
-      "floor": "16th & 17th floor",
-      "latitude": -6.23029804229736,
-      "longitude": 106.818313598633,
-      "name": "PT Telekomunikasi Indonesia Int",
-      "name_long": "",
-      "notes": "",
+      "floor": "",
+      "latitude": -6.84198617935181,
+      "longitude": 106.723098754883,
+      "name": "PT Cloud Hosting Indonesia",
+      "name_long": "PT Cloud Hosting Indonesia",
+      "notes": "One of the best cloud hosting provider in Indonesia\nfor technical inquiries \nadmin@idcloudhost.com\n-\nNetwork Ops\nnoc@idcloudhost.com\n-\nSales & Support\ncare@idcloudhost.com\n-",
       "social_media": [
         {
-          "identifier": "http://www.telin.net",
+          "identifier": "https://idcloudhost.com",
           "service": "website"
         }
       ],
-      "state": "DKI Jakarta",
+      "state": "",
       "status": "ok",
       "suite": "",
-      "website": "http://www.telin.net",
-      "zipcode": "12710"
+      "website": "https://idcloudhost.com",
+      "zipcode": "43353"
     }
   }
 }
