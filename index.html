@@ -4,22 +4,26 @@
 <link rel="stylesheet" href="./style.css">
 <script src="./src/script.js" type="module"></script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0">
 <title>Public IP Inspector</title>
 </head>
 <body id="body" class="p-4 bg-base-100">
-  Masih WIP
   <div class="content m-2">
     <fieldset class="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">
-      <legend class="w-full fieldset-legend">Public IP  <span id="ipv" class="text-right text-xs"></span></legend>
+     <legend class="w-full fieldset-legend">Public IP  <span id="ipv" class="text-right text-xs"></span></legend>
       <div class="skeleton h-12 w-full"></div>
-      <h1 id="pubIp" class="text-center text-4xl font-black mb-5"></h1>
+     <div class="rounded-2xl shadow-2xl p-4 mb-5">
+     <h1 id="pubIp" class="text-center text-4xl font-black"></h1>
+     </div> 
       <br>
       Network / CIDR :
        <div class="skeleton h-32 w-full"></div>
       <h1 id="networkIp" class="font-medium text-2xl"></h1>
       ISP :
       <h1 id="org" class="text-2xl"></h1>
+      ASN :
+      <h1 id="asn" class="text-2xl"></h1>
+      
      
     
     </fieldset>
@@ -34,13 +38,72 @@
         <span id="lat" class="text-md">Lat: </span>
         <span id="lon" class="text-md">Lon: </span>
       </div>
-      <div id="map" class="w-full h-32 rounded-box"></div> 
+      <div id="map" class="shadow w-full h-32 rounded-box border border-2 border-base-300"></div> 
     </fieldset>
     <fieldset class="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">
-      <legend class="fieldset-legend">Information</legend>
-      Population :
-      <h1 id="population" class="text-2xl font-medium"></h1>
+      <legend class="fieldset-legend">ISP Info</legend>
+      Also Known As :
+      <h1 id="aka" class="text-2xl px-3 mb-2  rounded"></h1>
+      Long name :
+      <h1 id="lname" class="text-2xl px-3 mb-2  rounded"></h1>
+      Internal Rate of Return :
+      <h1 id="irr" class="text-2xl px-3 mb-2"></h1>
+      ISP Notes :
+      <h1 id="notes" class="text-lg px-3 mb-2"></h1>
+      <div class="mt-2 stats bg-base-100 border border-base-300">
+      <div class="stat">
+        <div class="stat-title">ipv6</div>
+        <div id="ip6" class="stat-value"></div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">multicast</div>
+        <div id="multicast" class="stat-value"></div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">unicast</div>
+        <div id="unicast" class="stat-value"></div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">prefixes4</div>
+        <div id="prefixes4" class="stat-value"></div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">prefixes6</div>
+        <div id="prefixes6" class="stat-value"></div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">ratio</div>
+        <div id="ratio" class="stat-value"></div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">scope</div>
+        <div id="scope" class="stat-value"></div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">traffic</div>
+        <div id="traffic" class="stat-value"></div>
+      </div>
+    </div>
     </fieldset>
+    
+    
+    <fieldset class="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">
+      <legend class="fieldset-legend">Organization Info</legend>
+      Address :
+      <h1 id="orgCity" class="text-lg px-3"></h1>
+      <h1 id="orgAddr" class="text-lg px-3 mb-2"></h1>
+      Zipcode :
+      <h1 id="orgZip" class="text-2xl px-3 mb-2"></h1>
+      Organization Notes :
+      <h1 id="orgNotes" class="text-sm px-3 mb-2"></h1>
+      </fieldset>
+  <!-- WIP
+    <fieldset class="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">
+      <legend class="fieldset-legend">Social Media </legend>
+    </fieldset>
+    -->
+    
   </div>
+    <div class="opacity-50 mt-20 text-sm text-center">&copy; IP Info - Mininxd 2025 - Present.</div>
 </body>
 </html>
