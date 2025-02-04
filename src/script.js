@@ -23,11 +23,14 @@ if(validateIP(ipInput.value)) {
 (async() => {
 let urlIP = window.location.href.split("?ip=")[1];
 let ipAddr = await ipv4();
+let ipAddr6 = await ipv6();
+
 if (urlIP) {
   ipAddr = await urlIP;
+  if(ipAddr.includes("&")) {
+    ipAddr = ipAddr.split("&")[0];
+  }
 }
-
-let ipAddr6 = await ipv6();
 
 let {data} = await axios.get(`https://api-mininxd.vercel.app/ip/${ipAddr}`);
 
