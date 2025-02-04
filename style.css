@@ -4,3 +4,20 @@
 .hidden, .skeleton.hidden {
   display: none !important;
 }
+
+.input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.floating-label:has(.input:not(:placeholder-shown)) span, .floating-label:has(.input:focus) span {
+  background: #fff;
+  border: solid 1px #000;
+  transform: translatey(2px) scale(1.2);
+  padding: 2px;
+  border-radius: 2px;
+}
+
+form:has(input:focus) h1, form:has(input:not(:placeholder-shown)) h1 {
+  visibility: hidden;
+}

@@ -4,11 +4,8 @@ import { ipv4 } from "./ip.js"
 
 
 // ISP map
-export async function map(name) {
+export async function map(name, lat, lon) {
   const ipAddr = await ipv4();
-  let {data} = await axios.get(`https://api-mininxd.vercel.app/ip/${ipAddr}`);
-  let lat = data.data.latitude;
-  let lon = data.data.longitude;
   
   let map = L.map("map", { zoomControl: false }).setView([lat, lon], 13);
   

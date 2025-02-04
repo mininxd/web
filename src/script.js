@@ -5,10 +5,30 @@ import "./desktop.js";
 import theme from '@egstad/detect-theme'
 
 
+ function validateIP(ip) {
+  return /^(?:\d{1,3}\.){3}\d{1,3}$|^(?:[0-9a-fA-F]{0,4}:){1,7}[0-9a-fA-F]{0,4}$/.test(ip);
+ } 
+ 
+ipButton.addEventListener('click', (e) => {
+  e.preventDefault()
+if(validateIP(ipInput.value)) {
+ window.location.href = `?ip=${ipInput.value}`
+  } else { 
+    ipInput.setCustomValidity("Invalid IP address!");
+    ipInput.reportValidity();
+  };
+});
+
 
 (async() => {
+let urlIP = window.location.href.split("?ip=")[1];
 let ipAddr = await ipv4();
+if (urlIP) {
+  ipAddr = await urlIP;
+}
+
 let ipAddr6 = await ipv6();
+
 let {data} = await axios.get(`https://api-mininxd.vercel.app/ip/${ipAddr}`);
 
 if(data) {
@@ -20,13 +40,14 @@ if(data) {
 if(data.data.version == "IPv6") {
   pubIp.classList.replace("text-4xl", "text-3xl");
 }
+map(data.data.org, data.data.latitude, data.data.longitude);
+
 
 pubIp.append(data.data.ip|| "-");
 pubIp6.append(ipAddr6 || "");
 networkIp.append(data.data.network|| "-");
 ipv.append(data.data.version|| "-");
 org.append(data.data.org|| "-");
-map(data.data.org)
 asn.append(data.data.asn|| "-");
 city.append(data.data.city|| "-");
 region.append(`${data.data.region} - ${data.data.region_code}`|| "-");
