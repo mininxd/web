@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="oklch(24.787% 0.019 277.508)">
+    <link rel="stylesheet" href="./style.css">
+    <title>Free Proxies</title>
+  </head>
+  <body id="body" class="outfit m-2">
+<div class="navbar bg-base-100 mb-4 shadow-sm">
+  <h1 class="text-2xl px-4 font-black">Free Proxies</h1>
+
+
+  <div class="navbar-end">
+<div class="dropdown dropdown-end">
+  <button id="proxType" class="badge mr-1 badge-info badge-soft">-</button>
+  <div tabindex="0" class="dropdown-content menu bg-base-200 w-50 rounded-2xl shadow-sm">
+    <fieldset class="fieldset">
+      <legend class="fieldset-legend">Proxy Type</legend>
+<select id="selectProtocol" class="select-info select">
+    <option selected disabled>Select Protocol</option>
+    <option>http</option>
+    <option disabled>https (unavailable)</option>
+    <option>socks4</option>
+    <option>socks5</option>
+</select>
+</fieldset>
+  </div>
+  </div>
+
+
+<div class="dropdown dropdown-end">
+<button class="badge badge-info badge-soft">count: <span id="proxCount"></span></button>
+    <div tabindex="0" class="dropdown-content menu bg-base-200 w-50 rounded-2xl shadow-sm">
+    <fieldset class="fieldset">
+      <legend class="fieldset-legend">Proxy Count</legend>
+      <input id="countInput" type="number" class="input input-info" min="1" max="100"/>
+    </fieldset>
+    </div>
+  </div>
+  </div>
+</div>
+
+
+<!-----
+<div class="w-full px-14">
+<form class="w-full justify-center mb-2 filter">
+  <input class="btn btn-square" type="reset" value="×"/>
+  <input class="btn mr-4" type="radio" name="frameworks" aria-label="text"/>
+  <input class="btn ml-4" type="radio" name="frameworks" aria-label="json"/>
+</form>
+<btn class="btn w-full btn-info">Download All</btn>
+</div>
+----->
+
+
+    <center>
+    <span id="loading" class="loading loading-infinity loading-xl"></span>
+    </center>
+    
+<div id="proxFound" class="badge mt-5 ml-2 badge-info badge-soft"></div>
+<div class="m-2 mx-3 overflow-x-auto border border-base-content/5 rounded-md bg-base-100">
+  <table class="table">
+  
+    <!-- head -->
+    <thead>
+      <tr>
+        <th>Proxy</th>
+        <th>ip</th>
+        <th>Port</th>
+        <th>Protocol</th>
+        <th>Anonymity</th>
+        <th>Score</th>
+        <th>Country</th>
+      </tr>
+    </thead>
+    <tbody id="tBody">
+    </tbody>
+  </table>
+</div>
+ 
+ <footer class="footer mt-7 sm:footer-horizontal footer-center text-base-content p-4 opacity-60">
+  <aside>
+    <p>&copy; Mininxd | 2025 - Present.</p>
+  </aside>
+</footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

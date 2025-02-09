@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import "./src/tailwind.css";
+
+
+.outfit {
+  font-family: "Outfit", Sans-Serif;
+  font-optical-sizing: auto;
+  font-weight: auto;
+  font-style: normal;
+}
+.outfit-normal {
+  font-family: "Outfit", Sans-Serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.outfit-bold {
+  font-family: "Outfit", Sans-Serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+td:hover {
+  cursor: copy;
+  background: oklch(26.805% 0.02 277.508);
+}
