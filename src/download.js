@@ -69,7 +69,17 @@ downBtn.addEventListener("click", () => {
   const country = getProxyData(7);
   const count = proxyCheckbox.length;
 
+if(withoutProtocol.checked) {
+  let dataLength = proxies.toString().split(",").length;
+  let newDataTxt = "";
+  let protocol = localStorage.getItem("type") || "http";
+  for(let i = 0; i < dataLength; i++) {
+    newDataTxt += `${proxies.toString().split(",")[i].replaceAll(`${protocol}://`,"")}\n`
+  }
+  dataTxt = newDataTxt
+} else {
   dataTxt = proxies.join("\n");
+}
   dataJson = {
     proxy:proxies, ip, port, protocol, anonymity, score, country
   }
