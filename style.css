@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "./src/tailwind.css";
 
+*{scroll-behavior: smooth; transition: ease 0.1s;}
 
 .outfit {
   font-family: "Outfit", Sans-Serif;

@@ -1,4 +1,5 @@
 import {proxyTable} from "./proxy.js";
+import "./download.js";
 
 let count = Math.round(Number(localStorage.getItem("count"))) || 10;
 let type = localStorage.getItem("type") || "http";

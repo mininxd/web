@@ -6,11 +6,14 @@
     <meta name="theme-color" content="oklch(24.787% 0.019 277.508)">
     <link rel="stylesheet" href="./style.css">
     <title>Free Proxies</title>
-  </head>
-  <body id="body" class="outfit m-2">
+</head>
+
+<body id="body" class="outfit m-2">
 <div class="navbar bg-base-100 mb-4 shadow-sm">
   <h1 class="text-2xl px-4 font-black">Free Proxies</h1>
 
+<div id="toastPlace" class="toast toast-top toast-start">
+</div>
 
   <div class="navbar-end">
 <div class="dropdown dropdown-end">
@@ -43,29 +46,33 @@
 </div>
 
 
-<!-----
-<div class="w-full px-14">
-<form class="w-full justify-center mb-2 filter">
-  <input class="btn btn-square" type="reset" value="×"/>
-  <input class="btn mr-4" type="radio" name="frameworks" aria-label="text"/>
-  <input class="btn ml-4" type="radio" name="frameworks" aria-label="json"/>
+<div id="downloadDiv" class="w-full hidden">
+  <div class="flex mt-14">
+  <form class="w-60 justify-center mb-1 filter">
+    <input id="reset" class="btn btn-square" type="reset" value="×"/>
+    <input id="textRadio" class="btn btn-success px-5" type="radio" name="frameworks" aria-label="text"/>
+    <input id="jsonRadio" class="btn btn-success px-5" type="radio" name="frameworks" aria-label="json"/>
 </form>
-<btn class="btn w-full btn-info">Download All</btn>
+  <button id="downBtn" class="btn-disabled btn btn-info">Download</button>
 </div>
------>
+</div>
 
 
     <center>
     <span id="loading" class="loading loading-infinity loading-xl"></span>
     </center>
     
-<div id="proxFound" class="badge mt-5 ml-2 badge-info badge-soft"></div>
+<div id="totalSelect" class="badge hidden mt-5 ml-2 badge-info badge-soft"></div>
+<div id="proxFound" class="badge mt-5 badge-info badge-soft"></div>
 <div class="m-2 mx-3 overflow-x-auto border border-base-content/5 rounded-md bg-base-100">
   <table class="table">
   
     <!-- head -->
     <thead>
       <tr>
+        <label class="selectAll">
+         <td><input id="selectAll" class="selectAll checkbox checkbox-info" type="checkbox"></td>
+        </label>
         <th>Proxy</th>
         <th>ip</th>
         <th>Port</th>
