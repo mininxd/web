@@ -1,7 +1,8 @@
 import axios from "axios";
 import { copyText } from "./main.js";
-
+import{ checkProxy } from "./checkProxy.js";
 let totalProxies = 0;
+
 export async function proxyTable(count, type) {
 try {
   let {data} = await axios.get(`https://api-mininxd.vercel.app/proxy?count=${count}&type=${type}`);
@@ -21,9 +22,12 @@ try {
     tBody.innerHTML += `
       <tr>
         <td><input type="checkbox" class="select checkbox checkbox-info"></td>
-        <td>${data[i].proxy}</td>
-        <td>${data[i].ip}</td>
-        <td>${data[i].port}</td>
+        <td>
+          <span class="status hidden wip status-success"></span> 
+           ${data[i].proxy}
+        </td>
+        <td><span class="proxyIp">${data[i].ip}</span></td>
+        <td><span class="proxyPort">${data[i].port}</span></td>
         <td>${data[i].protocol}</td>
         <td>${data[i].anonymity}</td>
         <td>${data[i].score}</td>
@@ -31,6 +35,20 @@ try {
       </tr>`
   }
     copyText("td")
+    
+    
+/*WIP
+    const proxyStatus = await [...document.querySelectorAll(".status")]; 
+    const proxyIp = await [...document.querySelectorAll(".proxyIp")]; 
+    const proxyPort = await [...document.querySelectorAll(".proxyPort")]; 
+    
+    for(let i = 0; i < proxyStatus.length; i++) {
+      console.log(proxyIp[i].textContent)
+      checkProxy(proxyIp[i].textContent, proxyPort[i].textContent)
+    }
+    
+*/
+    
 } catch(e) {
   proxFound.classList.replace("badge-info", "badge-error")
   if(count > 100) {
