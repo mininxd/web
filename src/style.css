@@ -1,0 +1,20 @@
+@import "./theme.css";
+
+.font-jetbrains {
+  font-family: "JetBrains Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: auto;
+  font-style: normal;
+}
+.font-vt323 {
+  font-family: "VT323", monospace;
+  font-optical-sizing: auto;
+  font-weight: auto;
+  font-style: normal;
+}
+.font-outfit {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: auto;
+  font-style: normal;
+}

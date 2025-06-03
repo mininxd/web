@@ -1,0 +1,69 @@
+<!doctype html>
+<html data-theme="emerald" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script type="module" src="./src/main.ts"></script>
+    <link rel="stylesheet" href="./src/style.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=VT323&display=swap');
+    </style>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dns.mininxd.web.id</title>
+  </head>
+  <body class="m-2 my-4">
+    
+<div id="headerWrapper" class="w-full">
+  <div class="text-center mt-2">
+    <h1 id="titleHeader" class="font-bold font-outfit text-5xl">MININXD DNS</h1>
+    <span class="block">Block Ads, Malware, and Stay Safe Online</span>
+  </div>
+
+  <div class="text-center w-full mt-8 font-jetbrains">
+    <span class="ipv4 font-outfit text-4xl font-medium">Getting your IP...</span>
+    <br>
+    <span id="ConnectionStatus"></span><br>
+  </div>
+<div class="px-12">
+  <div id="isConnected" class="w-full bg-primary rounded-md px-3 text-white font-jetbrains">
+  </div>
+</div>
+<div id="topBlockedWrapper" class="px-4 pt-2 hidden h-0 max-h-0">
+    <div class="card-body border border-gray-500 rounded-md">
+      <h1 class="font-bold text-xl font-jetbrains">Top Blocked Domains :</h1>
+      <div id="topBlocked" class="text-s font-outfit">
+      </div>
+    </div>
+</div>
+
+
+<div id="wrapper" class="w-full max-w-screen-md px-3 pt-2 mt-8">
+    <fieldset class="border-1 rounded-md">
+      <legend class="text-lg ml-2">DNS-over-TLS</legend>
+      <p id="dotUrl" class="text-2xl font-bold font-jetbrains px-2 tooltip" data-tip="Text Copied!">dns.mininxd.web.id</p>
+    </fieldset>
+<a href="https://docs-mininxd.vercel.app/dns/dot.html" target="_blank">
+  <span class="font-jetbrains px-2 underline">
+How To Connect DoT <i class="ri-arrow-right-up-line"></i>
+</span>
+</a>
+    <fieldset class="border-1 rounded-md mt-6">
+      <legend class="text-lg ml-2">DNS-over-HTTPS</legend>
+      <p id="dohUrl" class="font-jetbrains font-bold text-md px-2 tooltip tooltip-xs" data-tip="Text Copied!">https://dns.mininxd.web.id/dns-query</p>
+      <p id="familyDohUrl" class="font-jetbrains font-bold text-md px-2 pb-2 tooltip tooltip-xs" data-tip="Text Copied!">https://dns.mininxd.web.id/family</p>
+    </fieldset>
+<a href="https://docs-mininxd.vercel.app/dns/doh.html" target="_blank">
+  <span class="font-jetbrains px-2 underline">
+How To Connect DoH <i class="ri-arrow-right-up-line"></i>
+</span>
+</a>
+</div>
+</div>
+
+
+<div id="footer" class="mt-5 text-center opacity-30">dns.mininxd.web.id</div>
+  
+
+
+  </body>
+</html>

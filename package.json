@@ -1,0 +1,24 @@
+{
+  "name": "a",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.7",
+    "axios": "^1.9.0",
+    "daisyui": "^5.0.38",
+    "gsap": "^3.13.0",
+    "remixicon": "^4.6.0",
+    "socket.io-client": "^4.8.1",
+    "tailwindcss": "^4.1.7"
+  }
+}
