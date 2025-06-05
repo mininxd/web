@@ -35,24 +35,22 @@ export function queryLogs(search = "", limit = 5, offset = 0) {
 
 
 // Top blocked domains stats
-export function stats() {
-  return new Promise((resolve, reject) => {
-    socket.once('stats:update', (data) => {
-      resolve(data);
-    });
-    socket.once('stats:error', (err) => {
-      reject(err);
-    });
+export function stats(callback) {
+  socket.on('stats:update', callback);
 
-    if (socket.connected) {
-      socket.emit('getStats');
-    } else {
-      socket.once('connect', () => {
-        socket.emit('getStats');
-      });
-    }
+  socket.on('stats:error', (err) => {
+    console.error('Stats error:', err.message);
   });
+
+  if (socket.connected) {
+    socket.emit('getStats');
+  } else {
+    socket.once('connect', () => {
+      socket.emit('getStats');
+    });
+  }
 }
+
 
 
 // Example JSON data (stats) :

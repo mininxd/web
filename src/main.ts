@@ -58,7 +58,7 @@ for (let i = 0; i < data.length; i++) {
 
 
 
-stats().then(response => {
+stats(response => {
   topBlockedWrapper.classList.remove("h-0", "max-h-0", "hidden")
   const blockedDomains = response.top_blocked_domains
     .slice(0, 5)
@@ -79,3 +79,15 @@ for(let i = 0; i<5; i++) {
 
 
 main();
+
+
+
+if(!navigator.userAgent.includes("Mobile")) {
+  html.classList.add("flex","justify-center")
+  wrapper.classList.add("px-[15%]")
+  document.querySelectorAll('.field').forEach(field => {
+    field.classList.add("w-full", "text-center", "px-4", "pb-[3px]")
+    dohUrl.classList.add("text-xl");
+    familyDohUrl.classList.add("text-xl");
+  })
+}
