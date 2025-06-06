@@ -1,0 +1,81 @@
+<!doctype html>
+<html data-theme="pastel" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="./src/style.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap');
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Energy Manager</title>
+  </head>
+  <body class="p-2 px-4 font-outfit" id="content">
+    <h1 class="text-4xl underline font-extrabold">Energy Manager</h1>
+    <h1 class="text-2xl font-bold">Price Chart <i class="ri-line-chart-line"></i></h1>
+    
+<div id="gridWrapper" class="pt-12">
+  <div id="hydrogenCard" class="card bg-base-200 w-full shadow-md mb-2 col-span-2"></div>
+  <div id="oilCard" class="card bg-base-200 w-full shadow-md mb-2">
+  </div>
+  <div id="coalCard" class="card bg-base-200 w-full shadow-md mb-2">
+  </div>
+  <div id="u235Card" class="card bg-base-200 w-full shadow-md mb-2">
+  </div>
+  <div id="co2Card" class="card bg-base-200 w-full shadow-md mb-2">
+  </div>
+</div>
+
+
+<h1 class="text-2xl font-extrabold mt-12">Chart :</h1>
+<div id="canvasWrapper" class="justify-center">
+<div class="m-0 col-span-2">
+  <div class="flex justify-end">
+      <div class="badge badge-neutral badge-outline font-bold">Hydrogen</div>
+  </div>
+  <canvas class="mb-4" id="hydrogenChart"></canvas>
+</div>
+<div class="m-0">
+  <div class="flex justify-end">
+      <div class="badge badge-neutral badge-outline font-bold">Oil</div>
+</div>
+  <canvas class="mb-4" id="oilChart"></canvas>
+</div>
+<div class="m-0">
+  <div class="flex justify-end">
+      <div class="badge badge-neutral badge-outline font-bold">Coal</div></div>    
+    <canvas class="mb-4" id="coalChart"></canvas>
+</div>
+<div class="m-0">
+<div class="flex justify-end">
+    <div class="badge badge-neutral badge-outline font-bold">U-235</div></div>
+    <canvas class="mb-4" id="u235Chart"></canvas>
+</div>
+<div class="m-0">
+  <div class="flex justify-end">
+  <div class="badge badge-neutral badge-outline font-bold">Co2</div></div>
+  <canvas class="mb-4" id="co2Chart"></canvas>
+</div>
+<div class="m-0"></div>
+</div>
+  
+
+<button onclick="qrisModal.showModal()" class="flex bg-neutral-200 rounded-md p-2 mt-16 mb-6 gap-2">
+  Accept Some Coffee: <img class="h-6" src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg">
+</button>
+
+<dialog id="qrisModal" class="modal">
+   <div class="modal-box flex flex-wrap justify-center">
+     <span>We’re accept for any donation, even Rp1.</span>
+     <canvas class="h-[0px]" id="qris"></canvas>
+     <span>See my another project : 
+     <a class="underline" target="_blank" href="https://qristiker.vercel.app/">QRIS Sticker</a></span>
+   </div>
+   <form method="dialog" class="modal-backdrop">
+     <button>close</button>
+    </form>
+</dialog>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
