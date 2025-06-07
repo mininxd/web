@@ -9,7 +9,7 @@ export default function renderCard({ data, name, isPositive, percentage }, chart
 
   cardElement.innerHTML = `
     <div class="card-body">
-      <h1 class="text-4xl font-extrabold">$${data[data.length - 1]}</h1>
+      <h1 class="text-4xl font-extrabold">$${parseFloat(data[data.length - 1]).toFixed(2)}</h1>
       <h1 class="text-xl font-bold text-neutral">${name} Price</h1>
       <hr class="opacity-50">
       <div class="font-bold text-neutral">

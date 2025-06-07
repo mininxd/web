@@ -57,7 +57,7 @@ new Chart(element, {
         tooltip: {
           displayColors: false,
           callbacks: {
-            label: ctx => `$${ctx.raw}`
+            label: ctx => `$${parseFloat(ctx.raw).toFixed(2)}`
           }
         }
       }
