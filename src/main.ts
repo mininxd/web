@@ -50,3 +50,10 @@ result.textContent = variant(filterText, filterMap[mode])
 
 
 
+
+
+
+if(!navigator.userAgent.includes("Mobile")) {
+  body.classList.replace("p-3", "p-5");
+  body.classList.add("px-[25%]")
+}
