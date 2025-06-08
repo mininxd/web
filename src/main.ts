@@ -42,7 +42,7 @@ resultLabel.classList.remove("hidden");
 
 if(advancedToggle.checked) {
 let repeatFilterText = repeat(modifiedFilterText, advancedInputNum.value || 1)
-result.textContent = variant(filterText, filterMap[mode]).join(", ");
+result.textContent = variant(filterText, filterMap[mode]);
 } else {
 result.textContent = variant(filterText, filterMap[mode]).join(", ");
 }
