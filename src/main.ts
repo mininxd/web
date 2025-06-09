@@ -1,6 +1,4 @@
 import './style.css';
-import "remixicon/fonts/remixicon.css";
-
 import "./radios.ts";
 import "./toggle.ts";
 import { easy, medium, hard } from "./lib/filters.ts";
@@ -44,7 +42,7 @@ if(advancedToggle.checked) {
 let repeatFilterText = repeat(modifiedFilterText, advancedInputNum.value || 1)
 result.textContent = variant(repeatFilterText, filterMap[mode]).join(", ");
 } else {
-result.textContent = variant(filterText, filterMap[mode]).join(", ");
+result.textContent = variant(filterText, filterMap[mode]).join(", ").replace(/[(){}]/g, "")
 }
 });
 
