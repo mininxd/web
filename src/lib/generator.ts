@@ -1,4 +1,4 @@
-import { easy, medium, hard } from "./filters.ts";
+import { easy, medium, hard, extreme } from "./filters.ts";
 
 export function variant(input: string, variantMap: Record<string, string>): string[] {
   const parts: string[][] = [];

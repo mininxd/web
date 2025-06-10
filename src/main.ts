@@ -1,7 +1,7 @@
 import './style.css';
 import "./radios.ts";
 import "./toggle.ts";
-import { easy, medium, hard } from "./lib/filters.ts";
+import { easy, medium, hard, extreme } from "./lib/filters.ts";
 import { variant, repeat } from "./lib/generator.ts";
 
 const filterMap: Record<string, Record<string, string>> = {
