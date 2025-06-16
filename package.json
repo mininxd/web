@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "scripts": {
+    "start":"node index.js",
+    "dev": "nodemon index.js",
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "@scalar/express-api-reference": "latest",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "/test": {
+    "get": {
+      "summary": "Get test data",
+      "description": "Returns a simple hello world message.",
+      "responses": {
+        "200": {
+          "description": "Successful response",
+          "content": {
+            "application/json": {
+              "example": {
+                "message": "hello world"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

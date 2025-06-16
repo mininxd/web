@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "name": "scalar-express-docs",
+  "builds": [
+    {
+      "src": "*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "Access-Control-Allow-Origin": "*",
+        "Open-Source": ""
+      },
+      "dest": "index.js"
+    }
+  ]
+}
