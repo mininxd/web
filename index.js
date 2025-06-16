@@ -9,7 +9,6 @@ dotenv.config()
 
 const app = express()
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
-
 app.get('/openapi.json', (req, res) => {
   if (process.env.DEVELOPMENT_MODE) {
     return res.json(openapi)
