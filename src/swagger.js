@@ -10,7 +10,7 @@ const swaggerDir = path.join(__dirname, "../swagger");
 const basePath = new URL("../swagger/index.json", import.meta.url);
 const base = JSON.parse(fs.readFileSync(basePath, "utf-8"));
 
-const allPaths: Record<string, unknown> = {};
+const allPaths = {};
 
 fs.readdirSync(swaggerDir).forEach((file) => {
   const filePath = path.join(swaggerDir, file);

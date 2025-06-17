@@ -12,7 +12,7 @@ const swaggerDir = path.join(projectRoot, 'swagger');
 const basePath = path.join(swaggerDir, 'index.json');
 const base = JSON.parse(fs.readFileSync(basePath, 'utf-8'));
 
-const allPaths: Record<string, any> = {};
+const allPaths = {};
 
 fs.readdirSync(swaggerDir).forEach((file) => {
   const filePath = path.join(swaggerDir, file);

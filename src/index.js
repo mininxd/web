@@ -3,9 +3,9 @@ import path from "path";
 import dotenv from "dotenv";
 import express from "express";
 import { apiReference } from "@scalar/express-api-reference";
-import openapi from "./swagger.ts";
+import openapi from "./swagger.js";
 import { fileURLToPath } from "url";
-import { isDev, dev, prod } from "./banner.ts";
+import { isDev, dev, prod } from "./banner.js";
 
 dotenv.config();
 const app = express();

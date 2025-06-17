@@ -1,20 +1,18 @@
 {
   "type": "module",
   "scripts": {
-    "start": "node src/index.ts",
-    "dev": "nodemon --watch src --ext ts --exec 'ts-node --esm ./src/index.ts'",
-    "build": "node src/build.ts"
+    "start": "node src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "build": "node src/build.js"
   },
   "dependencies": {
     "@scalar/express-api-reference": "latest",
     "@types/express": "^5.0.3",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
-    "type-fest": "^4.41.0"
+    "nodemon": "^3.1.10"
   },
   "devDependencies": {
-    "typescript": "^5.8.3"
+    "nodemon": "^3.1.10"
   }
 }
