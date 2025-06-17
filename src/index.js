@@ -27,7 +27,7 @@ app.get("/openapi.json", (req, res) => {
   }
   apiDoc.servers = [
     {
-      url: `${req.protocol}://${req.get("host")}`,
+      url: `${isDev ? req.protocol : 'https'}://${req.get("host")}`,
     },
   ];
 
