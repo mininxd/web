@@ -145,6 +145,18 @@ npm run start
 Your Swagger UI will be available at: `http://localhost:3000/swagger`
 
 
-__TL:DR__
-Dynamic build is auto detect URL by client browser, _build without dynamic if your API url is different from swagger_ 
+__Pro Tip.__<br>
+Dynamic build is auto detect URL by client browser, *build without dynamic if your API url is different from swagger*
+
+e.g : 
+> swagger :
+> https://example.com/swagger<br>
+> your api :
+> https://api.example.com/
+
+
+this swagger in dynamic will use https://example.com/ istead https://api.example.com/
+
+which is can't fetched by swagger itself, build dynamic if your API server has same URL
+
 ---
