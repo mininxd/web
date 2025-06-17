@@ -3,7 +3,7 @@
   "name": "scalar-express-docs",
   "builds": [
     {
-      "src": "*.js",
+      "src": "src/index.ts",
       "use": "@vercel/node"
     }
   ],
@@ -15,7 +15,7 @@
         "Access-Control-Allow-Origin": "*",
         "Open-Source": ""
       },
-      "dest": "index.js"
+      "dest": "src/index.ts"
     }
   ]
 }

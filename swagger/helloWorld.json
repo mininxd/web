@@ -1,0 +1,38 @@
+{
+  "/hello": {
+    "get": {
+      "summary": "Hello World",
+      "description": "Returns a simple hello world message.",
+      "responses": {
+        "200": {
+          "description": "Successful response",
+          "headers": {
+            "Content-Type": {
+              "description": "The content type of the response",
+              "schema": {
+                "type": "string",
+                "example": "application/json"
+              }
+            }
+          },
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "hello world"
+                  }
+                }
+              },
+              "example": {
+                "message": "hello world"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
