@@ -14,11 +14,24 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.get("/openapi.json", (req, res) => {
+  let apiDoc;
+
   if (isDev) {
-    res.json(openapi);
+    apiDoc = { ...openapi };
   } else {
-    res.sendFile(path.join(__dirname, "../dist/openapi-min.json"));
+    const raw = fs.readFileSync(
+      path.join(__dirname, "../dist/openapi-min.json"),
+      "utf-8"
+    );
+    apiDoc = JSON.parse(raw);
   }
+  apiDoc.servers = [
+    {
+      url: `${req.protocol}://${req.get("host")}`,
+    },
+  ];
+
+  res.json(apiDoc);
 });
 
 app.use(

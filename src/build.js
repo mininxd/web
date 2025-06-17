@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
 const projectRoot = path.resolve(__dirname, '..');
 
 const swaggerDir = path.join(projectRoot, 'swagger');
@@ -27,7 +26,7 @@ fs.readdirSync(swaggerDir).forEach((file) => {
 });
 
 base.paths = allPaths;
-
+base.servers = [{ url: '{dynamic}' }];
 console.log(base);
 
 const distDir = path.join(projectRoot, 'dist');
