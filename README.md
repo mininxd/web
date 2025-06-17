@@ -147,5 +147,5 @@ Your Swagger UI will be available at: `http://localhost:3000/swagger`
 
 __TL:DR__;
 
-Dynamic build is auto detect URL by client browser, _build without dynamic if your API url is different from swagger_
+Dynamic build is auto detect URL by client browser, _build without dynamic if your API url is different from swagger_ 
 ---
