@@ -1,9 +1,13 @@
 # Scalar API Documentation App
 
-This project serves Scalar UI with an Express backend.
-It allows you to document your API endpoints in a modular and easy-to-extend way.
+- This project serves `Scalar Swagger` using an `Express` backend.
+- It provides a modular and easy-to-extend way to document your API endpoints.
+- It also supports a `__dynamic server URL__`, so you don’t need to update your server url manually.
 
 ---
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/import?s=https://github.com/mininxd/web/tree/scalar)
+
 
 ## How to Add More API Data to `swagger`
 By default, Swagger loads your API specification from `openapi.yaml`.  
@@ -31,18 +35,36 @@ Typically, it looks like this (simplified example):
 }
 ```
 
-`test.json`
+`helloWorld.json`
 ```json
 {
-  "/test": {
+  "/hello": {
     "get": {
-      "summary": "Get test data",
+      "summary": "Hello World",
       "description": "Returns a simple hello world message.",
       "responses": {
         "200": {
           "description": "Successful response",
+          "headers": {
+            "Content-Type": {
+              "description": "The content type of the response",
+              "schema": {
+                "type": "string",
+                "example": "application/json"
+              }
+            }
+          },
           "content": {
             "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "hello world"
+                  }
+                }
+              },
               "example": {
                 "message": "hello world"
               }
@@ -108,11 +130,22 @@ Once you update and save, restart your server or refresh your Scalar UI page to 
 
 ```bash
 npm install
-node index.js
+npm run start
+npm run dev          # running with nodemon
+```
+
+## Build app 
+
+```bash
+npm run build
+npm run build -- --dynamic     # dynamic url build
+npm run start
 ```
 
 Your Swagger UI will be available at: `http://localhost:3000/swagger`
 
----
 
-If you're familiar with nodemon, you can use that for development with auto refresh when files are updated.
+__TL:DR__;
+Dynamic build is auto detect URL by your browser
+
+---

@@ -10,6 +10,8 @@ const projectRoot = path.resolve(__dirname, '..');
 const swaggerDir = path.join(projectRoot, 'swagger');
 const basePath = path.join(swaggerDir, 'index.json');
 const base = JSON.parse(fs.readFileSync(basePath, 'utf-8'));
+const isDynamic = process.argv.includes('--dynamic');
+
 
 const allPaths = {};
 
@@ -26,7 +28,7 @@ fs.readdirSync(swaggerDir).forEach((file) => {
 });
 
 base.paths = allPaths;
-base.servers = [{ url: '{dynamic}' }];
+if(isDynamic) base.servers = [{ url: '{dynamic}' }];
 console.log(base);
 
 const distDir = path.join(projectRoot, 'dist');

@@ -10,6 +10,7 @@ import { isDev, dev, prod } from "./banner.js";
 dotenv.config();
 const app = express();
 app.set("trust proxy", 1);
+const isDynamic = process.argv.includes('--dynamic');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,6 +25,7 @@ app.get("/openapi.json", (req, res) => {
       path.join(__dirname, "../dist/openapi-min.json"),
       "utf-8"
     );
+    if(isDynamic) return res.send(raw);
     apiDoc = JSON.parse(raw);
   }
 
