@@ -1,7 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
+html {
+  scroll-behavior: smooth;
+}
 .font-outfit {
   font-family: "Outfit", sans-serif;
   font-optical-sizing: auto;
