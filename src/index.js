@@ -49,7 +49,9 @@ app.get("/openapi.json", (req, res) => {
 app.use(
   "/swagger",
   apiReference({
-    url: "./openapi.json",
+    spec: {
+      url: "/openapi.json",
+    },
   }),
 );
 
