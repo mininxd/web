@@ -1,4 +1,4 @@
-class MaterialFileUploader {
+class FileUploader {
             constructor() {
                 this.files = [];
                 this.uploading = false;
@@ -196,4 +196,4 @@ class MaterialFileUploader {
         }
 
         // Initialize the uploader when the page loads
-        const uploader = new MaterialFileUploader();
+        const uploader = new FileUploader();
