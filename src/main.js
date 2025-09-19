@@ -5,6 +5,7 @@ class FileUploader {
 
                 this.initElements();
                 this.bindEvents();
+                this.checkFiles();
             }
 
             initElements() {
@@ -28,6 +29,28 @@ class FileUploader {
                 this.uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
                 this.uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
                 this.downloadAllBtn.addEventListener('click', () => this.downloadAll());
+            }
+
+            async checkFiles() {
+                try {
+                    const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/checkFiles`);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const files = await response.json();
+
+                    this.files = files.map(file => ({
+                        id: file.name, // Assuming name is unique, or backend provides an id
+                        file: null,
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        status: 'success'
+                    }));
+
+                    this.showFilesSection();
+                } catch (error) {
+                    this.showError('Failed to check files.');
+                    console.error('There has been a problem with your fetch operation:', error);
+                }
             }
 
             handleFileSelect(event) {
@@ -84,11 +107,8 @@ class FileUploader {
 
             onUploadComplete() {
                 this.progressText.textContent = 'Upload complete!';
-                this.files.forEach(file => {
-                    file.status = 'success';
-                });
-                this.updateFilesList();
                 this.uploading = false;
+                this.checkFiles();
             }
 
             showFilesSection() {
