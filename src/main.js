@@ -18,6 +18,8 @@ class MaterialFileUploader {
                 this.filesSection = document.getElementById('filesSection');
                 this.filesList = document.getElementById('filesList');
                 this.downloadAllBtn = document.getElementById('downloadAllBtn');
+                this.endpointUrl = document.getElementById('endpoint-url');
+                this.endpointUrl.textContent = import.meta.env.VITE_API_ENDPOINT;
             }
 
             bindEvents() {
@@ -99,21 +101,22 @@ class MaterialFileUploader {
 
                 this.files.forEach(file => {
                     const fileItem = document.createElement('div');
-                    fileItem.className = 'bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg flex items-center space-x-4';
+                    fileItem.className = 'p-4 rounded-lg flex items-center space-x-4';
+                    fileItem.style.backgroundColor = 'var(--surface-container-high)';
                     fileItem.innerHTML = `
-                        <div class="text-purple-500">
+                        <div style="color: var(--primary);">
                             ${this.getFileIcon(file.type)}
                         </div>
                         <div class="flex-grow">
-                            <div class="font-semibold text-gray-800 dark:text-gray-200">${file.name}</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">${this.formatFileSize(file.size)}</div>
+                            <div class="font-semibold" style="color: var(--on-surface-variant);">${file.name}</div>
+                            <div class="text-sm" style="color: var(--on-surface-variant);">${this.formatFileSize(file.size)}</div>
                         </div>
                         <div class="flex items-center space-x-2">
                             ${file.status === 'success' ?
-                                '<i class="material-icons text-green-500">check_circle</i>' :
-                                '<i class="material-icons text-gray-400 animate-spin">autorenew</i>'
+                                '<i class="material-icons" style="color: var(--primary);">check_circle</i>' :
+                                '<i class="material-icons animate-spin" style="color: var(--on-surface-variant);">autorenew</i>'
                             }
-                            <button class="text-gray-400 hover:text-red-500 transition-all" onclick="uploader.removeFile(${file.id})">
+                            <button style="color: var(--on-surface-variant);" class="hover:text-red-500 transition-all" onclick="uploader.removeFile(${file.id})">
                                 <i class="material-icons">close</i>
                             </button>
                         </div>
@@ -154,7 +157,7 @@ class MaterialFileUploader {
                     this.downloadAllBtn.innerHTML = '<i class="material-icons">autorenew</i> Downloading...';
 
                     // Simulate download from localhost:3000
-                    const response = await fetch('http://localhost:3000/downloadAll', {
+                    const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/downloadAll`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
