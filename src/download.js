@@ -31,7 +31,7 @@ selectAll.addEventListener("change", () => {
 
 function getProxyData(data) {
   return proxyCheckbox.map(
-    (checkbox) => checkbox.closest("tr").children[data].textContent);
+    (checkbox) => checkbox.closest("tr").children[data].textContent.trim());
 }
 
 function download(data, filename) {
@@ -84,7 +84,8 @@ if(withoutProtocol.checked) {
     proxy:proxies, ip, port, protocol, anonymity, score, country
   }
 
-let fileName = `${protocol[0]}-${ip[0]}-${count}`;
+const date = new Date().toISOString().slice(0,10);
+let fileName = `${protocol[0]}_${count}_${date}`;
 if (textRadio.checked) {
   download(dataTxt, `${fileName}.txt`)
 } else if(jsonRadio.checked) {
