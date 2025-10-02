@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "daisyui": "^5.0.0-beta.7",
+    "daisyui": "^5.1.26",
     "vite": "^6.0.5"
   },
   "dependencies": {

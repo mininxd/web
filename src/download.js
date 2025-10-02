@@ -72,7 +72,7 @@ downBtn.addEventListener("click", () => {
 if(withoutProtocol.checked) {
   let dataLength = proxies.toString().split(",").length;
   let newDataTxt = "";
-  let protocol = localStorage.getItem("type") || "http";
+  let protocol = localStorage.getItem("type") || "all";
   for(let i = 0; i < dataLength; i++) {
     newDataTxt += `${proxies.toString().split(",")[i].replaceAll(`${protocol}://`,"")}\n`
   }
@@ -91,5 +91,6 @@ if (textRadio.checked) {
   download(JSON.stringify(dataJson), `${fileName}.json`)
 } else {
   downBtn.innerHTML = "Select File Type";
+  downBtn.classList.add("btn-disabled");
 }
 })

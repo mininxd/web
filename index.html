@@ -9,8 +9,8 @@
 </head>
 
 <body id="body" class="outfit m-2">
-<div class="navbar bg-base-100 mb-4 shadow-sm">
-  <h1 class="text-2xl px-4 font-black">Free Proxies</h1>
+<div class="navbar flex w-full justify-between px-1 md:px-12 bg-base-100 mb-4 shadow-sm">
+  <h1 class="text-2xl px-4 font-black">Proxyxd</h1>
 
 <div id="toastPlace" class="toast toast-top toast-start">
 </div>
@@ -23,8 +23,8 @@
       <legend class="fieldset-legend">Proxy Type</legend>
 <select id="selectProtocol" class="select-info select">
     <option selected disabled>Select Protocol</option>
+    <option>all</option>
     <option>http</option>
-    <option disabled>https (unavailable)</option>
     <option>socks4</option>
     <option>socks5</option>
 </select>
@@ -47,16 +47,16 @@
 
 
 <div id="downloadDiv" class="w-full hidden">
-  <div class="flex mt-14">
-  <form class="w-60 justify-center mb-1 filter">
+  <div class="flex mt-14 px-3">
+  <form class="w-60 justify-left mb-1 filter">
     <input id="reset" class="btn btn-square" type="reset" value="×"/>
     <input id="textRadio" class="btn btn-success px-5" type="radio" name="frameworks" aria-label="text"/>
     <input id="jsonRadio" class="btn btn-success px-5" type="radio" name="frameworks" aria-label="json"/>
 </form>
   <button id="downBtn" class="btn-disabled btn btn-info">Download</button>
 </div>
-<div class="ml-12 form-control">
-  <label class="label cursor-pointer">
+<div class="form-control">
+  <label class="label cursor-pointer px-3">
     <span class="label-text">without protocol</span>
     <input id="withoutProtocol" type="checkbox" class="checkbox checkbox-xs checkbox-success" />
   </label>

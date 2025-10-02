@@ -1,8 +1,8 @@
 import {proxyTable} from "./proxy.js";
 import "./download.js";
 
-let count = Math.round(Number(localStorage.getItem("count"))) || 10;
-let type = localStorage.getItem("type") || "http";
+let count = Math.round(Number(localStorage.getItem("count"))) || 25;
+let type = localStorage.getItem("type") || "all";
 let countInput = document.getElementById("countInput");
 countInput.value = count;
 
@@ -19,7 +19,9 @@ countInput.addEventListener("blur", function() {
 export function copyText(id) { 
 document.querySelectorAll(id).forEach((el) => {
   el.addEventListener('click', () => {
-    navigator.clipboard.writeText(el.textContent)
+    navigator.clipboard.writeText(
+  el.textContent.replace(/\s+/g, "")
+);
   })
 })
 }

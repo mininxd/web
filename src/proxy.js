@@ -54,7 +54,7 @@ try {
   if(count > 100) {
     proxFound.innerHTML = "403 Forbidden - can't exceed 100"
   } else {
-  proxFound.innerHTML = "429 Too Many Request"
+  proxFound.innerHTML = "Can't get proxy!"
   }
 }
 }
