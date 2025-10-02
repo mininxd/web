@@ -1,65 +1,41 @@
-<!doctype html>
-<html data-theme="pastel" lang="en">
-  <head>
-    <style>
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap');
-</style>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wordlist</title>
-  </head>
-  <body id="body" class="p-3 m-2 outfit">
-<h1 class="p-3 text-3xl font-bold">Wordlist Generator</h1>
-<fieldset class="fieldset my-2 bg-base-200 border-base-300 rounded-box border p-4 w-full">
-<legend class="fi text-xl">Text</legend>
-<label class="input w-full">
-  <input id="filterInput" type="text" placeholder="text to be filtered" />
-</label>
-  <label class="text-xs label m-2 jost" id="cheatsheet">
-    Put letters inside ( ) to generate filter variations. <br>
-    e.g. H(e)llo World = H3llo World, H€llo World, etc.
-  </label>
-</fieldset>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Lister</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body style="background-color: var(--surface); color: var(--on-surface); font-family: 'Roboto Flex', sans-serif;">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <div style="background-color: var(--surface-container);" class="rounded-2xl shadow-lg overflow-hidden">
+            <div style="background-color: var(--primary); color: var(--on-primary);" class="p-6 sm:p-8 relative">
+                <div class="flex justify-between items-center mb-4">
+                    <h1 class="text-2xl sm:text-3xl font-bold">Files</h1>
+                    <button id="downloadAllButton" style="background-color: var(--tertiary); color: var(--on-tertiary);" class="px-4 py-2 rounded-lg shadow-md hover:opacity-80 transition-opacity font-bold">
+                        <span class="material-icons" style="vertical-align: middle;">archive</span>
+                        Download.zip
+                    </button>
+                </div>
+                <p class="text-sm sm:text-base" style="color: var(--on-primary);">A list of all files in the project directory.</p>
+            </div>
 
-<fieldset class="fieldset my-2 bg-base-200 border-base-300 rounded-box border p-4 w-full">
-<legend class="fi text-xl">Filter Level</legend>
-<div class="filter">
-  <input class="btn btn-primary" type="radio" name="filter" aria-label="easy"/>
-  <input class="btn btn-primary" type="radio" name="filter" aria-label="medium"/>
-  <input class="btn btn-primary" type="radio" name="filter" aria-label="hard"/>
-  <input class="btn btn-neutral filter-reset" type="radio" name="filter"/>
-</div>
-  <p id="filterLabel"></p>
+            <!-- Error Message -->
+            <div id="errorMessage" class="hidden p-4 m-6 sm:m-8 bg-red-100 dark:bg-red-900 border border-red-400 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg relative" role="alert">
+                <i class="material-icons">error</i>
+                <span id="errorText" class="ml-2"></span>
+            </div>
 
-  <label class="label mt-4">
-    <input type="checkbox" class="toggle" id="advancedToggle"/>
-    Advanced Mode (optional)
-  </label>
-
-  <label id="advancedInput" class="input hidden">
-    how long duplicates?
-    <input id="advancedInputNum" type="number" class="font-bold" placeholder="default 1">
-  </label>
-  
-    <label class="text-xs label m-2 jost" id="advancedLabel">
-    in Advanced Mode, <br>
-    Filtered letters will be duplicated with many filters variations.<br>
-    e.g. H(e)llo World = H£3llo World, H33llo Wolrd, etc.
-    <br>
-    Be careful, this options may cause client lag  </label>
-  
-  
-  
-</fieldset>
-  <button id="generate" class="btn btn-primary w-full">Generate</button>
-  
-  
-  <textarea id="result" readonly class="mt-5 jost textarea w-full h-[128px] rounded-box hidden"></textarea>
-   <label id="resultLabel" class="hidden mx-2 label text-xs">Click To Copy</label>
-   
-   
-   <p class="text-center mt-16 opacity-50">&copy; 2025 - Present. | mininxd</p>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+            <!-- Files List -->
+            <div class="p-6 sm:p-8">
+                <ul id="filesList" class="space-y-2"></ul>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+</body>
 </html>
