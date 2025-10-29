@@ -1,5 +1,5 @@
 import QRCode from "qrcode";
-import { initMasonry, updateMasonry } from "./masonry.js";
+import { initMasonry } from "./masonry.js";
 
 function renderEmptyState() {
   downloadAll.style.display = "none";
@@ -13,7 +13,7 @@ function renderEmptyState() {
         <p class="namaToko">merchant</p>
       </div>
     </div>`;
-  QRCode.toCanvas(dummyQR, "mininxd");
+  QRCode.toCanvas(dummyQR, "mininxd", { width: 1080 });
 }
 
 function createStickerCard(stickerData, index) {
@@ -45,18 +45,18 @@ function createStickerCard(stickerData, index) {
   itemDiv.appendChild(qrisCanvasDiv);
 
   setTimeout(() => {
-    QRCode.toCanvas(document.getElementById(`s${index}`), stickerData.QR);
+    QRCode.toCanvas(document.getElementById(`s${index}`), stickerData.QR, { width: 1080 });
   }, 0);
 
   itemDiv.addEventListener("click", () => {
     try {
-      htmlToImage.toPng(itemDiv, {
+      window.htmlToImage.toPng(itemDiv, {
         pixelRatio: 3
       }).then(function (blob) {
         if (window.saveAs) {
           window.saveAs(blob, `${stickerData.nama}.png`);
         } else {
-          FileSaver.saveAs(blob, `${stickerData.nama}.png`);
+          window.FileSaver.saveAs(blob, `${stickerData.nama}.png`);
         }
       });
     } catch (e) {

@@ -1,4 +1,5 @@
 .qrisCanvas {
+  user-select: none;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   background: #fff;
@@ -14,8 +15,8 @@
   gap: 4px;
 }
 .qrisCanvas canvas {
-  width: 90px;
-  height: 90px;
+  width: 90px !important;
+  height: 90px !important;
 }
 
 .canvasWrapper {
@@ -35,23 +36,6 @@
   margin-bottom: 8px;
 }
 
-@media (min-width: 768px) {
-  .item {
-    width: calc(25% - 8px);
-  }
-}
-
-@media (min-width: 1024px) {
-  .item {
-    width: calc(20% - 8px);
-  }
-}
-
-@media (min-width: 1280px) {
-  .item {
-    width: calc(16.666% - 8px);
-  }
-}
 
 .item:hover {
   opacity: 0.8;
