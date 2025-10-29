@@ -41,23 +41,38 @@ namaMerchant.classList.remove("is-skeleton");
 
 downloadAll.addEventListener("click", () => {
   downloadAll.classList.add("is-loading");
-  try {
-      htmlToImage.toPng(listQrisCanvas, { 
-        pixelRatio: 3 // Increase resolution by 3x for high definition
-      }).then(function (blob) {
-        if (window.saveAs) {
-          window.saveAs(blob, `${data.merchant}.png`);
-        } else {
-          FileSaver.saveAs(blob, `${data.merchant}.png`);
-        }
-      });
-    setTimeout(() => {
-  downloadAll.classList.remove("is-loading");
-    },1500)
-    } catch (e) {
-      alert(e);
+  const zip = new JSZip();
+  const stickerData = JSON.parse(localStorage.getItem("stickerStorage"));
+  const stickerLength = Object.keys(stickerData).length;
+  let processedStickers = 0;
+
+  for (let i = 0; i < stickerLength; i++) {
+    if (stickerData[i]) {
+      const itemDiv = document.querySelector(`#s${i}`).parentElement.parentElement;
+      htmlToImage.toPng(itemDiv, { pixelRatio: 3 })
+        .then(function (blob) {
+          zip.file(`${stickerData[i].nama}.png`, blob.split(',')[1], { base64: true });
+          processedStickers++;
+          if (processedStickers === stickerLength) {
+            zip.generateAsync({ type: "blob" })
+              .then(function (content) {
+                FileSaver.saveAs(content, `${data.merchant}.zip`);
+                downloadAll.classList.remove("is-loading");
+              });
+          }
+        });
+    } else {
+      processedStickers++;
+      if (processedStickers === stickerLength) {
+        zip.generateAsync({ type: "blob" })
+          .then(function (content) {
+            FileSaver.saveAs(content, `${data.merchant}.zip`);
+            downloadAll.classList.remove("is-loading");
+          });
+      }
     }
-})
+  }
+});
 })
 }
 

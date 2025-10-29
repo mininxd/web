@@ -21,7 +21,7 @@ for (let i = 0; i < Number(stickerLength); i++) {
 if(!stickerData[i]) {
 } else {
   const itemDiv = document.createElement("div");
-  itemDiv.classList.add("item","pointer");
+  itemDiv.classList.add("item","pointer", "grid-item");
 
   const qrisCanvasDiv = document.createElement("div");
   qrisCanvasDiv.classList.add("qrisCanvas");
@@ -71,4 +71,10 @@ if(!stickerData[i]) {
 }}
 }
 
+var elem = document.querySelector('#listQrisCanvas');
+var msnry = new Masonry( elem, {
+  // options
+  itemSelector: '.grid-item',
+  columnWidth: 110
+});
 
