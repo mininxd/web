@@ -4,7 +4,7 @@ if(!JSON.parse(localStorage.getItem("stickerStorage")) || localStorage.getItem("
   downloadAll.style.display = "none";
   hapusItem.style.display = "none";
 listQrisCanvas.innerHTML = `
-<div class="item">
+<div class="item w-fit">
       <div class="qrisCanvas">
         <span class="namaBarang">Masih Kosong</span>
         <canvas id="dummyQR"></canvas><br>
@@ -55,7 +55,9 @@ if(!stickerData[i]) {
 
   itemDiv.addEventListener("click", () => {
     try {
-      htmlToImage.toPng(itemDiv).then(function (blob) {
+      htmlToImage.toPng(itemDiv, { 
+        pixelRatio: 3 // Increase resolution by 3x for high definition
+      }).then(function (blob) {
         if (window.saveAs) {
           window.saveAs(blob, `${stickerData[i].nama}.png`);
         } else {

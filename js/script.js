@@ -1,11 +1,29 @@
 import QRCode from "qrcode";
-import {qris} from "/lib/qris.js";
+import {qris} from "/src/lib/qris.js";
 import "/lib/modal.js";
 import "./login.js";
 import "./localStorage.js";
 import "./canvas.js";
 import "./isDesktop.js";
 import "./deleteList.js";
+
+// Define global variables for elements used in imported modules
+const submitTambahItem = document.getElementById("submitTambahItem");
+const inputNamaItem = document.getElementById("inputNamaItem");
+const inputHargaItem = document.getElementById("inputHargaItem");
+const namaMerchant = document.getElementById("namaMerchant");
+const buatStikerMsg = document.getElementById("buatStikerMsg");
+const submitLogout = document.getElementById("submitLogout");
+const submitLogoutHapus = document.getElementById("submitLogoutHapus");
+const submitGantiQris = document.getElementById("submitGantiQris");
+const inputGantiQris = document.getElementById("inputGantiQris");
+const gantiQrisMsg = document.getElementById("gantiQrisMsg");
+const uploadGantiQris = document.getElementById("uploadGantiQris");
+const uploadGantiQrisMsg = document.getElementById("uploadGantiQrisMsg");
+const downloadAll = document.getElementById("downloadAll");
+const source = document.getElementById("source");
+const donate = document.getElementById("donate");
+const listQrisCanvas = document.getElementById("listQrisCanvas");
 
 
 // Get Header
@@ -18,15 +36,15 @@ qris(localStorage.getItem("QRIS_Utama"), 0)
 downloadAll.disabled = false;
 downloadAll.classList.remove("is-loading");
 
-dataQris.innerHTML = data.QR;
-QRCode.toCanvas(merchantQRIScanvas, data.QR);
 namaMerchant.innerHTML = data.merchant;
 namaMerchant.classList.remove("is-skeleton");
 
 downloadAll.addEventListener("click", () => {
   downloadAll.classList.add("is-loading");
   try {
-      htmlToImage.toPng(listQrisCanvas).then(function (blob) {
+      htmlToImage.toPng(listQrisCanvas, { 
+        pixelRatio: 3 // Increase resolution by 3x for high definition
+      }).then(function (blob) {
         if (window.saveAs) {
           window.saveAs(blob, `${data.merchant}.png`);
         } else {
@@ -75,6 +93,34 @@ submitGantiQris.addEventListener("click", () => {
 }, 500)
 }
 })
+
+uploadGantiQris.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    const img = new Image();
+    img.onload = function () {
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      context.drawImage(img, 0, 0);
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(imageData.data, imageData.width, imageData.height);
+      if (code) {
+        inputGantiQris.value = code.data;
+        uploadGantiQrisMsg.innerHTML = "QRIS berhasil di-scan";
+      } else {
+        uploadGantiQrisMsg.innerHTML = "Tidak dapat menemukan kode QR";
+      }
+    };
+    img.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+});
 
 
 source.addEventListener("click", () => {

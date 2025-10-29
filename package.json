@@ -12,9 +12,11 @@
     "vite": "^6.0.1"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.16",
     "axios": "^1.7.8",
     "npm": "^10.9.1",
     "qrcode": "^1.5.4",
-    "qrcode-decoder": "^0.3.4"
+    "qrcode-decoder": "^0.3.4",
+    "tailwindcss": "^4.1.16"
   }
 }

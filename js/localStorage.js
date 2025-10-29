@@ -1,4 +1,4 @@
-import {qris} from "/lib/qris.js";
+import {qris} from "/src/lib/qris.js";
 
 
 function addSticker(nama, QR, harga, merchant) {

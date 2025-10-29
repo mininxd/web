@@ -2,20 +2,21 @@
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   background: #fff;
-  max-width: 128px;
-  min-height: 185px;
+  max-width: 100px;
+  min-height: 150px;
   padding: 5px;
   border-radius: 5px;
   text-align: center;
   color: #222;
   border: 2px solid #000;
+  justify-content: center;
 }
 .qrisCanvas canvas {
-  width: 100px;
-  max-width: 100px;
-  max-height: 100px;
+  transform: translateX(-2px);
+  min-width: 90px;
+  max-width: 90px;
+  max-height: 90px;
 }
-
 
 .canvasWrapper {
   background: #fff;
@@ -23,9 +24,6 @@
   padding: 1em;
   padding-top: 3em;
   min-height: 60vh;
-  padding-bottom: 40vh;
 }
-
 .item:hover {
-  transform: scale(1.025)
 }

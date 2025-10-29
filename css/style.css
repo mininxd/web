@@ -3,6 +3,7 @@
 @import url("./canvas.css");
 @import url("./fonts.css");
 @import url("./checkbox.css");
+@import "tailwindcss";
 * {
   scroll-behavior: smooth;
   transition: all 0.3s ease-out;
@@ -38,12 +39,6 @@ button {
 }
 #listQrisCanvas {
   padding: 5px;
-}
-#canvasBtn {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 .modal-content {
   padding: 2em;

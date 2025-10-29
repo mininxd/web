@@ -1,5 +1,5 @@
 import QrcodeDecoder from 'qrcode-decoder';
-import {qris} from '/lib/qris';
+import {qris} from '/src/lib/qris.js';
 
 const qr = new QrcodeDecoder();
 
