@@ -1,0 +1,37 @@
+{
+  "hash": "6e7c7e2c",
+  "configHash": "31c89e3f",
+  "lockfileHash": "078b4eb5",
+  "browserHash": "1de62898",
+  "optimized": {
+    "qrcode": {
+      "src": "../../node_modules/qrcode/lib/browser.js",
+      "file": "qrcode.js",
+      "fileHash": "33048c9e",
+      "needsInterop": true
+    },
+    "qrcode-decoder": {
+      "src": "../../node_modules/qrcode-decoder/dist/index.esm.js",
+      "file": "qrcode-decoder.js",
+      "fileHash": "55032ba0",
+      "needsInterop": false
+    },
+    "masonry-layout": {
+      "src": "../../node_modules/masonry-layout/masonry.js",
+      "file": "masonry-layout.js",
+      "fileHash": "0fdcfcd7",
+      "needsInterop": true
+    },
+    "imagesloaded": {
+      "src": "../../node_modules/imagesloaded/imagesloaded.js",
+      "file": "imagesloaded.js",
+      "fileHash": "529c3a52",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-5WRI5ZAA": {
+      "file": "chunk-5WRI5ZAA.js"
+    }
+  }
+}

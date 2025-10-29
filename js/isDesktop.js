@@ -13,6 +13,16 @@ if(!navigator.userAgent.includes("Mobile")) {
 });
 loginFirst.style.marginLeft = "25%"
 loginWrapper.style.width = "50vw"
+
+// Add desktop-specific styles
+document.querySelectorAll('.item').forEach(item => {
+  item.style.width = "100px";
+  item.style.gap = "2px";
+});
+document.querySelectorAll('.qrisCanvas canvas').forEach(canvas => {
+  canvas.style.width = "90px";
+  canvas.style.height = "90px";
+});
 } else {
   downloadAll.classList.add("is-fullwidth")
   hapusItem.classList.add("is-fullwidth")

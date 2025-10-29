@@ -14,6 +14,9 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.16",
     "axios": "^1.7.8",
+    "html-to-image": "^1.11.13",
+    "imagesloaded": "^5.0.0",
+    "masonry-layout": "^4.2.2",
     "npm": "^10.9.1",
     "qrcode": "^1.5.4",
     "qrcode-decoder": "^0.3.4",

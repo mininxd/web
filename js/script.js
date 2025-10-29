@@ -43,7 +43,7 @@ downloadAll.addEventListener("click", () => {
   downloadAll.classList.add("is-loading");
   try {
       htmlToImage.toPng(listQrisCanvas, { 
-        pixelRatio: 3 // Increase resolution by 3x for high definition
+        pixelRatio: 3 
       }).then(function (blob) {
         if (window.saveAs) {
           window.saveAs(blob, `${data.merchant}.png`);

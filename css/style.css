@@ -8,6 +8,8 @@
   scroll-behavior: smooth;
   transition: all 0.3s ease-out;
   -webkit-tap-highlight-color: transparent;
+  overflow-wrap: word-wrap;
+  word-break: break-all;
 }
 body {
   font-family: "Roboto", sans-serif;
@@ -39,6 +41,7 @@ button {
 }
 #listQrisCanvas {
   padding: 5px;
+  display: block;
 }
 .modal-content {
   padding: 2em;
