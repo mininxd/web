@@ -7,7 +7,6 @@ export function initMasonry(containerSelector) {
   const container = document.querySelector(containerSelector);
 
   if (!container) {
-    console.error("Masonry container not found");
     return null;
   }
 
@@ -17,7 +16,6 @@ export function initMasonry(containerSelector) {
     percentPosition: true,
     gutter: 8,
     horizontalOrder: true,
-    fitWidth: true
   });
 
   imagesLoaded(container, () => {

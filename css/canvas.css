@@ -7,7 +7,7 @@
   padding: 8px;
   border-radius: 5px;
   text-align: center;
-  color: #222;
+  color: #0a0a0a;
   border: 2px solid #000;
   display: flex;
   flex-direction: column;
@@ -28,16 +28,16 @@
 }
 
 #listQrisCanvas {
-  margin: 0 auto;
+  margin: 0;
+  justify-content: start;
 }
 
 .item {
-  width: calc(33.333% - 8px);
+  width: 100px;
   margin-bottom: 8px;
 }
 
 
 .item:hover {
-  opacity: 0.8;
   transform: scale(0.98);
 }
