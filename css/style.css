@@ -39,6 +39,7 @@ button {
 }
 #listQrisCanvas {
   padding: 5px;
+  display: block;
 }
 .modal-content {
   padding: 2em;

@@ -1,74 +1,98 @@
 import QRCode from "qrcode";
+import { initMasonry, updateMasonry } from "./masonry.js";
 
-if(!JSON.parse(localStorage.getItem("stickerStorage")) || localStorage.getItem("stickerStorage") == "{}") {
+function renderEmptyState() {
   downloadAll.style.display = "none";
   hapusItem.style.display = "none";
-listQrisCanvas.innerHTML = `
-<div class="item w-fit">
+  listQrisCanvas.innerHTML = `
+    <div class="item">
       <div class="qrisCanvas">
         <span class="namaBarang">Masih Kosong</span>
         <canvas id="dummyQR"></canvas><br>
         <span class="hargaBarang">---</span>
         <p class="namaToko">merchant</p>
       </div>
-    </div>`
-    QRCode.toCanvas(dummyQR, "mininxd");
-}  else {
-  let stickerData = JSON.parse(localStorage.getItem("stickerStorage"));
-  let stickerLength = JSON.stringify(Object.keys(stickerData).length);
-console.log(stickerData);
-for (let i = 0; i < Number(stickerLength); i++) {
-if(!stickerData[i]) {
-} else {
+    </div>`;
+  QRCode.toCanvas(dummyQR, "mininxd");
+}
+
+function createStickerCard(stickerData, index) {
   const itemDiv = document.createElement("div");
-  itemDiv.classList.add("item","pointer");
+  itemDiv.classList.add("item", "pointer");
 
   const qrisCanvasDiv = document.createElement("div");
   qrisCanvasDiv.classList.add("qrisCanvas");
 
   const namaBarangSpan = document.createElement("span");
   namaBarangSpan.classList.add("namaBarang");
-  namaBarangSpan.textContent = stickerData[i].nama;
+  namaBarangSpan.textContent = stickerData.nama;
 
   const canvasElement = document.createElement("canvas");
-  canvasElement.id = `s${i}`;
+  canvasElement.id = `s${index}`;
 
   const hargaBarangSpan = document.createElement("span");
   hargaBarangSpan.classList.add("hargaBarang");
-  hargaBarangSpan.textContent = `Rp${Number(stickerData[i].harga).toLocaleString("id-ID")}`;
-  
+  hargaBarangSpan.textContent = `Rp${Number(stickerData.harga).toLocaleString("id-ID")}`;
+
   const namaTokoP = document.createElement("p");
   namaTokoP.classList.add("namaToko");
-  namaTokoP.textContent = `${stickerData[i].merchant}`
-  
+  namaTokoP.textContent = stickerData.merchant;
+
   qrisCanvasDiv.appendChild(namaBarangSpan);
   qrisCanvasDiv.appendChild(canvasElement);
   qrisCanvasDiv.appendChild(hargaBarangSpan);
   qrisCanvasDiv.appendChild(namaTokoP);
   itemDiv.appendChild(qrisCanvasDiv);
 
-  listQrisCanvas.appendChild(itemDiv);
-
   setTimeout(() => {
-    QRCode.toCanvas(document.getElementById(`s${i}`), stickerData[i].QR);
+    QRCode.toCanvas(document.getElementById(`s${index}`), stickerData.QR);
   }, 0);
 
   itemDiv.addEventListener("click", () => {
     try {
-      htmlToImage.toPng(itemDiv, { 
-        pixelRatio: 3 // Increase resolution by 3x for high definition
+      htmlToImage.toPng(itemDiv, {
+        pixelRatio: 3
       }).then(function (blob) {
         if (window.saveAs) {
-          window.saveAs(blob, `${stickerData[i].nama}.png`);
+          window.saveAs(blob, `${stickerData.nama}.png`);
         } else {
-          FileSaver.saveAs(blob, `${stickerData[i].nama}.png`);
+          FileSaver.saveAs(blob, `${stickerData.nama}.png`);
         }
       });
     } catch (e) {
       alert(e);
     }
   });
-}}
+
+  return itemDiv;
 }
+
+function renderStickers() {
+  const stickerStorage = localStorage.getItem("stickerStorage");
+
+  if (!JSON.parse(stickerStorage) || stickerStorage === "{}") {
+    renderEmptyState();
+    return;
+  }
+
+  const stickerData = JSON.parse(stickerStorage);
+  const stickerKeys = Object.keys(stickerData);
+  console.log(stickerData);
+
+  listQrisCanvas.innerHTML = "";
+
+  stickerKeys.forEach((key, index) => {
+    if (stickerData[key]) {
+      const itemDiv = createStickerCard(stickerData[key], key);
+      listQrisCanvas.appendChild(itemDiv);
+    }
+  });
+
+  setTimeout(() => {
+    initMasonry("#listQrisCanvas");
+  }, 100);
+}
+
+renderStickers();
 
 
