@@ -13,4 +13,7 @@ if(!navigator.userAgent.includes("Mobile")) {
 });
 loginFirst.style.marginLeft = "25%"
 loginWrapper.style.width = "50vw"
+} else {
+  downloadAll.classList.add("is-fullwidth")
+  hapusItem.classList.add("is-fullwidth")
 }
