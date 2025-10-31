@@ -2,8 +2,6 @@
   user-select: none;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
-  overflow-wrap: word-wrap;
-  word-break: break-all;
   background: #fff;
   width: 100%;
   padding: 8px;
@@ -42,4 +40,9 @@
 
 .item:hover {
   transform: scale(0.98);
+}
+
+.namaBarang {
+  overflow-wrap: word-wrap;
+  word-break: break-all;
 }
