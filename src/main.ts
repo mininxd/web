@@ -67,18 +67,6 @@ getClientDnsInfo(ipv4).then(clientInfo => {
 getDnsStats().then(response => {
   topBlockedWrapper.classList.remove("h-0", "max-h-0", "hidden")
 
-  // Display additional stats
-  isConnected.innerHTML += `
-    <div class="flex justify-between w-full mb-1">
-      <span>Total Queries</span>
-      <span>${response.num_dns_queries}</span>
-    </div>
-    <div class="flex justify-between w-full mb-1">
-      <span>Blocked</span>
-      <span>${response.num_blocked_filtering}</span>
-    </div>
-  `;
-
   // Display top blocked domains
   const blockedDomains = response.top_blocked_domains
     .slice(0, 5)
