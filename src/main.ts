@@ -1,4 +1,5 @@
 import "./lib";
+import "./blocked.ts";
 import 'remixicon/fonts/remixicon.css'
 import axios from "axios";
 import { getDnsStats, getClientDnsInfo } from "./lib/api";
