@@ -45,7 +45,11 @@ getClientDnsInfo(ipv4).then(clientInfo => {
   if(client_proto == "doh") client_proto = "DoH";
   if(client_proto == "dot") client_proto = "DoT";
 
+if(!client_proto || client_proto == undefined) {
+  ConnectionStatus.innerHTML = `Not Connected to DNS`;
+} else {
   ConnectionStatus.innerHTML = `Connected to DNS (${client_proto})`;
+}
 
   // Add network information if available
   if(clientInfo.client_info && clientInfo.client_info.whois) {
