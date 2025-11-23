@@ -9,16 +9,15 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "~5.8.3",
-    "vite": "^6.3.5"
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.7",
-    "axios": "^1.9.0",
-    "daisyui": "^5.0.38",
+    "@tailwindcss/vite": "^4.1.17",
+    "axios": "^1.13.2",
+    "daisyui": "^5.5.5",
     "gsap": "^3.13.0",
-    "remixicon": "^4.6.0",
-    "socket.io-client": "^4.8.1",
-    "tailwindcss": "^4.1.7"
+    "remixicon": "^4.7.0",
+    "tailwindcss": "^4.1.17"
   }
 }

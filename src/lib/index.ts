@@ -1,5 +1,5 @@
 import "./gsap.ts"
-import "./socket.ts"
+import "./api.ts"
 
 
 export function copyText(e) {
@@ -7,3 +7,5 @@ export function copyText(e) {
     navigator.clipboard.writeText(e.textContent);
   });
 }
+
+export { getDnsStats, getClientDnsInfo } from './api';

@@ -1,23 +1,35 @@
 import "./lib";
 import 'remixicon/fonts/remixicon.css'
 import axios from "axios";
-import { queryLogs, stats } from "./lib/socket.ts";
-import { copyText } from "./lib/index.ts";
+import { getDnsStats, getClientDnsInfo } from "./lib/api";
 
-copyText(dotUrl);
-copyText(dohUrl);
-copyText(familyDohUrl);
+// Function to copy text to clipboard and update tooltip
+async function copyToClipboard(element, text) {
+  try {
+    await navigator.clipboard.writeText(text);
 
+    // Temporarily change tooltip text to indicate copied
+    const originalTip = element.getAttribute('data-tip');
+    element.setAttribute('data-tip', 'Copied!');
 
+    // Add a class to show the update
+    element.classList.add('tooltip');
 
-
-
-
+    // Reset the tooltip after a short delay
+    setTimeout(() => {
+      element.setAttribute('data-tip', originalTip);
+      element.classList.remove('tooltip');
+    }, 2000);
+  } catch (err) {
+    console.error('Failed to copy text: ', err);
+    alert('Failed to copy text to clipboard');
+  }
+}
 
 async function main() {
-let ip = await axios.get("https://api-mininxd.vercel.app/ip");
+const ipEndpoint = import.meta.env.VITE_IP_ENDPOINT || "https://api-mininxd.vercel.app/ip";
+let ip = await axios.get(ipEndpoint);
 const ipv4 = ip.data.ip.ipv4
-// const ipv6 = ip.data.ip.ipv6
 
 let ipAddr = document.querySelectorAll(".ipv4");
 ipAddr.forEach(el => {
@@ -25,56 +37,82 @@ ipAddr.forEach(el => {
 })
 
 
-ConnectionStatus.innerHTML = "Checking DNS Connection..."
+ConnectionStatus.innerHTML = "Checking DNS Connection...";
 
-queryLogs(ipv4, 10, 0).then(response => 
-{
-  const data = response.data; 
-  if(data.length <= 1) {
-    ConnectionStatus.innerHTML = "Not Connected";
-    return;
-  }
-  let client_proto = data[0].client_proto;
+// Get client DNS info to determine connection protocol
+getClientDnsInfo(ipv4).then(clientInfo => {
+  let client_proto = clientInfo.client_proto;
   if(client_proto == "doh") client_proto = "DoH";
   if(client_proto == "dot") client_proto = "DoT";
-  
-    ConnectionStatus.innerHTML = `Connected to DNS (${client_proto})`;
 
-for (let i = 0; i < data.length; i++) {
-  if (data[i].client_whois) {
+  ConnectionStatus.innerHTML = `Connected to DNS (${client_proto})`;
+
+  // Add network information if available
+  if(clientInfo.client_info && clientInfo.client_info.whois) {
+    const country = clientInfo.client_info.whois.country;
+    const orgname = clientInfo.client_info.whois.orgname;
     isConnected.innerHTML += `
     <div class="flex justify-between w-full mb-1">
       <span>Network</span>
-      <span>${data[i].client_whois}</span>
+      <span>${orgname}</span>
     </div>
     `
-    break;
   }
-}
-})
+}).catch(error => {
+  console.error('Error fetching client DNS info:', error);
+  ConnectionStatus.innerHTML = "Connection status unknown";
+});
 
-
-
-
-
-
-stats(response => {
+// Get DNS stats from API
+getDnsStats().then(response => {
   topBlockedWrapper.classList.remove("h-0", "max-h-0", "hidden")
+
+  // Display additional stats
+  isConnected.innerHTML += `
+    <div class="flex justify-between w-full mb-1">
+      <span>Total Queries</span>
+      <span>${response.num_dns_queries}</span>
+    </div>
+    <div class="flex justify-between w-full mb-1">
+      <span>Blocked</span>
+      <span>${response.num_blocked_filtering}</span>
+    </div>
+  `;
+
+  // Display top blocked domains
   const blockedDomains = response.top_blocked_domains
     .slice(0, 5)
     .map(item => Object.keys(item)[0]);
-  
-const blockedCounts = response.top_blocked_domains.slice(0, 5).map(item => Object.values(item)[0]);
 
-for(let i = 0; i<5; i++) {
-  topBlocked.innerHTML += `
-  <div class="flex border-b-1 w-full justify-between">
-  <span>${blockedDomains[i]}</span>
-  <span>${blockedCounts[i]}</span>
-  </div>
-  `
-}
-})
+  const blockedCounts = response.top_blocked_domains.slice(0, 5).map(item => Object.values(item)[0]);
+
+  for(let i = 0; i<5; i++) {
+    if (blockedDomains[i]) { // Check if domain exists to avoid errors
+      topBlocked.innerHTML += `
+      <div class="flex border-b-1 w-full justify-between">
+      <span>${blockedDomains[i]}</span>
+      <span>${blockedCounts[i]}</span>
+      </div>
+      `
+    }
+  }
+}).catch(error => {
+  console.error('Error fetching DNS stats:', error);
+  ConnectionStatus.innerHTML = "Failed to load DNS stats";
+});
+
+// Add click event listeners to DNS URL elements to enable copy functionality
+document.getElementById('dohUrl')?.addEventListener('click', function() {
+  copyToClipboard(this, this.textContent);
+});
+
+document.getElementById('familyDohUrl')?.addEventListener('click', function() {
+  copyToClipboard(this, this.textContent);
+});
+
+document.getElementById('dotUrl')?.addEventListener('click', function() {
+  copyToClipboard(this, this.textContent);
+});
 }
 
 
