@@ -17,9 +17,19 @@ export async function getDnsStats() {
 export async function getClientDnsInfo(ip) {
   try {
     const response = await axios.get(`${base_api}/dns/query?ip=${ip}`);
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error('Error fetching client DNS info:', error);
     throw error;
+  }
+}
+
+export async function getIpInfo(ip) {
+  try {
+    let response = await axios.get(`https://api.mininxd.xyz/ip/${ip}`);
+    return response.data.data;
+  } catch(e) { 
+    return ""
   }
 }

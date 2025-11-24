@@ -1,5 +1,5 @@
-import "./gsap.ts"
-import "./api.ts"
+import "./gsap.js"
+import "./api.js"
 
 
 export function copyText(e) {

@@ -1,15 +1,13 @@
 import "./lib";
-import "./blocked.ts";
+import "./blocked.js";
 import 'remixicon/fonts/remixicon.css'
 import axios from "axios";
-import { getDnsStats, getClientDnsInfo } from "./lib/api";
+import { getDnsStats, getIpInfo, getClientDnsInfo } from "./lib/api";
 
-// Function to copy text to clipboard and update tooltip
 async function copyToClipboard(element, text) {
   try {
     await navigator.clipboard.writeText(text);
 
-    // Temporarily change tooltip text to indicate copied
     const originalTip = element.getAttribute('data-tip');
     element.setAttribute('data-tip', 'Copied!');
 
@@ -23,7 +21,6 @@ async function copyToClipboard(element, text) {
     }, 2000);
   } catch (err) {
     console.error('Failed to copy text: ', err);
-    alert('Failed to copy text to clipboard');
   }
 }
 
@@ -37,34 +34,50 @@ ipAddr.forEach(el => {
   el.innerHTML = ipv4;
 })
 
-
 ConnectionStatus.innerHTML = "Checking DNS Connection...";
 
 // Get client DNS info to determine connection protocol
-getClientDnsInfo(ipv4).then(clientInfo => {
+getClientDnsInfo(ipv4).then(async (clientInfo) => {
   let client_proto = clientInfo.client_proto;
-  if(client_proto == "doh") client_proto = "DoH";
-  if(client_proto == "dot") client_proto = "DoT";
+  let client_name = clientInfo.client_info?.name?.trim();
 
-if(!client_proto || client_proto == undefined) {
-  ConnectionStatus.innerHTML = `Not Connected to DNS`;
-} else {
-  ConnectionStatus.innerHTML = `Connected to DNS (${client_proto})`;
-}
+  if (client_proto == "doh") client_proto = "DoH";
+  if (client_proto == "dot") client_proto = "DoT";
+
+  if (!client_proto) {
+    ConnectionStatus.innerHTML = `Not Connected to DNS`;
+  } else if (client_name && client_name.length > 0) {
+    ConnectionStatus.innerHTML = `Connected to DNS (${client_name})`;
+  } else {
+    ConnectionStatus.innerHTML = `Connected to DNS (${client_proto})`;
+  }
 
   // Add network information if available
-  if(clientInfo.client_info && clientInfo.client_info.whois) {
-    const country = clientInfo.client_info.whois.country;
-    const orgname = clientInfo.client_info.whois.orgname;
-    isConnected.innerHTML += `
+  if (clientInfo.client_info?.whois) {
+  let orgname = clientInfo.client_info.whois.orgname;
+
+  // If whois is empty or has no orgname, fall back to API
+  if (!orgname && Object.keys(clientInfo.client_info.whois).length === 0) {
+    const ipInfo = await getIpInfo(ipv4);
+    orgname = ipInfo?.org.toUpperCase() || "Unknown";
+  }
+
+if(navigator.userAgent.includes("Mobile") && orgname.length >= 18) {
+  orgname = `
+  ${orgname.slice(0, 16)}...
+  <div class="tooltip tooltip-left" data-tip="${orgname}">
+  <i class="ri-information-fill"></i>
+</div>`
+}
+  isConnected.innerHTML += `
     <div class="flex justify-between w-full mb-1">
       <span>Network</span>
       <span>${orgname}</span>
     </div>
-    `
-  }
+  `;
+}
+
 }).catch(error => {
-  console.error('Error fetching client DNS info:', error);
   ConnectionStatus.innerHTML = "Connection status unknown";
 });
 
@@ -90,7 +103,6 @@ getDnsStats().then(response => {
     }
   }
 }).catch(error => {
-  console.error('Error fetching DNS stats:', error);
   ConnectionStatus.innerHTML = "Failed to load DNS stats";
 });
 

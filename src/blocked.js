@@ -6,8 +6,12 @@ const blocked_redirect = document.getElementById("blocked_redirect");
 
 // Note: checking window.location.origin instead of href ensures we match the domain logic
 // However, the original code checked !...includes, which implies if it's NOT the mininxd domain, it's blocked.
+const allowedOrigins = [
+  "dns.mininxd.xyz",
+  "http://localhost:5173"
+];
 
-if (!window.location.origin.includes("dns.mininxd.xyz")) {
+if (!allowedOrigins.some(url => window.location.origin.includes(url))) {
   console.log("Blocked: Origin does not match allowed domain.");
   
   if (blocked_content && dns_content && blockedUrl && blocked_redirect) {
