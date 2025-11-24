@@ -47,7 +47,7 @@ getClientDnsInfo(ipv4).then(async (clientInfo) => {
   if (!client_proto) {
     ConnectionStatus.innerHTML = `Not Connected to DNS`;
   } else if (client_name && client_name.length > 0) {
-    ConnectionStatus.innerHTML = `Connected to DNS (${client_name})`;
+    ConnectionStatus.innerHTML = `Connected to DNS (${client_proto} — ${client_name})`;
   } else {
     ConnectionStatus.innerHTML = `Connected to DNS (${client_proto})`;
   }
@@ -111,11 +111,14 @@ document.getElementById('dohUrl')?.addEventListener('click', function() {
   copyToClipboard(this, this.textContent);
 });
 
-document.getElementById('familyUrl')?.addEventListener('click', function() {
+document.getElementById('familyDohUrl')?.addEventListener('click', function() {
   copyToClipboard(this, this.textContent);
 });
 
 document.getElementById('dotUrl')?.addEventListener('click', function() {
+  copyToClipboard(this, this.textContent);
+});
+document.getElementById('familyDotUrl')?.addEventListener('click', function() {
   copyToClipboard(this, this.textContent);
 });
 }
