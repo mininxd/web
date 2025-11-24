@@ -65,7 +65,7 @@ getClientDnsInfo(ipv4).then(async (clientInfo) => {
 if(navigator.userAgent.includes("Mobile") && orgname.length >= 18) {
   orgname = `
   ${orgname.slice(0, 16)}...
-  <div class="tooltip tooltip-left" data-tip="${orgname}">
+  <div class="font-jetbrains tooltip tooltip-left" data-tip="${orgname}">
   <i class="ri-information-fill"></i>
 </div>`
 }
@@ -111,7 +111,7 @@ document.getElementById('dohUrl')?.addEventListener('click', function() {
   copyToClipboard(this, this.textContent);
 });
 
-document.getElementById('familyDohUrl')?.addEventListener('click', function() {
+document.getElementById('familyUrl')?.addEventListener('click', function() {
   copyToClipboard(this, this.textContent);
 });
 
