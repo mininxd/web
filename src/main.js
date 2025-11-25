@@ -3,6 +3,7 @@ import "./blocked.js";
 import 'remixicon/fonts/remixicon.css'
 import axios from "axios";
 import { getDnsStats, getIpInfo, getClientDnsInfo } from "./lib/api";
+import language from "./lib/language.json";
 
 async function copyToClipboard(element, text) {
   try {
@@ -34,7 +35,14 @@ ipAddr.forEach(el => {
   el.innerHTML = ipv4;
 })
 
-ConnectionStatus.innerHTML = "Checking DNS Connection...";
+const userLang = navigator.language || navigator.userLanguage || "en";
+const isIndonesian = userLang.startsWith("id");
+
+if(isIndonesian) {
+  ConnectionStatus.innerHTML = "Memeriksa Koneksi DNS...";
+} else {
+  ConnectionStatus.innerHTML = "Checking DNS Connection...";
+}
 
 // Get client DNS info to determine connection protocol
 getClientDnsInfo(ipv4).then(async (clientInfo) => {
@@ -45,11 +53,23 @@ getClientDnsInfo(ipv4).then(async (clientInfo) => {
   if (client_proto == "dot") client_proto = "DoT";
 
   if (!client_proto) {
-    ConnectionStatus.innerHTML = `Not Connected to DNS`;
+    if(isIndonesian) {
+      ConnectionStatus.innerHTML = "Tidak Terhubung ke DNS";
+    } else {
+      ConnectionStatus.innerHTML = "Not Connected to DNS";
+    }
   } else if (client_name && client_name.length > 0) {
-    ConnectionStatus.innerHTML = `Connected to DNS (${client_proto} — ${client_name})`;
+    if(isIndonesian) {
+      ConnectionStatus.innerHTML = `Terhubung ke DNS (${client_proto} — ${client_name})`;
+    } else {
+      ConnectionStatus.innerHTML = `Connected to DNS (${client_proto} — ${client_name})`;
+    }
   } else {
-    ConnectionStatus.innerHTML = `Connected to DNS (${client_proto})`;
+    if(isIndonesian) {
+      ConnectionStatus.innerHTML = `Terhubung ke DNS (${client_proto})`;
+    } else {
+      ConnectionStatus.innerHTML = `Connected to DNS (${client_proto})`;
+    }
   }
 
   // Add network information if available
@@ -69,16 +89,29 @@ if(navigator.userAgent.includes("Mobile") && orgname.length >= 18) {
   <i class="ri-information-fill"></i>
 </div>`
 }
-  isConnected.innerHTML += `
-    <div class="flex justify-between w-full mb-1">
-      <span>Network</span>
-      <span>${orgname}</span>
-    </div>
-  `;
+  if(isIndonesian) {
+    isConnected.innerHTML += `
+      <div class="flex justify-between w-full mb-1">
+        <span>Jaringan</span>
+        <span>${orgname}</span>
+      </div>
+    `;
+  } else {
+    isConnected.innerHTML += `
+      <div class="flex justify-between w-full mb-1">
+        <span>Network</span>
+        <span>${orgname}</span>
+      </div>
+    `;
+  }
 }
 
 }).catch(error => {
-  ConnectionStatus.innerHTML = "Connection status unknown";
+  if(isIndonesian) {
+    ConnectionStatus.innerHTML = "Status koneksi tidak diketahui";
+  } else {
+    ConnectionStatus.innerHTML = "Connection status unknown";
+  }
 });
 
 // Get DNS stats from API
@@ -103,7 +136,11 @@ getDnsStats().then(response => {
     }
   }
 }).catch(error => {
-  ConnectionStatus.innerHTML = "Failed to load DNS stats";
+  if(isIndonesian) {
+    ConnectionStatus.innerHTML = "Gagal memuat statistik DNS";
+  } else {
+    ConnectionStatus.innerHTML = "Failed to load DNS stats";
+  }
 });
 
 // Add click event listeners to DNS URL elements to enable copy functionality

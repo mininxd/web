@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrambleTextPlugin);
 let ip = await axios.get("https://api-mininxd.vercel.app/ip");
 const ipv4 = ip.data.ip.ipv4
 
-gsap.to("#titleHeader", {
+gsap.to("#title_header", {
   duration: 1, 
   scrambleText: "MININXD DNS"
 });

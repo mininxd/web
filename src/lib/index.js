@@ -1,6 +1,6 @@
 import "./gsap.js"
 import "./api.js"
-
+import "./translate.js"
 
 export function copyText(e) {
   e.addEventListener("click", () => {
