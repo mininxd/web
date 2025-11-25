@@ -67,6 +67,9 @@ if (!allowedOrigins.some(url => window.location.origin.includes(url))) {
         } else {
           window.history.back();
         }
+        setTimeout(() => {
+          window.close();
+        }, 100);
         return;
       }
       setTimeout(countdown, 1000);
