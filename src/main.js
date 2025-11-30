@@ -1,5 +1,5 @@
 import './style.css';
-import { computeAndVisualize } from './imageProcessor.js';
+import { computeAndVisualize } from './lib/libImageProcessor.js';
 
 // DOM Elements
 const imageUpload = document.getElementById('imageUpload');
@@ -8,6 +8,7 @@ const imagePreview = document.getElementById('imagePreview');
 const processBtn = document.getElementById('processBtn');
 const loadingIndicator = document.getElementById('loadingIndicator');
 const resultsSection = document.getElementById('resultsSection');
+const result_section = document.getElementById('result_section');
 const resultImg = document.getElementById('resultImg');
 const downloadLink = document.getElementById('downloadLink');
 const originalWidth = document.getElementById('originalWidth');
@@ -38,6 +39,7 @@ function handleImageUpload(event) {
   reader.onload = function(e) {
     // Display preview
     previewImg.src = e.target.result;
+    result_section.classList.remove("hidden");
     imagePreview.classList.remove('hidden');
 
     // Enable process button
@@ -69,7 +71,13 @@ async function processImage() {
 
     // Process the image to create a gradient map
     const startTime = performance.now();
-    const result = await computeAndVisualize(img);
+    
+    // Detect format from currentImage (DataURL) or default to png
+    let format = 'png';
+    if (currentImage.startsWith('data:image/jpeg')) format = 'jpeg';
+    else if (currentImage.startsWith('data:image/jpg')) format = 'jpg';
+    
+    const result = await computeAndVisualize(img, format);
     const endTime = performance.now();
 
     // Hide loading, show results
@@ -80,6 +88,7 @@ async function processImage() {
     resultImg.src = result.visual.base64;
     downloadLink.href = result.visual.base64;
     downloadLink.classList.remove('hidden');
+    githubLink.classList.remove('hidden');
 
     // Update stats table
     originalWidth.textContent = result.stats.width;

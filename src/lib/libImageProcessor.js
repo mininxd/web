@@ -1,19 +1,21 @@
-import { loadImage, createCanvas } from 'canvas';
-import sharp from 'sharp';
-
-export async function computeAndVisualize(imageSource, originalFormat, gradientMax) {
-    const img = await loadImage(imageSource);
+export async function computeAndVisualize(img, originalFormat = 'png', gradientMax = 256) {
+    // img is expected to be an HTMLImageElement (loaded) or HTMLCanvasElement
     const width = img.width;
     const height = img.height;
 
-    // Canvas dasar
-    const canvas = createCanvas(width, height);
+    // Create a temporary canvas to extract pixel data
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
     const ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0);
-    const data = ctx.getImageData(0, 0, width, height).data;
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const data = imageData.data;
 
-    // Canvas untuk edge map
-    const fullResCanvas = createCanvas(width, height);
+    // Canvas for edge map (output)
+    const fullResCanvas = document.createElement('canvas');
+    fullResCanvas.width = width;
+    fullResCanvas.height = height;
     const fullResCtx = fullResCanvas.getContext('2d');
     const fullResImgData = fullResCtx.createImageData(width, height);
     const outputData = fullResImgData.data;
@@ -21,33 +23,32 @@ export async function computeAndVisualize(imageSource, originalFormat, gradientM
     // Luminance
     const luma = new Float32Array(width * height);
 
-    // Alpha opaque
+    // Alpha opaque for output
     for (let i = 0; i < outputData.length; i += 4) {
         outputData[i + 3] = 255;
     }
 
     // Compute luminance
     for (let i = 0; i < data.length; i += 4) {
+        // Simple luminance formula
         luma[i / 4] =
             0.2126 * data[i] +
             0.7152 * data[i + 1] +
             0.0722 * data[i + 2];
     }
 
-    // Use Sharp to resize image to gradientMax x gradientMax for gradient calculation
-    const resizedBuffer = await sharp(imageSource)
-        .resize(gradientMax, gradientMax, { fit: 'fill' })
-        .ensureAlpha()
-        .raw()
-        .toBuffer();
+    // Resize image to gradientMax x gradientMax for gradient calculation
+    const resizeCanvas = document.createElement('canvas');
+    resizeCanvas.width = gradientMax;
+    resizeCanvas.height = gradientMax;
+    const resizeCtx = resizeCanvas.getContext('2d');
+    // Use 'fill' behavior (stretch) to match original sharp implementation
+    resizeCtx.drawImage(img, 0, 0, gradientMax, gradientMax);
+    const resizedImageData = resizeCtx.getImageData(0, 0, gradientMax, gradientMax);
+    const resizedBuffer = resizedImageData.data;
 
     const resizedWidth = gradientMax;
     const resizedHeight = gradientMax;
-    const expectedLength = resizedWidth * resizedHeight * 4; // RGBA
-
-    if (resizedBuffer.length !== expectedLength) {
-        console.warn(`Expected buffer length ${expectedLength}, got ${resizedBuffer.length}`);
-    }
 
     // Luminance for resized image (for gradient calculation)
     const resizedLuma = new Float32Array(resizedWidth * resizedHeight);
@@ -55,7 +56,7 @@ export async function computeAndVisualize(imageSource, originalFormat, gradientM
     // Compute luminance for resized image
     for (let i = 0; i < resizedBuffer.length; i += 4) {
         const pixelIndex = i / 4;
-        if (pixelIndex >= resizedLuma.length) break; // Safety check
+        if (pixelIndex >= resizedLuma.length) break;
 
         resizedLuma[pixelIndex] =
             0.2126 * resizedBuffer[i] +      // R
@@ -97,11 +98,11 @@ export async function computeAndVisualize(imageSource, originalFormat, gradientM
         }
     }
 
-    // Batasi ke 100 sampel atau kurangi dari gradientMax*gradientMax jika lebih besar
+    // Limit to 100 samples
     const maxSamples = Math.min(100, M.length);
     const limitedM = M.slice(0, maxSamples);
 
-    // === FULL RESOLUTION GRADIENTS (kovarians + visualisasi) ===
+    // === FULL RESOLUTION GRADIENTS (covariance + visualization) ===
     let sumGx2 = 0, sumGy2 = 0, sumGxGy = 0, validPixels = 0;
 
     for (let y = 0; y < height; y++) {
@@ -150,20 +151,22 @@ export async function computeAndVisualize(imageSource, originalFormat, gradientM
         finalWidth = MAX_WIDTH;
         finalHeight = Math.round(height * scale);
 
-        const resizeCanvas = createCanvas(finalWidth, finalHeight);
-        const resizeCtx = resizeCanvas.getContext('2d');
+        const resizeCanvas2 = document.createElement('canvas');
+        resizeCanvas2.width = finalWidth;
+        resizeCanvas2.height = finalHeight;
+        const resizeCtx2 = resizeCanvas2.getContext('2d');
 
-        resizeCtx.drawImage(fullResCanvas, 0, 0, finalWidth, finalHeight);
-        finalCanvas = resizeCanvas;
+        resizeCtx2.drawImage(fullResCanvas, 0, 0, finalWidth, finalHeight);
+        finalCanvas = resizeCanvas2;
     }
 
     // Encoding
-    const isJpeg =
-        originalFormat.toLowerCase().endsWith('jpg') ||
-        originalFormat.toLowerCase().endsWith('jpeg');
+    // If originalFormat is passed (e.g., 'image/jpeg'), use it.
+    let mimeType = 'image/png';
+    if (originalFormat && (originalFormat.toLowerCase().includes('jpg') || originalFormat.toLowerCase().includes('jpeg'))) {
+        mimeType = 'image/jpeg';
+    }
 
-    const mimeType = isJpeg ? 'image/jpeg' : 'image/png';
-    const buffer = finalCanvas.toBuffer(mimeType);
     const base64 = finalCanvas.toDataURL(mimeType);
 
     return {
@@ -177,17 +180,16 @@ export async function computeAndVisualize(imageSource, originalFormat, gradientM
                 [sumGxGy / validPixels, sumGy2 / validPixels]
             ],
 
-            gradientMatrixSampled: limitedM,      // <= 100 vektor
-            gradientGridSize: [resizedWidth, resizedHeight],       // <= grid size used for gradient computation
-            gradientRawCount: M.length           // <= total before limit
+            gradientMatrixSampled: limitedM,
+            gradientGridSize: [resizedWidth, resizedHeight],
+            gradientRawCount: M.length
         },
 
         visual: {
             width: finalWidth,
             height: finalHeight,
-            imageBuffer: buffer,
             base64: base64,
-            ext: isJpeg ? 'jpg' : 'png'
+            ext: mimeType === 'image/jpeg' ? 'jpg' : 'png'
         }
     };
 }
