@@ -1,65 +1,112 @@
 <!doctype html>
-<html data-theme="pastel" lang="en">
+<html lang="en">
   <head>
-    <style>
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap');
-</style>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wordlist</title>
+    <title>Image Gradient Map Generator</title>
   </head>
-  <body id="body" class="p-3 m-2 outfit">
-<h1 class="p-3 text-3xl font-bold">Wordlist Generator</h1>
-<fieldset class="fieldset my-2 bg-base-200 border-base-300 rounded-box border p-4 w-full">
-<legend class="fi text-xl">Text</legend>
-<label class="input w-full">
-  <input id="filterInput" type="text" placeholder="text to be filtered" />
-</label>
-  <label class="text-xs label m-2 jost" id="cheatsheet">
-    Put letters inside ( ) to generate filter variations. <br>
-    e.g. H(e)llo World = H3llo World, H€llo World, etc.
-  </label>
-</fieldset>
+  <body>
+    <div id="app">
+      <div class="min-h-screen bg-base-200 p-4 md:p-8">
+        <div class="max-w-6xl mx-auto">
+          <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-primary">Image Gradient Map Generator</h1>
+            <p class="text-base-content/80 mt-2">Upload an image to generate a gradient map visualization</p>
+          </header>
 
-<fieldset class="fieldset my-2 bg-base-200 border-base-300 rounded-box border p-4 w-full">
-<legend class="fi text-xl">Filter Level</legend>
-<div class="filter">
-  <input class="btn btn-primary" type="radio" name="filter" aria-label="easy"/>
-  <input class="btn btn-primary" type="radio" name="filter" aria-label="medium"/>
-  <input class="btn btn-primary" type="radio" name="filter" aria-label="hard"/>
-  <input class="btn btn-neutral filter-reset" type="radio" name="filter"/>
-</div>
-  <p id="filterLabel"></p>
+          <main class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Upload Section -->
+            <div class="card bg-base-100 shadow-xl">
+              <div class="card-body">
+                <h2 class="card-title text-2xl">Upload Image</h2>
+                <div class="form-control w-full">
+                  <label class="label">
+                    <span class="label-text">Choose an image file</span>
+                  </label>
+                  <input type="file" id="imageUpload" class="file-input file-input-bordered w-full" accept="image/*" />
+                  <label class="label">
+                    <span class="label-text-alt">Supports JPG, PNG, GIF formats</span>
+                  </label>
+                </div>
 
-  <label class="label mt-4">
-    <input type="checkbox" class="toggle" id="advancedToggle"/>
-    Advanced Mode (optional)
-  </label>
+                <!-- Image Preview -->
+                <div id="imagePreview" class="mt-4 hidden">
+                  <h3 class="font-medium mb-2">Preview:</h3>
+                  <div class="flex justify-center">
+                    <img id="previewImg" class="max-h-64 object-contain rounded-lg border" alt="Preview" />
+                  </div>
+                </div>
 
-  <label id="advancedInput" class="input hidden">
-    how long duplicates?
-    <input id="advancedInputNum" type="number" class="font-bold" placeholder="default 1">
-  </label>
-  
-    <label class="text-xs label m-2 jost" id="advancedLabel">
-    in Advanced Mode, <br>
-    Filtered letters will be duplicated with many filters variations.<br>
-    e.g. H(e)llo World = H£3llo World, H33llo Wolrd, etc.
-    <br>
-    Be careful, this options may cause client lag  </label>
-  
-  
-  
-</fieldset>
-  <button id="generate" class="btn btn-primary w-full">Generate</button>
-  
-  
-  <textarea id="result" readonly class="mt-5 jost textarea w-full h-[128px] rounded-box hidden"></textarea>
-   <label id="resultLabel" class="hidden mx-2 label text-xs">Click To Copy</label>
-   
-   
-   <p class="text-center mt-16 opacity-50">&copy; 2025 - Present. | mininxd</p>
-    <script type="module" src="/src/main.ts"></script>
+                <div class="flex justify-center mt-4">
+                  <button id="processBtn" class="btn btn-primary" disabled>Generate Gradient Map</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="card bg-base-100 shadow-xl">
+              <div class="card-body">
+                <h2 class="card-title text-2xl">Results</h2>
+                <div id="loadingIndicator" class="hidden flex justify-center items-center py-8">
+                  <span class="loading loading-spinner loading-lg"></span>
+                  <span class="ml-2">Processing image...</span>
+                </div>
+                <div id="resultsSection" class="hidden">
+                  <div class="overflow-x-auto">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Statistics</th>
+                          <th>Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Original Width</td>
+                          <td id="originalWidth">-</td>
+                        </tr>
+                        <tr>
+                          <td>Original Height</td>
+                          <td id="originalHeight">-</td>
+                        </tr>
+                        <tr>
+                          <td>Gradient Map Width</td>
+                          <td id="outputWidth">-</td>
+                        </tr>
+                        <tr>
+                          <td>Gradient Map Height</td>
+                          <td id="outputHeight">-</td>
+                        </tr>
+                        <tr>
+                          <td>Processing Time</td>
+                          <td id="processingTime">-</td>
+                        </tr>
+                        <tr>
+                          <td>Pixel Samples</td>
+                          <td id="pixelSamples">-</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="mt-4">
+                    <h3 class="font-medium mb-2">Gradient Map Visualization</h3>
+                    <div class="flex justify-center">
+                      <img id="resultImg" class="max-h-64 object-contain rounded-lg border" alt="Result" />
+                    </div>
+                  </div>
+
+                  <div class="flex justify-center mt-4">
+                    <a id="downloadLink" class="btn btn-success hidden" download="gradient-map-result.png">Download Result</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
