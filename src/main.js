@@ -8,7 +8,6 @@ const imagePreview = document.getElementById('imagePreview');
 const processBtn = document.getElementById('processBtn');
 const loadingIndicator = document.getElementById('loadingIndicator');
 const resultsSection = document.getElementById('resultsSection');
-const result_section = document.getElementById('result_section');
 const resultImg = document.getElementById('resultImg');
 const downloadLink = document.getElementById('downloadLink');
 const originalWidth = document.getElementById('originalWidth');
@@ -17,6 +16,7 @@ const outputWidth = document.getElementById('outputWidth');
 const outputHeight = document.getElementById('outputHeight');
 const processingTime = document.getElementById('processingTime');
 const pixelSamples = document.getElementById('pixelSamples');
+const covarianceTableBody = document.querySelector('#covarianceTable tbody');
 
 let currentImage = null;
 
@@ -39,7 +39,6 @@ function handleImageUpload(event) {
   reader.onload = function(e) {
     // Display preview
     previewImg.src = e.target.result;
-    result_section.classList.remove("hidden");
     imagePreview.classList.remove('hidden');
 
     // Enable process button
@@ -97,6 +96,27 @@ async function processImage() {
     outputHeight.textContent = result.visual.height;
     processingTime.textContent = `${(endTime - startTime).toFixed(2)} ms`;
     pixelSamples.textContent = result.stats.N;
+
+    // Update Covariance Matrix Table
+    covarianceTableBody.innerHTML = '';
+    const labels = ['Gx', 'Gy'];
+    if (result.stats.covarianceMatrix) {
+      result.stats.covarianceMatrix.forEach((row, i) => {
+        const tr = document.createElement('tr');
+        // Row Label
+        const th = document.createElement('th');
+        th.textContent = labels[i];
+        tr.appendChild(th);
+        
+        row.forEach(val => {
+          const td = document.createElement('td');
+          td.textContent = val.toFixed(2);
+          td.classList.add('text-right');
+          tr.appendChild(td);
+        });
+        covarianceTableBody.appendChild(tr);
+      });
+    }
 
   } catch (error) {
     console.error('Error processing image:', error);

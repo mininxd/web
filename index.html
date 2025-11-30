@@ -45,9 +45,9 @@
             </div>
 
             <!-- Results Section -->
-            <div id="result_section" class="hidden card bg-base-100 shadow-xl">
+            <div class="card bg-base-100 shadow-xl">
               <div class="card-body">
-                <h2 class="card-title text-2xl">Results</h2>
+                <h2 class="card-title text-2xl">Result</h2>
                 <div id="loadingIndicator" class="hidden flex justify-center items-center py-8">
                   <span class="loading loading-spinner loading-lg"></span>
                   <span class="ml-2">Processing image...</span>
@@ -91,7 +91,24 @@
                   </div>
 
                   <div class="mt-4">
-                    <h3 class="font-medium mb-2">Gradient Map Visualization</h3>
+                    <h3 class="font-medium mb-2">Covariance Matrix</h3>
+                    <div class="overflow-x-auto">
+                      <table class="table table-xs w-full" id="covarianceTable">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th class="text-center">Gx</th>
+                            <th class="text-center">Gy</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- Populated via JS -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="mt-4">
                     <div class="flex justify-center">
                       <img id="resultImg" class="max-h-64 object-contain rounded-lg border" alt="Result" />
                     </div>

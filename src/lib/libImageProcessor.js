@@ -169,16 +169,32 @@ export async function computeAndVisualize(img, originalFormat = 'png', gradientM
 
     const base64 = finalCanvas.toDataURL(mimeType);
 
+    // Generate Covariance Matrix HTML
+    const covMatrix = [
+        [sumGx2 / validPixels, sumGxGy / validPixels],
+        [sumGxGy / validPixels, sumGy2 / validPixels]
+    ];
+
+    const labels = ['Gx', 'Gy'];
+    let covarianceMatrixHTML = '';
+    
+    covMatrix.forEach((row, i) => {
+        let rowHTML = `<tr><th>${labels[i]}</th>`;
+        row.forEach(val => {
+            rowHTML += `<td class="text-right">${val.toFixed(2)}</td>`;
+        });
+        rowHTML += '</tr>';
+        covarianceMatrixHTML += rowHTML;
+    });
+
     return {
         stats: {
             width,
             height,
             N: validPixels,
 
-            covarianceMatrix: [
-                [sumGx2 / validPixels, sumGxGy / validPixels],
-                [sumGxGy / validPixels, sumGy2 / validPixels]
-            ],
+            covarianceMatrix: covMatrix,
+            covarianceMatrixHTML,
 
             gradientMatrixSampled: limitedM,
             gradientGridSize: [resizedWidth, resizedHeight],
