@@ -121,7 +121,7 @@ export class FileTransferApp {
     this.currentFileIndex = 0;
     
     // Generate a unique ID for this sender
-    this.transferId = 'sender_' + Math.random().toString(36).substr(2, 9);
+    this.transferId = Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
     this.senderIdInput.value = this.transferId;
 
     // Generate QR code for the connection ID
