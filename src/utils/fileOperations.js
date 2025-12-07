@@ -61,6 +61,22 @@ export class FileOperations {
     URL.revokeObjectURL(link.href);
   }
 
+  static async downloadMultipleFilesAsZip(filesMap) {
+    const zip = new JSZip();
+
+    // Add each file to the zip
+    Object.keys(filesMap).forEach(fileName => {
+      const fileData = filesMap[fileName];
+      zip.file(fileName, fileData.blob);
+    });
+
+    // Generate the zip file
+    const content = await zip.generateAsync({ type: 'blob' });
+
+    // Download the zip file
+    this.downloadFile(content, 'received_files.zip');
+  }
+
   static downloadMultipleFiles(filesMap) {
     Object.keys(filesMap).forEach(fileName => {
       const fileData = filesMap[fileName];

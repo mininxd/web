@@ -34,11 +34,14 @@ export class ReceiverMode {
   }
 
   connect() {
-    const id = this.receiverInput.value.trim();
+    let id = this.receiverInput.value.trim();
     if (!id) {
-      alert('Please enter a sender ID');
+      console.log('Please enter a sender ID');
       return;
     }
+
+    // Convert to uppercase to match sender IDs
+    id = id.toUpperCase();
 
     this.connectionStatus.textContent = 'Connecting to sender...';
 
@@ -87,18 +90,39 @@ export class ReceiverMode {
           totalExpectedBytes = data.size;
           receivedBytes = 0;
 
+          const sanitizedId = `received-${data.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
           const fileItem = DOMUtils.createElement('div', 'py-2 border-b border-gray-200 last:border-0');
-          fileItem.id = `received-${data.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
+          fileItem.id = sanitizedId;
           fileItem.innerHTML = `
-            <div class="flex justify-between">
-              <span class="font-medium">${data.name}</span>
-              <span class="text-sm">${FileOperations.formatFileSize(data.size)}</span>
-            </div>
-            <div class="w-full bg-gray-200 rounded-full h-1.5 mt-1">
-              <div class="file-progress bg-blue-600 h-1.5 rounded-full" style="width: 0%"></div>
+            <div class="flex justify-between items-center">
+              <div class="flex-1">
+                <span class="font-medium">${data.name}</span>
+                <div class="text-sm text-gray-500">${FileOperations.formatFileSize(data.size)}</div>
+              </div>
+              <div class="flex items-center space-x-2">
+                <div class="w-full bg-gray-200 rounded-full h-1.5 mt-1 w-32">
+                  <div class="file-progress bg-blue-600 h-1.5 rounded-full" style="width: 0%"></div>
+                </div>
+                <button class="download-btn btn btn-xs btn-outline hidden" data-filename="${data.name}">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                  </svg>
+                </button>
+              </div>
             </div>
           `;
           this.receivedFilesList.appendChild(fileItem);
+
+          // Add event listener for individual download button
+          const downloadBtn = fileItem.querySelector('.download-btn');
+          downloadBtn.addEventListener('click', () => {
+            const fileName = downloadBtn.getAttribute('data-filename');
+            const fileData = this.receivedFiles[fileName];
+            if (fileData) {
+              FileOperations.downloadFile(fileData.blob, fileName);
+              console.log('Downloaded file:', fileName);
+            }
+          });
         } else if (data.type === 'file_chunk') {
           if (currentFileMetadata) {
             currentFileMetadata.data.push(data.data);
@@ -133,6 +157,12 @@ export class ReceiverMode {
               if (progressBar) {
                 progressBar.style.width = '100%';
               }
+
+              // Show the download button for this file
+              const downloadBtn = fileItem.querySelector('.download-btn');
+              if (downloadBtn) {
+                downloadBtn.classList.remove('hidden');
+              }
             }
 
             currentFileMetadata = null;
@@ -144,6 +174,7 @@ export class ReceiverMode {
     conn.on('close', () => {
       this.connectionStatus.textContent = 'Transfer completed.';
       this.downloadAllReceivedBtn.classList.remove('hidden');
+      console.log('Transfer completed. All files received.');
     });
 
     conn.on('error', (err) => {
@@ -221,18 +252,56 @@ export class ReceiverMode {
     } catch (err) {
       console.error('Camera error:', err);
       cleanup();
-      alert('Unable to access camera. Please check permissions or enter the ID manually.');
+      console.log('Unable to access camera. Please check permissions or enter the ID manually.');
     }
   }
 
-  downloadAllFiles() {
+  async downloadAllFiles() {
     if (Object.keys(this.receivedFiles).length === 0) {
-      alert('No files received yet.');
+      console.log('No files received yet.');
       return;
     }
 
-    FileOperations.downloadMultipleFiles(this.receivedFiles);
-    alert('Files downloaded successfully!');
+    // Show a modal to let user choose between zip and individual downloads
+    this.showDownloadOptions();
+  }
+
+  showDownloadOptions() {
+    // Create and show a modal for download options
+    const modal = DOMUtils.createElement('div', 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50');
+    modal.innerHTML = `
+      <div class="bg-base-100 rounded-lg p-6 max-w-md w-full mx-4">
+        <h3 class="text-xl font-bold mb-4">Download Options</h3>
+        <p class="mb-4">Choose how you want to download your files:</p>
+        <div class="space-y-3">
+          <button id="download-zip-btn" class="btn btn-primary w-full">Download as ZIP Archive</button>
+          <button id="download-individual-btn" class="btn btn-secondary w-full">Download Individual Files</button>
+          <button id="cancel-download-btn" class="btn btn-ghost w-full">Cancel</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Add event listeners
+    const downloadZipBtn = modal.querySelector('#download-zip-btn');
+    const downloadIndividualBtn = modal.querySelector('#download-individual-btn');
+    const cancelBtn = modal.querySelector('#cancel-download-btn');
+
+    downloadZipBtn.addEventListener('click', async () => {
+      await FileOperations.downloadMultipleFilesAsZip(this.receivedFiles);
+      console.log('Files downloaded as a zip archive successfully!');
+      document.body.removeChild(modal);
+    });
+
+    downloadIndividualBtn.addEventListener('click', () => {
+      FileOperations.downloadMultipleFiles(this.receivedFiles);
+      console.log('Files downloaded individually successfully!');
+      document.body.removeChild(modal);
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      document.body.removeChild(modal);
+    });
   }
 
   show() {

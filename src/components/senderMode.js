@@ -69,7 +69,7 @@ export class SenderMode {
 
   startTransfer() {
     if (this.selectedFiles.length === 0) {
-      alert('Please select at least one file to send');
+      console.log('Please select at least one file to send');
       return;
     }
 
@@ -77,7 +77,7 @@ export class SenderMode {
     this.sentBytes = 0;
     this.currentFileIndex = 0;
 
-    this.transferId = Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
+    this.transferId = Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0').toUpperCase();
     this.senderIdInput.value = this.transferId;
 
     QRCodeGenerator.createQRCode(this.qrcodeContainer, this.transferId);
@@ -104,7 +104,7 @@ export class SenderMode {
       },
       (err) => {
         this.statusText.textContent = 'Connection error: ' + err.type;
-        alert('PeerJS Error: ' + err.type);
+        console.log('PeerJS Error: ' + err.type);
       }
     );
   }
@@ -124,7 +124,7 @@ export class SenderMode {
 
   async sendNextFile() {
     if (this.currentFileIndex >= this.selectedFiles.length) {
-      alert('File transfer completed!');
+      console.log('File transfer completed!');
       return;
     }
 
@@ -154,8 +154,9 @@ export class SenderMode {
 
   copySenderId() {
     this.senderIdInput.select();
+    this.senderIdInput.setSelectionRange(0, 99999); // For mobile devices
     document.execCommand('copy');
-    alert('Connection ID copied to clipboard!');
+    console.log('Connection ID copied to clipboard!');
   }
 
   show() {
