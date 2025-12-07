@@ -68,7 +68,7 @@ export class FileTransferApp {
     if (this.createOfferBtn) this.createOfferBtn.addEventListener('click', this.createWebRtcOffer.bind(this));
     if (this.newTransferBtn) this.newTransferBtn.addEventListener('click', this.resetApp.bind(this));
 
-    if (this.connectBtn) this.connectBtn.addEventListener('click', this.connectToSender.bind(this));
+    if (this.connectBtn) this.connectBtn.addEventListener('click', () => this.connectToSender());
     if (this.scanQrBtn) this.scanQrBtn.addEventListener('click', this.scanQRCode.bind(this));
     if (this.downloadAllReceivedBtn) this.downloadAllReceivedBtn.addEventListener('click', this.downloadAllReceivedFiles.bind(this));
   }
@@ -408,12 +408,76 @@ export class FileTransferApp {
     });
   }
 
-  scanQRCode() {
-    // Simulated QR scanner - in a real app, this would use a camera
-    const qrCodeContent = prompt('Enter the text from the QR code (sender ID):');
-    if (qrCodeContent) {
-      this.receiverInput.value = qrCodeContent.trim();
-      this.connectToSender(qrCodeContent.trim());
+  async scanQRCode() {
+    const modal = DOMUtils.createElement('div', 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50');
+    modal.innerHTML = `
+      <div class="bg-base-100 rounded-lg p-6 max-w-lg w-full mx-4">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold">Scan QR Code</h3>
+          <button id="close-scanner" class="btn btn-sm btn-circle">✕</button>
+        </div>
+        <div class="relative">
+          <video id="qr-video" class="w-full rounded-lg bg-black" autoplay playsinline></video>
+          <canvas id="qr-canvas" class="hidden"></canvas>
+        </div>
+        <p class="text-center mt-4 text-sm">Position the QR code within the camera view</p>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    const video = modal.querySelector('#qr-video');
+    const canvas = modal.querySelector('#qr-canvas');
+    const context = canvas.getContext('2d');
+    const closeBtn = modal.querySelector('#close-scanner');
+
+    let stream = null;
+    let scanning = true;
+
+    const cleanup = () => {
+      scanning = false;
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+      document.body.removeChild(modal);
+    };
+
+    closeBtn.addEventListener('click', cleanup);
+
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' }
+      });
+      video.srcObject = stream;
+
+      const scanFrame = () => {
+        if (!scanning) return;
+
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+          const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+          if (code) {
+            cleanup();
+            this.receiverInput.value = code.data.trim();
+            this.connectToSender();
+            return;
+          }
+        }
+
+        requestAnimationFrame(scanFrame);
+      };
+
+      video.addEventListener('loadedmetadata', () => {
+        scanFrame();
+      });
+    } catch (err) {
+      console.error('Camera error:', err);
+      cleanup();
+      alert('Unable to access camera. Please check permissions or enter the ID manually.');
     }
   }
 
@@ -459,7 +523,7 @@ export class FileTransferApp {
     this.receptionSection.classList.add('hidden');
     this.receivedFilesList.innerHTML = '';
     this.downloadAllReceivedBtn.classList.add('hidden');
-    this.connectionStatus.textContent = 'Waiting for connection...';
+    this.connectionStatus.textContent = '';
 
     // Clean up Peer connection
     if (this.peer) {
