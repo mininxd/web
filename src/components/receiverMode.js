@@ -262,46 +262,12 @@ export class ReceiverMode {
       return;
     }
 
-    // Show a modal to let user choose between zip and individual downloads
-    this.showDownloadOptions();
-  }
-
-  showDownloadOptions() {
-    // Create and show a modal for download options
-    const modal = DOMUtils.createElement('div', 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50');
-    modal.innerHTML = `
-      <div class="bg-base-100 rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 class="text-xl font-bold mb-4">Download Options</h3>
-        <p class="mb-4">Choose how you want to download your files:</p>
-        <div class="space-y-3">
-          <button id="download-zip-btn" class="btn btn-primary w-full">Download as ZIP Archive</button>
-          <button id="download-individual-btn" class="btn btn-secondary w-full">Download Individual Files</button>
-          <button id="cancel-download-btn" class="btn btn-ghost w-full">Cancel</button>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(modal);
-
-    // Add event listeners
-    const downloadZipBtn = modal.querySelector('#download-zip-btn');
-    const downloadIndividualBtn = modal.querySelector('#download-individual-btn');
-    const cancelBtn = modal.querySelector('#cancel-download-btn');
-
-    downloadZipBtn.addEventListener('click', async () => {
+    try {
       await FileOperations.downloadMultipleFilesAsZip(this.receivedFiles);
       console.log('Files downloaded as a zip archive successfully!');
-      document.body.removeChild(modal);
-    });
-
-    downloadIndividualBtn.addEventListener('click', () => {
-      FileOperations.downloadMultipleFiles(this.receivedFiles);
-      console.log('Files downloaded individually successfully!');
-      document.body.removeChild(modal);
-    });
-
-    cancelBtn.addEventListener('click', () => {
-      document.body.removeChild(modal);
-    });
+    } catch (error) {
+      console.error('Error downloading files as zip:', error);
+    }
   }
 
   show() {
