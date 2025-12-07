@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Additional custom styles can go here */
+
+/* Custom styles for file transfer app */
+.file-progress {
+  transition: width 0.3s ease;
+}
+
+.qr-code-container {
+  padding: 1rem;
+  background: white;
+  border-radius: 0.5rem;
+}

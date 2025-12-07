@@ -1,23 +1,21 @@
 {
-  "name": "a",
+  "name": "file-transfer-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "~5.9.3",
-    "vite": "^7.2.4"
+    "serve": "^14.2.4",
+    "typescript": "~5.9.3"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
-    "axios": "^1.13.2",
     "daisyui": "^5.5.5",
-    "gsap": "^3.13.0",
-    "remixicon": "^4.7.0",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.17",
+    "vite": "^7.2.6"
   }
 }
