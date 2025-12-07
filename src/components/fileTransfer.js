@@ -1,6 +1,5 @@
 // src/components/fileTransfer.js
 import { DOMUtils } from '../utils/dom.js';
-import { WebRTCConnection } from '../webrtc/connection.js';
 import { QRCodeGenerator } from '../utils/qrcode.js';
 
 export class FileTransferApp {
@@ -10,8 +9,8 @@ export class FileTransferApp {
     this.totalFilesSize = 0;
     this.sentBytes = 0;
     this.currentFileIndex = 0;
-    this.peerConnection = null;
-    this.dataChannel = null;
+    this.peer = null;
+    this.conn = null;
     
     this.initializeElements();
     this.bindEvents();
@@ -130,6 +129,53 @@ export class FileTransferApp {
     // Show connection section
     DOMUtils.getElement('#file-upload-section').classList.add('hidden');
     this.connectionSection.classList.remove('hidden');
+
+    // Hide create offer button since we're using PeerJS
+    if (this.createOfferBtn) {
+        this.createOfferBtn.classList.add('hidden');
+    }
+
+    // Initialize Peer immediately
+    this.initializeSenderPeer();
+  }
+
+  initializeSenderPeer() {
+      // Use a fixed prefix + the 6 digit code for the Peer ID
+      const peerId = `file-transfer-app-${this.transferId}`;
+      this.peer = new Peer(peerId);
+
+      this.peer.on('open', (id) => {
+          console.log('My peer ID is: ' + id);
+          this.statusText.textContent = 'Waiting for receiver to connect...';
+      });
+
+      this.peer.on('connection', (conn) => {
+          this.conn = conn;
+          this.statusText.textContent = 'Receiver connected!';
+          this.setupSenderConnection(conn);
+      });
+
+      this.peer.on('error', (err) => {
+          console.error('Peer error:', err);
+          this.statusText.textContent = 'Connection error: ' + err.type;
+          alert('PeerJS Error: ' + err.type);
+      });
+  }
+
+  setupSenderConnection(conn) {
+      conn.on('open', () => {
+          this.statusText.textContent = 'Connected! Sending files...';
+
+          // Switch to progress view if not already there
+           this.connectionSection.classList.add('hidden');
+           this.progressSection.classList.remove('hidden');
+
+          this.sendNextFile();
+      });
+
+      conn.on('close', () => {
+         this.statusText.textContent = 'Connection closed.';
+      });
   }
 
   copySenderId() {
@@ -138,74 +184,22 @@ export class FileTransferApp {
     alert('Connection ID copied to clipboard!');
   }
 
+  // Deprecated but kept for UI binding compatibility, redirects to PeerJS logic if needed
   async createWebRtcOffer() {
-    const webrtc = new WebRTCConnection();
-
-    try {
-      // Create the connection first
-      webrtc.createConnection();
-
-      // Then create data channel
-      const dataChannel = webrtc.createDataChannel('fileTransfer', { ordered: true });
-      this.setupDataChannel(dataChannel);
-
-      // Store the connections
-      this.peerConnection = webrtc.getPeerConnection();
-      this.dataChannel = webrtc.getDataChannel();
-
-      // Create offer
-      const offer = await webrtc.createOffer();
-
-      // Prepare connection info to share
-      const connectionInfo = {
-        offer: this.peerConnection.localDescription,
-        senderId: this.transferId,
-        fileInfo: this.selectedFiles.map(file => ({
-          name: file.name,
-          size: file.size,
-          type: file.type
-        }))
-      };
-
-      // Store in localStorage for receiver to access
-      localStorage.setItem(`connection_${this.transferId}`, JSON.stringify(connectionInfo));
-
-      // Show progress section and start waiting for connection
+      // With PeerJS, we don't need manual offer creation. The peer is initialized in startFileTransfer.
+      // We can just show the progress section and wait.
       this.connectionSection.classList.add('hidden');
       this.progressSection.classList.remove('hidden');
-
-      // Update status
-      this.statusText.textContent = 'Connection created! Waiting for receiver to connect...';
-    } catch (err) {
-      console.error('Error creating offer:', err);
-      alert('Error creating connection offer. Check console for details.');
-    }
-  }
-
-  setupDataChannel(channel) {
-    channel.onopen = () => {
-      this.statusText.textContent = 'Connected! Sending files...';
-      this.sendNextFile();
-    };
-
-    channel.onclose = () => {
-      this.statusText.textContent = 'Connection closed.';
-      setTimeout(() => {
-        alert('File transfer completed!');
-      }, 500);
-    };
-
-    channel.onerror = (err) => {
-      console.error('Data channel error:', err);
-      this.statusText.textContent = 'Error occurred during transfer.';
-    };
   }
 
   sendNextFile() {
     if (this.currentFileIndex >= this.selectedFiles.length) {
       // All files sent
-      if (this.dataChannel) {
-        this.dataChannel.close();
+      if (this.conn) {
+        // Keep connection open for a bit
+        setTimeout(() => {
+            alert('File transfer completed!');
+        }, 500);
       }
       return;
     }
@@ -216,12 +210,12 @@ export class FileTransferApp {
     const reader = new FileReader();
     reader.onload = (event) => {
       // Send file metadata
-      this.dataChannel.send(JSON.stringify({
+      this.conn.send({
         type: 'file_metadata',
         name: file.name,
         size: file.size,
-        type: file.type
-      }));
+        fileType: file.type
+      });
 
       // Send actual file content in chunks
       const chunkSize = 16384; // 16KB chunks
@@ -231,19 +225,24 @@ export class FileTransferApp {
       const sendChunk = () => {
         if (offset < content.byteLength) {
           const chunk = content.slice(offset, offset + chunkSize);
-          this.dataChannel.send(chunk);
+          this.conn.send({
+              type: 'file_chunk',
+              data: chunk
+          });
           offset += chunkSize;
 
           // Update progress
           this.sentBytes += chunk.byteLength;
-          const progress = Math.round((this.sentBytes / this.totalFilesSize) * 100);
+          // Guard against overflow if file size changed or logic error
+          const safeSentBytes = Math.min(this.sentBytes, this.totalFilesSize);
+          const progress = Math.round((safeSentBytes / this.totalFilesSize) * 100);
           this.transferProgress.value = progress;
           this.progressPercent.textContent = `${progress}%`;
 
           setTimeout(sendChunk, 0); // Yield to browser
         } else {
           // File completed, send delimiter
-          this.dataChannel.send(JSON.stringify({ type: 'file_end', name: file.name }));
+          this.conn.send({ type: 'file_end', name: file.name });
           this.currentFileIndex++;
           setTimeout(() => this.sendNextFile(), 100); // Small delay before next file
         }
@@ -264,159 +263,149 @@ export class FileTransferApp {
 
     this.connectionStatus.textContent = 'Connecting to sender...';
 
-    // Try to get connection info from localStorage (simulating signaling server)
-    const connectionInfoStr = localStorage.getItem(`connection_${id}`);
-    if (!connectionInfoStr) {
-      this.connectionStatus.textContent = 'Connection not found or expired';
-      return;
+    // Initialize Receiver Peer (random ID is fine)
+    if (this.peer) {
+        this.peer.destroy();
     }
 
-    const connectionInfo = JSON.parse(connectionInfoStr);
-    if (!connectionInfo.offer) {
-      this.connectionStatus.textContent = 'Invalid connection information';
-      return;
-    }
+    this.peer = new Peer(); // Auto-generate ID for receiver
 
-    // Initialize WebRTC connection
-    const webrtc = new WebRTCConnection();
-    this.peerConnection = webrtc.getPeerConnection();
+    this.peer.on('open', () => {
+        const connId = `file-transfer-app-${id}`;
+        console.log(`Connecting to ${connId}...`);
 
-    // Setup data channel event handlers
-    this.peerConnection.ondatachannel = (event) => {
-      this.setupReceiverDataChannel(event.channel);
-    };
+        const conn = this.peer.connect(connId);
+        this.conn = conn;
 
-    try {
-      // Set remote description
-      webrtc.createAnswer(connectionInfo.offer)
-        .then(() => {
-          this.connectionStatus.textContent = 'Connected! Receiving files...';
+        conn.on('open', () => {
+            console.log("Connected to sender");
+            this.connectionStatus.textContent = 'Connected! Receiving files...';
+             // Show reception section after a delay
+            setTimeout(() => {
+                this.receiverConnectionSection.classList.add('hidden');
+                this.receptionSection.classList.remove('hidden');
 
-          // Show reception section after a delay
-          setTimeout(() => {
-            this.receiverConnectionSection.classList.add('hidden');
-            this.receptionSection.classList.remove('hidden');
-
-            // Initialize progress
-            this.receptionProgress.value = 0;
-            this.receptionProgressPercent.textContent = '0%';
-          }, 1000);
-        })
-        .catch(err => {
-          console.error('Error connecting:', err);
-          this.connectionStatus.textContent = 'Connection error';
+                // Initialize progress
+                this.receptionProgress.value = 0;
+                this.receptionProgressPercent.textContent = '0%';
+            }, 1000);
         });
-    } catch (err) {
-      console.error('Error connecting:', err);
-      this.connectionStatus.textContent = 'Connection error';
-    }
+
+        this.setupReceiverDataConnection(conn);
+
+        conn.on('error', (err) => {
+            console.error("Connection error:", err);
+            this.connectionStatus.textContent = 'Connection failed. Check ID.';
+        });
+    });
+
+    this.peer.on('error', (err) => {
+        console.error('Peer error:', err);
+        this.connectionStatus.textContent = 'Connection error: ' + err.type;
+    });
   }
 
-  setupReceiverDataChannel(channel) {
+  setupReceiverDataConnection(conn) {
     let currentFileBuffer = [];
     let currentFileMetadata = null;
     let receivedBytes = 0;
     let totalExpectedBytes = 0;
     const receivedFiles = {}; // Store received file blobs by name
 
-    channel.onopen = () => {
-      this.connectionStatus.textContent = 'Connected! Receiving files...';
-    };
+    conn.on('data', (data) => {
+        // Check if data is an object (metadata/control) or chunk
+        // PeerJS sends objects as JSON automatically if you send objects.
+        // We structured our send to always be objects with 'type'
 
-    channel.onmessage = (event) => {
-      if (typeof event.data === 'string') {
-        // It's metadata or control message
-        const message = JSON.parse(event.data);
+        if (data && data.type) {
+            if (data.type === 'file_metadata') {
+                // Start receiving a new file
+                currentFileMetadata = {
+                    name: data.name,
+                    size: data.size,
+                    type: data.fileType,
+                    data: []
+                };
+                totalExpectedBytes = data.size;
+                receivedBytes = 0;
 
-        if (message.type === 'file_metadata') {
-          // Start receiving a new file
-          currentFileMetadata = {
-            name: message.name,
-            size: message.size,
-            type: message.type,
-            data: []
-          };
-          totalExpectedBytes = message.size;
-          receivedBytes = 0;
+                // Add to received files list
+                const fileItem = DOMUtils.createElement('div', 'py-2 border-b border-gray-200 last:border-0');
+                fileItem.id = `received-${data.name.replace(/[^a-zA-Z0-9]/g, '_')}`; // Sanitize ID
+                fileItem.innerHTML = `
+                    <div class="flex justify-between">
+                    <span class="font-medium">${data.name}</span>
+                    <span class="text-sm">${DOMUtils.formatFileSize(data.size)}</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                    <div class="file-progress bg-blue-600 h-1.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                `;
+                this.receivedFilesList.appendChild(fileItem);
 
-          // Add to received files list
-          const fileItem = DOMUtils.createElement('div', 'py-2 border-b border-gray-200 last:border-0');
-          fileItem.id = `received-${message.name}`;
-          fileItem.innerHTML = `
-            <div class="flex justify-between">
-              <span class="font-medium">${message.name}</span>
-              <span class="text-sm">${DOMUtils.formatFileSize(message.size)}</span>
-            </div>
-            <div class="w-full bg-gray-200 rounded-full h-1.5 mt-1">
-              <div class="file-progress bg-blue-600 h-1.5 rounded-full" style="width: 0%"></div>
-            </div>
-          `;
-          this.receivedFilesList.appendChild(fileItem);
-        } else if (message.type === 'file_end') {
-          // File reception completed
-          if (currentFileMetadata) {
-            // Create file from accumulated data
-            const fileBlob = new Blob(currentFileMetadata.data);
+            } else if (data.type === 'file_chunk') {
+                 if (currentFileMetadata) {
+                    currentFileMetadata.data.push(data.data);
 
-            // Store the blob for later download
-            receivedFiles[currentFileMetadata.name] = {
-              blob: fileBlob,
-              size: currentFileMetadata.size,
-              type: currentFileMetadata.type
-            };
+                    // Update progress
+                    receivedBytes += data.data.byteLength;
+                    const progress = totalExpectedBytes > 0 ? Math.round((receivedBytes / totalExpectedBytes) * 100) : 0;
 
-            // Update progress for this file to 100%
-            const fileItem = DOMUtils.getElement(`#received-${currentFileMetadata.name}`);
-            if (fileItem) {
-              const progressBar = fileItem.querySelector('.file-progress');
-              if (progressBar) {
-                progressBar.style.width = '100%';
-              }
+                    // Update overall progress (simplified for single file per visual, but works generally)
+                    this.receptionProgress.value = progress;
+                    this.receptionProgressPercent.textContent = `${progress}%`;
+
+                    // Update file-specific progress
+                    const sanitizedId = `received-${currentFileMetadata.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
+                    const fileItem = document.getElementById(sanitizedId);
+                    if (fileItem) {
+                        const progressBar = fileItem.querySelector('.file-progress');
+                        if (progressBar) {
+                        progressBar.style.width = `${progress}%`;
+                        }
+                    }
+                }
+            } else if (data.type === 'file_end') {
+                // File reception completed
+                if (currentFileMetadata) {
+                    // Create file from accumulated data
+                    const fileBlob = new Blob(currentFileMetadata.data);
+
+                    // Store the blob for later download
+                    receivedFiles[currentFileMetadata.name] = {
+                        blob: fileBlob,
+                        size: currentFileMetadata.size,
+                        type: currentFileMetadata.type
+                    };
+
+                    // Finalize UI for this file
+                    const sanitizedId = `received-${currentFileMetadata.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
+                    const fileItem = document.getElementById(sanitizedId);
+                    if (fileItem) {
+                        const progressBar = fileItem.querySelector('.file-progress');
+                        if (progressBar) {
+                            progressBar.style.width = '100%';
+                        }
+                    }
+
+                    currentFileMetadata = null;
+                }
             }
-
-            currentFileMetadata = null;
-            currentFileBuffer = [];
-          }
         }
-      } else {
-        // It's binary data
-        const chunk = event.data;
-        if (currentFileMetadata) {
-          currentFileMetadata.data.push(chunk);
+    });
 
-          // Update progress
-          receivedBytes += chunk.byteLength;
-          const progress = Math.round((receivedBytes / totalExpectedBytes) * 100);
-
-          // Update overall progress
-          const overallProgress = Math.round((receivedBytes / totalExpectedBytes) * 100);
-          this.receptionProgress.value = overallProgress;
-          this.receptionProgressPercent.textContent = `${overallProgress}%`;
-
-          // Update file-specific progress
-          const fileItem = DOMUtils.getElement(`#received-${currentFileMetadata.name}`);
-          if (fileItem) {
-            const progressBar = fileItem.querySelector('.file-progress');
-            if (progressBar) {
-              progressBar.style.width = `${progress}%`;
-            }
-          }
-        }
-      }
-    };
-
-    channel.onclose = () => {
+    conn.on('close', () => {
       this.connectionStatus.textContent = 'Transfer completed.';
       this.downloadAllReceivedBtn.classList.remove('hidden');
 
       // Store received files for later access
       window.receivedFiles = receivedFiles;
-    };
+    });
 
-    channel.onerror = (err) => {
-      console.error('Data channel error:', err);
+    conn.on('error', (err) => {
+      console.error('Data connection error:', err);
       this.connectionStatus.textContent = 'Error occurred during transfer.';
-    };
+    });
   }
 
   scanQRCode() {
@@ -470,29 +459,25 @@ export class FileTransferApp {
     this.receptionSection.classList.add('hidden');
     this.receivedFilesList.innerHTML = '';
     this.downloadAllReceivedBtn.classList.add('hidden');
+    this.connectionStatus.textContent = 'Waiting for connection...';
 
-    // Clean up WebRTC connections if they exist
-    if (this.peerConnection) {
-      this.peerConnection.close();
-      this.peerConnection = null;
+    // Clean up Peer connection
+    if (this.peer) {
+        this.peer.destroy();
+        this.peer = null;
     }
-    if (this.dataChannel) {
-      this.dataChannel.close();
-      this.dataChannel = null;
-    }
+    this.conn = null;
   }
 
   init() {
-    // Check URL for receiver mode
-    const path = window.location.pathname;
-    if (path.startsWith('/connect/')) {
-      // Extract sender ID from URL
-      const pathParts = path.split('/');
-      if (pathParts.length >= 3 && pathParts[2]) {
-        const senderId = pathParts[2];
+    // Check URL parameters for receiver mode
+    const urlParams = new URLSearchParams(window.location.search);
+    const senderId = urlParams.get('connect');
+
+    if (senderId) {
         this.receiverInput.value = senderId;
 
-        // Switch to receiver mode and connect
+        // Switch to receiver mode
         this.modeSelector.classList.add('hidden');
         this.senderApp.classList.add('hidden');
         this.receiverApp.classList.remove('hidden');
@@ -501,7 +486,6 @@ export class FileTransferApp {
         setTimeout(() => {
           this.connectToSender(senderId);
         }, 1000);
-      }
     }
   }
 }
