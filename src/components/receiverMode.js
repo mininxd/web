@@ -77,6 +77,9 @@ export class ReceiverMode {
     let currentFileMetadata = null;
     let receivedBytes = 0;
     let totalExpectedBytes = 0;
+    let totalBytesReceived = 0; // Track total bytes received across all files
+    let totalBytesExpected = 0; // Track total bytes expected across all files
+    let completedFilesSize = 0; // Track size of completed files
 
     conn.on('data', (data) => {
       if (data && data.type) {
@@ -90,13 +93,16 @@ export class ReceiverMode {
           totalExpectedBytes = data.size;
           receivedBytes = 0;
 
+          // Add this file's size to the total expected bytes
+          totalBytesExpected += data.size;
+
           const sanitizedId = `received-${data.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
           const fileItem = DOMUtils.createElement('div', 'py-2 border-b border-gray-200 last:border-0');
           fileItem.id = sanitizedId;
           fileItem.innerHTML = `
             <div class="flex justify-between items-center">
-              <div class="flex-1">
-                <span class="font-medium">${data.name}</span>
+              <div class="flex-1 truncate mr-2">
+                <span class="font-medium truncate max-w-xs">${data.name}</span>
                 <div class="text-sm text-gray-500">${FileOperations.formatFileSize(data.size)}</div>
               </div>
               <div class="flex items-center space-x-2">
@@ -129,9 +135,7 @@ export class ReceiverMode {
             receivedBytes += data.data.byteLength;
             const progress = totalExpectedBytes > 0 ? Math.round((receivedBytes / totalExpectedBytes) * 100) : 0;
 
-            this.receptionProgress.value = progress;
-            this.receptionProgressPercent.textContent = `${progress}%`;
-
+            // Update the individual file progress
             const sanitizedId = `received-${currentFileMetadata.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
             const fileItem = document.getElementById(sanitizedId);
             if (fileItem) {
@@ -140,6 +144,15 @@ export class ReceiverMode {
                 progressBar.style.width = `${progress}%`;
               }
             }
+
+            // Calculate total bytes received = completed files + current file bytes received
+            const totalBytesNow = completedFilesSize + receivedBytes;
+            const globalProgress = totalBytesExpected > 0 ? Math.round((totalBytesNow / totalBytesExpected) * 100) : 0;
+            // Ensure progress doesn't exceed 100%
+            const safeGlobalProgress = Math.min(globalProgress, 100);
+
+            this.receptionProgress.value = safeGlobalProgress;
+            this.receptionProgressPercent.textContent = `${safeGlobalProgress}%`;
           }
         } else if (data.type === 'file_end') {
           if (currentFileMetadata) {
@@ -165,6 +178,19 @@ export class ReceiverMode {
               }
             }
 
+            // Move to next file: add current file size to completed files and reset
+            completedFilesSize += currentFileMetadata.size;
+            // Update the overall progress after file completion
+            const globalProgress = totalBytesExpected > 0 ? Math.round((completedFilesSize / totalBytesExpected) * 100) : 0;
+            // Ensure progress doesn't exceed 100%
+            const safeGlobalProgress = Math.min(globalProgress, 100);
+
+            this.receptionProgress.value = safeGlobalProgress;
+            this.receptionProgressPercent.textContent = `${safeGlobalProgress}%`;
+
+            // Show the "Download All" button since we now have received files
+            this.downloadAllReceivedBtn.classList.remove('hidden');
+
             currentFileMetadata = null;
           }
         }
@@ -173,7 +199,13 @@ export class ReceiverMode {
 
     conn.on('close', () => {
       this.connectionStatus.textContent = 'Transfer completed.';
-      this.downloadAllReceivedBtn.classList.remove('hidden');
+      // Ensure progress shows 100% when all files are received
+      this.receptionProgress.value = 100;
+      this.receptionProgressPercent.textContent = '100%';
+      // Ensure the download all button remains visible if there are files received
+      if (Object.keys(this.receivedFiles).length > 0) {
+        this.downloadAllReceivedBtn.classList.remove('hidden');
+      }
       console.log('Transfer completed. All files received.');
     });
 
@@ -189,7 +221,7 @@ export class ReceiverMode {
       <div class="bg-base-100 rounded-lg p-6 max-w-lg w-full mx-4">
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-xl font-bold">Scan QR Code</h3>
-          <button id="close-scanner" class="btn btn-sm btn-circle">✕</button>
+          <button id="close-scanner" class="btn btn-sm btn-outline btn-circle">✕</button>
         </div>
         <div class="relative">
           <video id="qr-video" class="w-full rounded-lg bg-black" autoplay playsinline></video>
@@ -259,6 +291,7 @@ export class ReceiverMode {
   async downloadAllFiles() {
     if (Object.keys(this.receivedFiles).length === 0) {
       console.log('No files received yet.');
+      alert('No files received yet.');
       return;
     }
 

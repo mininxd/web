@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-theme="wireframe">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="src/style.css">
 </head>
 <body class="bg-base-200 min-h-screen">
-    <div id="mode-selector" class="min-h-screen flex flex-col items-center justify-center p-4">
+    <div id="mode-selector" class="pt-[128px] flex flex-col items-center justify-center p-4">
         <div class="card bg-base-100 shadow-xl w-full max-w-md">
             <div class="card-body items-center text-center">
-                <h2 class="card-title text-2xl mb-6">File Transfer Mode</h2>
+                <h2 class="card-title text-2xl mb-6">RTC File Transfer</h2>
                 <div class="flex flex-col gap-4 w-full">
                     <button id="sender-mode-btn" class="btn btn-primary btn-lg">I'm a Sender</button>
                     <button id="receiver-mode-btn" class="btn btn-secondary btn-lg">I'm a Receiver</button>
@@ -25,7 +25,7 @@
                 <a class="btn btn-ghost text-xl">Sender Mode</a>
             </div>
             <div class="flex-none">
-                <button class="btn" id="sender-home-btn">Change Mode</button>
+                <button class="btn btn-outline" id="sender-home-btn">Change Mode</button>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
             <div id="file-upload-section" class="card bg-base-100 shadow-xl mb-6 p-6">
                 <h2 class="text-xl font-bold mb-4">Select Files to Send</h2>
                 <div class="flex flex-col items-center">
-                    <label class="btn btn-accent btn-lg mb-4" for="sender-upload-input">Choose Files</label>
+                    <label class="btn btn-outline btn-lg mb-4" for="sender-upload-input">Choose Files</label>
                     <input type="file" id="sender-upload-input" class="hidden" multiple />
                     <p class="text-sm text-gray-500">Select one or more files to share via WebRTC</p>
                     <div id="selected-files-info" class="mt-4 w-full max-w-md hidden">
@@ -80,7 +80,7 @@
                             <span>Progress</span>
                             <span id="progress-percent">0%</span>
                         </div>
-                        <progress id="transfer-progress" class="progress progress-primary w-full" value="0" max="100"></progress>
+                        <progress id="transfer-progress" class="progress progress-accent w-full" value="0" max="100"></progress>
                         <p id="status-text" class="mt-2 text-center">Connecting...</p>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                 <a class="btn btn-ghost text-xl">Receiver Mode</a>
             </div>
             <div class="flex-none">
-                <button class="btn" id="receiver-home-btn">Change Mode</button>
+                <button class="btn btn-outline" id="receiver-home-btn">Change Mode</button>
             </div>
         </div>
 
@@ -103,7 +103,7 @@
             <div id="receiver-connection-section" class="card bg-base-100 shadow-xl mb-6 p-6">
                 <h2 class="text-xl font-bold mb-4">Connect to Sender</h2>
                 <div class="flex flex-col items-center">
-                    <div class="bg-base-200 p-4 rounded-lg w-full max-w-md">
+                    <div class="p-4 rounded-lg w-full max-w-md">
                         <div class="form-control mb-4">
                             <label class="label">
                                 <span class="label-text">Enter Sender's Connection ID:</span>
@@ -128,7 +128,7 @@
                             <span>Progress</span>
                             <span id="reception-progress-percent">0%</span>
                         </div>
-                        <progress id="reception-progress" class="progress progress-primary w-full" value="0" max="100"></progress>
+                        <progress id="reception-progress" class="progress progress-accent w-full" value="0" max="100"></progress>
                         <div id="received-files-list" class="mt-4 bg-base-200 p-4 rounded-lg max-h-60 overflow-y-auto"></div>
                         <button id="download-all-received-btn" class="btn btn-primary mt-4 w-full hidden">Download All</button>
                     </div>

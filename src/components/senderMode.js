@@ -46,25 +46,57 @@ export class SenderMode {
 
   handleFileSelection(event) {
     if (event && event.target && event.target.files && event.target.files.length > 0) {
-      this.selectedFiles = Array.from(event.target.files);
+      // Add new files to the existing selected files (don't replace them)
+      const newFiles = Array.from(event.target.files);
+      this.selectedFiles = [...this.selectedFiles, ...newFiles];
       this.showSelectedFiles();
       this.selectedFilesInfo.classList.remove('hidden');
     }
+    // Reset the input to allow re-selection of the same file
+    event.target.value = '';
   }
 
   showSelectedFiles() {
     this.selectedFilesList.innerHTML = '';
 
-    this.selectedFiles.forEach((file) => {
-      const li = DOMUtils.createElement('li', 'py-1 border-b border-gray-200 last:border-0');
+    this.selectedFiles.forEach((file, index) => {
+      const li = DOMUtils.createElement('li', 'py-1 border-b border-gray-200 last:border-0 flex justify-between items-center');
       li.innerHTML = `
-        <div class="flex justify-between">
+        <div class="flex-1 truncate mr-2">
           <span class="truncate max-w-xs">${file.name}</span>
-          <span class="text-sm text-gray-500">${FileOperations.formatFileSize(file.size)}</span>
+          <div class="text-sm text-gray-500">${FileOperations.formatFileSize(file.size)}</div>
         </div>
+        <button class="remove-file-btn btn btn-xs btn-outline" data-index="${index}" title="Remove file">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
       `;
       this.selectedFilesList.appendChild(li);
     });
+
+    // Add event listeners to the remove buttons
+    this.selectedFilesList.querySelectorAll('.remove-file-btn').forEach(button => {
+      button.addEventListener('click', (event) => {
+        const index = parseInt(event.currentTarget.getAttribute('data-index'));
+        this.removeFile(index);
+      });
+    });
+  }
+
+  removeFile(index) {
+    if (index >= 0 && index < this.selectedFiles.length) {
+      // Remove the file from the selected files array
+      this.selectedFiles.splice(index, 1);
+
+      // Update the UI to reflect the change
+      this.showSelectedFiles();
+
+      // Hide the selected files info section if no files are left
+      if (this.selectedFiles.length === 0) {
+        this.selectedFilesInfo.classList.add('hidden');
+      }
+    }
   }
 
   startTransfer() {
@@ -125,20 +157,33 @@ export class SenderMode {
   async sendNextFile() {
     if (this.currentFileIndex >= this.selectedFiles.length) {
       console.log('File transfer completed!');
+      // Ensure progress shows 100% when all files are sent
+      this.transferProgress.value = 100;
+      this.progressPercent.textContent = '100%';
+      this.statusText.textContent = 'Transfer completed!';
       return;
     }
 
     const file = this.selectedFiles[this.currentFileIndex];
     this.statusText.textContent = `Sending: ${file.name}`;
 
+    // Calculate the base offset (bytes from previously sent files)
+    let baseOffset = 0;
+    for (let i = 0; i < this.currentFileIndex; i++) {
+      baseOffset += this.selectedFiles[i].size;
+    }
+
     try {
       await FileOperations.sendFileInChunks(
         this.peerManager.conn,
         file,
-        (sentBytes) => {
-          this.sentBytes = sentBytes;
-          const safeSentBytes = Math.min(this.sentBytes, this.totalFilesSize);
-          const progress = Math.round((safeSentBytes / this.totalFilesSize) * 100);
+        (bytesForCurrentFile) => {
+          // Calculate total bytes sent across all files
+          const totalBytesSent = baseOffset + bytesForCurrentFile;
+          // Ensure we don't exceed the total file size
+          const safeTotalBytes = Math.min(totalBytesSent, this.totalFilesSize);
+          const progress = Math.round((safeTotalBytes / this.totalFilesSize) * 100);
+
           this.transferProgress.value = progress;
           this.progressPercent.textContent = `${progress}%`;
         }
