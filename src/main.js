@@ -4,6 +4,9 @@ import 'remixicon/fonts/remixicon.css'
 import axios from "axios";
 import { getDnsStats, getIpInfo, getClientDnsInfo } from "./lib/api";
 import language from "./lib/language.json";
+import gsap from "gsap";
+import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
+gsap.registerPlugin(ScrambleTextPlugin);
 
 async function copyToClipboard(element, text) {
   try {
@@ -34,15 +37,33 @@ let ipAddr = document.querySelectorAll(".ipv4");
 ipAddr.forEach(el => {
   el.innerHTML = ipv4;
 
-  // Add click event to hide/show IP address
+  // Add click event to hide/show IP address with scramble text animation
   el.addEventListener('click', function() {
     if (this.innerHTML === ipv4) {
-      // Hide IP address with x's
-      this.innerHTML = 'xxx.xxx.xxx.xxx';
+      // Scramble to masked IP
+      gsap.to(this, {
+        duration: 1,
+        scrambleText: {
+          text: "xxx.xxx.xxx.xxx",
+          chars: "X0123456789.",
+          revealDelay: 0.1,
+          speed: 0.2,
+          tweenLength: false
+        }
+      });
       this.style.cursor = 'default';
     } else {
-      // Show actual IP address
-      this.innerHTML = ipv4;
+      // Scramble to real IP
+      gsap.to(this, {
+        duration: 1,
+        scrambleText: {
+          text: ipv4,
+          chars: "X0123456789.",
+          revealDelay: 0.1,
+          speed: 0.2,
+          tweenLength: false
+        }
+      });
       this.style.cursor = 'pointer';
     }
   });
