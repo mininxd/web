@@ -26,13 +26,29 @@ async function copyToClipboard(element, text) {
 }
 
 async function main() {
-const ipEndpoint = import.meta.env.VITE_IP_ENDPOINT || "https://api-mininxd.vercel.app/ip";
+const ipEndpoint = "https://api-mininxd.vercel.app/ip";
 let ip = await axios.get(ipEndpoint);
 const ipv4 = ip.data.ip.ipv4
 
 let ipAddr = document.querySelectorAll(".ipv4");
 ipAddr.forEach(el => {
   el.innerHTML = ipv4;
+
+  // Add click event to hide/show IP address
+  el.addEventListener('click', function() {
+    if (this.innerHTML === ipv4) {
+      // Hide IP address with x's
+      this.innerHTML = 'xxx.xxx.xxx.xxx';
+      this.style.cursor = 'default';
+    } else {
+      // Show actual IP address
+      this.innerHTML = ipv4;
+      this.style.cursor = 'pointer';
+    }
+  });
+
+  // Make IP clickable by default
+  el.style.cursor = 'pointer';
 })
 
 const userLang = navigator.language || navigator.userLanguage || "en";
