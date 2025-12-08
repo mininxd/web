@@ -6,7 +6,7 @@ export class FileOperations {
     return DOMUtils.formatFileSize(size);
   }
 
-  static sendFileInChunks(conn, file, onProgress) {
+  static sendFileInChunks(conn, file, onProgress, shouldStop) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
@@ -25,6 +25,12 @@ export class FileOperations {
 
         const sendChunk = () => {
           if (offset < content.byteLength) {
+            // Check if we should stop
+            if (shouldStop && shouldStop()) {
+              reject(new Error('Transfer stopped'));
+              return;
+            }
+
             // Check if connection is still open
             if (!conn.open) {
               reject(new Error('Connection closed'));

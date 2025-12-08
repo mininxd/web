@@ -10,6 +10,7 @@ export class SenderMode {
     this.totalFilesSize = 0;
     this.sentBytes = 0;
     this.currentFileIndex = 0;
+    this.isConnectionActive = false;
   }
 
   initializeElements() {
@@ -143,6 +144,7 @@ export class SenderMode {
 
   setupConnection(conn) {
     conn.on('open', () => {
+      this.isConnectionActive = true;
       this.statusText.textContent = 'Connected! Sending files...';
       this.connectionSection.classList.add('hidden');
       this.progressSection.classList.remove('hidden');
@@ -150,7 +152,14 @@ export class SenderMode {
     });
 
     conn.on('close', () => {
+      this.isConnectionActive = false;
       this.statusText.textContent = 'Connection closed.';
+    });
+
+    conn.on('error', (err) => {
+      this.isConnectionActive = false;
+      console.error('Connection error:', err);
+      this.statusText.textContent = 'Connection error: ' + (err.message || 'Unknown error');
     });
   }
 
@@ -186,14 +195,15 @@ export class SenderMode {
 
           this.transferProgress.value = progress;
           this.progressPercent.textContent = `${progress}%`;
-        }
+        },
+        () => !this.isConnectionActive // Check if connection is cancelled
       );
 
       this.currentFileIndex++;
       setTimeout(() => this.sendNextFile(), 100);
     } catch (error) {
       console.error('Error sending file:', error);
-      if (error.message === 'Connection closed' || error.message === 'Connection closed before finishing') {
+      if (error.message === 'Connection closed' || error.message === 'Connection closed before finishing' || error.message === 'Transfer stopped') {
         this.statusText.textContent = 'Transfer stopped: Connection closed';
       } else {
         this.statusText.textContent = 'Error sending file: ' + error.message;
