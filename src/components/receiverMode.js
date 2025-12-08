@@ -1,5 +1,6 @@
 import { DOMUtils } from '../utils/dom.js';
 import { FileOperations } from '../utils/fileOperations.js';
+import jsQR from 'jsqr';
 
 export class ReceiverMode {
   constructor(peerManager) {

@@ -1,4 +1,5 @@
 import { DOMUtils } from './dom.js';
+import JSZip from 'jszip';
 
 export class FileOperations {
   static formatFileSize(size) {

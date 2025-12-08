@@ -15,7 +15,10 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "daisyui": "^5.5.5",
+    "jsqr": "^1.4.0",
     "jszip": "^3.10.1",
+    "peerjs": "^1.5.5",
+    "qrcode": "^1.5.4",
     "tailwindcss": "^4.1.17",
     "vite": "^7.2.6"
   }

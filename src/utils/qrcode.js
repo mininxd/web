@@ -1,22 +1,25 @@
-// src/utils/qrcode.js
+import QRCode from 'qrcode';
+
 export class QRCodeGenerator {
   static createQRCode(container, text) {
     // Clear any existing content
     container.innerHTML = '';
 
-    // Create a div to hold the QR code
-    const qrDiv = document.createElement('div');
-    qrDiv.id = 'qrcode';
-    container.appendChild(qrDiv);
+    // Create a canvas to hold the QR code
+    const canvas = document.createElement('canvas');
+    canvas.id = 'qrcode-canvas';
+    container.appendChild(canvas);
 
     // Generate QR code
-    new QRCode(qrDiv, {
-      text: text,
+    QRCode.toCanvas(canvas, text, {
       width: 150,
-      height: 150,
-      colorDark: "#000000",
-      colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
+      color: {
+        dark: "#000000",
+        light: "#ffffff"
+      },
+      errorCorrectionLevel: 'H'
+    }, function (error) {
+      if (error) console.error('QR Code generation error:', error);
     });
   }
 }
