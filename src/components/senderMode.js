@@ -193,7 +193,13 @@ export class SenderMode {
       setTimeout(() => this.sendNextFile(), 100);
     } catch (error) {
       console.error('Error sending file:', error);
-      this.statusText.textContent = 'Error sending file';
+      if (error.message === 'Connection closed' || error.message === 'Connection closed before finishing') {
+        this.statusText.textContent = 'Transfer stopped: Connection closed';
+      } else {
+        this.statusText.textContent = 'Error sending file: ' + error.message;
+      }
+      // Stop the transfer loop
+      return;
     }
   }
 

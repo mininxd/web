@@ -25,22 +25,42 @@ export class FileOperations {
 
         const sendChunk = () => {
           if (offset < content.byteLength) {
-            const chunk = content.slice(offset, offset + chunkSize);
-            conn.send({
-              type: 'file_chunk',
-              data: chunk
-            });
-            offset += chunkSize;
-            sentBytes += chunk.byteLength;
-
-            if (onProgress) {
-              onProgress(sentBytes);
+            // Check if connection is still open
+            if (!conn.open) {
+              reject(new Error('Connection closed'));
+              return;
             }
 
-            setTimeout(sendChunk, 0);
+            const chunk = content.slice(offset, offset + chunkSize);
+
+            try {
+              conn.send({
+                type: 'file_chunk',
+                data: chunk
+              });
+
+              offset += chunkSize;
+              sentBytes += chunk.byteLength;
+
+              if (onProgress) {
+                onProgress(sentBytes);
+              }
+
+              setTimeout(sendChunk, 0);
+            } catch (error) {
+              reject(error);
+            }
           } else {
-            conn.send({ type: 'file_end', name: file.name });
-            resolve();
+            try {
+              if (conn.open) {
+                conn.send({ type: 'file_end', name: file.name });
+                resolve();
+              } else {
+                reject(new Error('Connection closed before finishing'));
+              }
+            } catch (error) {
+              reject(error);
+            }
           }
         };
 
