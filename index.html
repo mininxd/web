@@ -2,12 +2,25 @@
 <html data-theme="wireframe">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>RTC File Transfer</title>
     <link rel="stylesheet" href="src/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4f46e5">
+    <!-- Add padding for mobile devices with status bars -->
+    <style>
+        @media screen and (max-height: 812px) {
+            #mode-selector {
+                padding-top: calc(env(safe-area-inset-top, 20px) + 64px) !important;
+            }
+            .navbar {
+                padding-top: env(safe-area-inset-top, 20px);
+            }
+        }
+    </style>
 </head>
 <body class="bg-base-200 min-h-screen">
-    <div id="mode-selector" class="pt-[128px] flex flex-col items-center justify-center p-4">
+    <div id="mode-selector" class="pt-16 flex flex-col items-center justify-center p-4">
         <div class="card bg-base-100 shadow-xl w-full max-w-md">
             <div class="card-body items-center text-center">
                 <h2 class="card-title text-2xl mb-6">RTC File Transfer</h2>
@@ -138,5 +151,20 @@
     </div>
 
     <script type="module" src="src/main.js"></script>
+
+    <script>
+      // Register service worker if supported
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
 </body>
 </html>
