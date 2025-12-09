@@ -6,13 +6,24 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "cap:sync": "cap sync",
+    "android:build": "npm run build && cap sync android && cd android && ./gradlew assembleRelease"
   },
   "devDependencies": {
     "serve": "^14.2.4",
     "typescript": "~5.9.3"
   },
   "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/app": "^8.0.0",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/device": "^8.0.0",
+    "@capacitor/filesystem": "^8.0.0",
+    "@capacitor/haptics": "^8.0.0",
+    "@capacitor/keyboard": "^8.0.0",
+    "@capacitor/status-bar": "^8.0.0",
     "@tailwindcss/vite": "^4.1.17",
     "daisyui": "^5.5.5",
     "jsqr": "^1.4.0",

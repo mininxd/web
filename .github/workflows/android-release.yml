@@ -1,0 +1,126 @@
+name: Build and Release Android App
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Type of release'
+        required: false
+        default: 'manual'
+        type: choice
+        options:
+          - manual
+          - alpha
+          - beta
+          - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build web assets
+      run: npm run build
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Install Android command-line tools
+      run: |
+        echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} --install "build-tools;34.0.0" "platform-tools" "platforms;android-34"
+
+    - name: Sync Capacitor for Android
+      run: |
+        npx cap sync android
+        cd android
+        chmod +x ./gradlew
+
+    - name: Build Android APK
+      run: |
+        cd android
+        ./gradlew assembleRelease --no-daemon
+      env:
+        JAVA_OPTS: -Xmx2048m
+
+    - name: Sign APK (if signing key provided)
+      uses: r0adkll/sign-android-release@v1
+      if: env.SIGNING_KEY != null && env.SIGNING_KEY != ''
+      id: sign_app
+      with:
+        releaseDir: android/app/build/outputs/apk/release
+        signingKey: ${{ secrets.SIGNING_KEY }}
+        alias: ${{ secrets.ALIAS }}
+        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+        keyPassword: ${{ secrets.KEY_PASSWORD }}
+      env:
+        SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+
+    - name: Get APK path
+      id: apk
+      run: |
+        if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
+          APK_PATH=$(find android/app/build/outputs/apk/release -name "*.apk" | head -n 1)
+        else
+          APK_PATH=$(find android/app/build/outputs/apk/release -name "*-release.apk" | head -n 1)
+        fi
+        echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
+        echo "APK Path: $APK_PATH"
+
+    - name: Upload APK as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release-apk
+        path: ${{ steps.apk.outputs.apk_path }}
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/heads/main') || github.event.inputs.release_type == 'production'
+      with:
+        tag_name: v${{ github.run_number }}
+        name: Release ${{ github.run_number }}
+        body: |
+          Release build from GitHub Actions
+          - Build: ${{ github.sha }}
+          - Branch: ${{ github.ref_name }}
+        files: ${{ steps.apk.outputs.apk_path }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Pre-release
+      uses: softprops/action-gh-release@v2
+      if: github.event.inputs.release_type != 'production' && github.event.inputs.release_type != ''
+      with:
+        tag_name: v${{ github.run_number }}-${{ github.event.inputs.release_type }}
+        name: ${{ github.event.inputs.release_type }} Release ${{ github.run_number }}
+        body: |
+          ${{ github.event.inputs.release_type }} release build from GitHub Actions
+          - Build: ${{ github.sha }}
+          - Branch: ${{ github.ref_name }}
+          - Triggered manually: ${{ github.event.inputs.release_type }}
+        files: ${{ steps.apk.outputs.apk_path }}
+        draft: false
+        prerelease: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
