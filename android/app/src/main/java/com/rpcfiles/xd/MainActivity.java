@@ -1,4 +1,4 @@
-package com.example.filetransferapp;
+package com.rpcfiles.xd;
 
 import com.getcapacitor.BridgeActivity;
 

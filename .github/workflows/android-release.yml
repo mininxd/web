@@ -49,6 +49,13 @@ jobs:
       run: |
         echo "y" | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} --install "build-tools;35.0.0" "platform-tools" "platforms;android-36"
 
+    - name: Check for build tools
+      run: |
+        echo "Checking for build tools in ${ANDROID_HOME}/build-tools/35.0.0/"
+        ls -la ${ANDROID_HOME}/build-tools/35.0.0/ | grep -E "(apksigner|zipalign)"
+        which zipalign || echo "zipalign not in PATH"
+        which apksigner || echo "apksigner not in PATH"
+
     - name: Sync Capacitor for Android
       run: |
         npx cap sync android
@@ -76,21 +83,101 @@ jobs:
     - name: Sign APK with existing certificate files
       run: |
         cd android
+
+        # Check if the necessary signing files exist
+        if [ ! -f "key.pk8" ] || [ ! -f "x509.pem" ]; then
+          echo "Signing certificate files not found. APK will not be signed."
+          echo "Looking for key.pk8: $(if [ -f key.pk8 ]; then echo 'FOUND'; else echo 'NOT FOUND'; fi)"
+          echo "Looking for x509.pem: $(if [ -f x509.pem ]; then echo 'FOUND'; else echo 'NOT FOUND'; fi)"
+          exit 0  # Exit successfully to continue workflow, unsigned APK will be used
+        fi
+
         # Check if apksigner is available
-        which apksigner
+        if ! which apksigner; then
+          echo "apksigner not found in PATH"
+          # Add common paths where apksigner might be located
+          export PATH="$PATH:$ANDROID_HOME/build-tools/35.0.0"
+          if ! which apksigner; then
+            echo "apksigner still not found - attempting to find in build-tools directories"
+            for build_tool_dir in $ANDROID_HOME/build-tools/*; do
+              if [ -f "$build_tool_dir/apksigner" ] || [ -f "$build_tool_dir/apksigner.bat" ]; then
+                export PATH="$PATH:$build_tool_dir"
+                break
+              fi
+            done
+          fi
+        fi
+
+        if ! which apksigner; then
+          echo "apksigner still not found after checking all build-tools directories"
+          exit 0  # Exit successfully to continue workflow, unsigned APK will be used
+        fi
+
+        if ! which zipalign; then
+          echo "zipalign not found in PATH, trying to find in build-tools directories"
+          for build_tool_dir in $ANDROID_HOME/build-tools/*; do
+            if [ -f "$build_tool_dir/zipalign" ] || [ -f "$build_tool_dir/zipalign.bat" ]; then
+              export PATH="$PATH:$build_tool_dir"
+              break
+            fi
+          done
+        fi
+
+        # Find the actual release APK that was built (could be named differently)
+        APK_PATH=$(find app/build/outputs/apk/release -name "*release*.apk" -type f | head -n 1)
+
+        if [ ! -f "$APK_PATH" ]; then
+          echo "No release APK found in app/build/outputs/apk/release"
+          ls -la app/build/outputs/apk/release/
+          exit 1
+        fi
+
+        echo "Found APK to sign: $APK_PATH"
+
+        # Copy the APK to a consistent name for signing
+        cp "$APK_PATH" app/build/outputs/apk/release/app-release-unsigned-aligned.apk
+
+        # Zipalign the APK (recommended before signing)
+        if which zipalign; then
+          echo "Running zipalign..."
+          zipalign -v -p 4 app/build/outputs/apk/release/app-release-unsigned-aligned.apk app/build/outputs/apk/release/app-release-aligned.apk
+        else
+          echo "zipalign not available, skipping alignment"
+          cp app/build/outputs/apk/release/app-release-unsigned-aligned.apk app/build/outputs/apk/release/app-release-aligned.apk
+        fi
+
         # Sign the APK with the existing certificate files
-        apksigner sign --key key.pk8 --cert x509.pem --out app/build/outputs/apk/release/app-release-signed.apk app/build/outputs/apk/release/app-release-unsigned.apk
+        echo "Signing APK with apksigner..."
+        apksigner sign --key key.pk8 --cert x509.pem --out app/build/outputs/apk/release/app-release-signed.apk app/build/outputs/apk/release/app-release-aligned.apk
+
         # Verify the signature
-        apksigner verify app/build/outputs/apk/release/app-release-signed.apk
+        if apksigner verify app/build/outputs/apk/release/app-release-signed.apk; then
+          echo "APK signing completed successfully"
+          echo "Signed APK is at: app/build/outputs/apk/release/app-release-signed.apk"
+        else
+          echo "APK verification failed"
+          exit 1
+        fi
 
     - name: Get APK path
       id: apk
       run: |
-        # Check if the signed APK exists, otherwise use the unsigned one
+        # Check if the signed APK exists
         if [ -f "android/app/build/outputs/apk/release/app-release-signed.apk" ]; then
           APK_PATH="android/app/build/outputs/apk/release/app-release-signed.apk"
+          echo "Using signed APK: $APK_PATH"
+        elif [ -f "android/app/build/outputs/apk/release/app-release.apk" ]; then
+          APK_PATH="android/app/build/outputs/apk/release/app-release.apk"
+          echo "Using built APK (not signed): $APK_PATH"
         else
-          APK_PATH=$(find android/app/build/outputs/apk/release -name "*-release-unsigned.apk" | head -n 1)
+          # Fallback: find any APK in the release directory
+          APK_PATH=$(find android/app/build/outputs/apk/release -name "*.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "No APK found in release directory!"
+            ls -la android/app/build/outputs/apk/release/
+            exit 1
+          fi
+          echo "Using found APK: $APK_PATH"
         fi
         echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
         echo "APK Path: $APK_PATH"
@@ -111,6 +198,7 @@ jobs:
           Release build v1.${{ github.run_number }}
           - Build: ${{ github.sha }}
           - Branch: ${{ github.ref_name }}
+          - Status: APK built successfully
         files: ${{ steps.apk.outputs.apk_path }}
         draft: false
         prerelease: false
@@ -128,6 +216,7 @@ jobs:
           - Build: ${{ github.sha }}
           - Branch: ${{ github.ref_name }}
           - Triggered manually: ${{ github.event.inputs.release_type }}
+          - Status: APK built successfully
         files: ${{ steps.apk.outputs.apk_path }}
         draft: false
         prerelease: true

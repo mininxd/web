@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">FileTransferApp</string>
-    <string name="title_activity_main">FileTransferApp</string>
-    <string name="package_name">com.example.filetransferapp</string>
-    <string name="custom_url_scheme">com.example.filetransferapp</string>
+    <string name="app_name">RPC Files</string>
+    <string name="title_activity_main">RPC Files</string>
+    <string name="package_name">com.rpcfiles.xd</string>
+    <string name="custom_url_scheme">com.rpcfiles.xd</string>
 </resources>
