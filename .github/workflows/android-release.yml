@@ -40,20 +40,31 @@ jobs:
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
-        java-version: '17'
+        java-version: '21'
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Install Android command-line tools
+    - name: Install Android build tools and platform
       run: |
-        echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} --install "build-tools;34.0.0" "platform-tools" "platforms;android-34"
+        echo "y" | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} --install "build-tools;35.0.0" "platform-tools" "platforms;android-36"
 
     - name: Sync Capacitor for Android
       run: |
         npx cap sync android
         cd android
         chmod +x ./gradlew
+
+    - name: Set app version
+      run: |
+        cd android
+        # Set versionCode based on GitHub run number (with a base offset to ensure uniqueness)
+        NEW_VERSION_CODE=${{ github.run_number }}
+        sed -i "s/versionCode [0-9]*/versionCode $NEW_VERSION_CODE/" app/build.gradle
+
+        # Set versionName to v1.{run_number}
+        sed -i "s/versionName \".*\"/versionName \"v1.${{ github.run_number }}\"/" app/build.gradle
+        echo "Updated versionCode to $NEW_VERSION_CODE and versionName to v1.${{ github.run_number }}"
 
     - name: Build Android APK
       run: |
@@ -62,26 +73,24 @@ jobs:
       env:
         JAVA_OPTS: -Xmx2048m
 
-    - name: Sign APK (if signing key provided)
-      uses: r0adkll/sign-android-release@v1
-      if: env.SIGNING_KEY != null && env.SIGNING_KEY != ''
-      id: sign_app
-      with:
-        releaseDir: android/app/build/outputs/apk/release
-        signingKey: ${{ secrets.SIGNING_KEY }}
-        alias: ${{ secrets.ALIAS }}
-        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-        keyPassword: ${{ secrets.KEY_PASSWORD }}
-      env:
-        SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+    - name: Sign APK with existing certificate files
+      run: |
+        cd android
+        # Check if apksigner is available
+        which apksigner
+        # Sign the APK with the existing certificate files
+        apksigner sign --key key.pk8 --cert x509.pem --out app/build/outputs/apk/release/app-release-signed.apk app/build/outputs/apk/release/app-release-unsigned.apk
+        # Verify the signature
+        apksigner verify app/build/outputs/apk/release/app-release-signed.apk
 
     - name: Get APK path
       id: apk
       run: |
-        if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
-          APK_PATH=$(find android/app/build/outputs/apk/release -name "*.apk" | head -n 1)
+        # Check if the signed APK exists, otherwise use the unsigned one
+        if [ -f "android/app/build/outputs/apk/release/app-release-signed.apk" ]; then
+          APK_PATH="android/app/build/outputs/apk/release/app-release-signed.apk"
         else
-          APK_PATH=$(find android/app/build/outputs/apk/release -name "*-release.apk" | head -n 1)
+          APK_PATH=$(find android/app/build/outputs/apk/release -name "*-release-unsigned.apk" | head -n 1)
         fi
         echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
         echo "APK Path: $APK_PATH"
@@ -96,10 +105,10 @@ jobs:
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/heads/main') || github.event.inputs.release_type == 'production'
       with:
-        tag_name: v${{ github.run_number }}
-        name: Release ${{ github.run_number }}
+        tag_name: v1.${{ github.run_number }}
+        name: Release v1.${{ github.run_number }}
         body: |
-          Release build from GitHub Actions
+          Release build v1.${{ github.run_number }}
           - Build: ${{ github.sha }}
           - Branch: ${{ github.ref_name }}
         files: ${{ steps.apk.outputs.apk_path }}
@@ -112,10 +121,10 @@ jobs:
       uses: softprops/action-gh-release@v2
       if: github.event.inputs.release_type != 'production' && github.event.inputs.release_type != ''
       with:
-        tag_name: v${{ github.run_number }}-${{ github.event.inputs.release_type }}
-        name: ${{ github.event.inputs.release_type }} Release ${{ github.run_number }}
+        tag_name: v1.${{ github.run_number }}-${{ github.event.inputs.release_type }}
+        name: ${{ github.event.inputs.release_type }} Release v1.${{ github.run_number }}
         body: |
-          ${{ github.event.inputs.release_type }} release build from GitHub Actions
+          ${{ github.event.inputs.release_type }} release build v1.${{ github.run_number }}
           - Build: ${{ github.sha }}
           - Branch: ${{ github.ref_name }}
           - Triggered manually: ${{ github.event.inputs.release_type }}
