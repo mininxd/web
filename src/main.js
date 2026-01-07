@@ -204,7 +204,6 @@ main();
 
 if(!navigator.userAgent.includes("Mobile")) {
   html.classList.add("flex","justify-center")
-  wrapper.classList.add("px-[15%]")
   document.querySelectorAll('.field').forEach(field => {
     field.classList.add("w-full", "text-center", "px-4", "pb-[3px]")
     dohUrl.classList.add("text-xl");
