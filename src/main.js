@@ -1,5 +1,6 @@
 import "./lib";
 import "./blocked.js";
+import "./render.js";
 import 'remixicon/fonts/remixicon.css'
 import axios from "axios";
 import { getDnsStats, getIpInfo, getClientDnsInfo } from "./lib/api";
