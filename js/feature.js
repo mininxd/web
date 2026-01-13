@@ -31,7 +31,7 @@ if (navigator.userAgent.includes("Mobile")) {
     bratImg.style.width = "10%";
   });
   inputText.addEventListener("blur", () => {
-    bratImg.style.width = "inherit";
+    bratImg.style.width = "";
   });
   img.classList.add("desktop");
 }

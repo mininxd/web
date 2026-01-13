@@ -1,5 +1,10 @@
 @import url("https://unpkg.com/98.css@latest/dist/98.css");
 @import url("/utils.css");
+
+* {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
   transition: 0.3s ease-out;
@@ -31,13 +36,16 @@ fieldset {
   padding: 1em;
   background: transparent;
   max-width: 90%;
+  box-sizing: border-box;
 }
 #imgWrapper.desktop {
   max-width: 75%;
 }
 #bratImg {
-  width: inherit;
-  max-width: inherit;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
   opacity: 0;
 }
 #bratImg.desktop {

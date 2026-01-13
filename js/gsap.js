@@ -1,3 +1,6 @@
+import gsap from "gsap";
+import { Draggable } from "gsap/Draggable";
+
 gsap.registerPlugin(Draggable);
 
 function drag(elem) {
