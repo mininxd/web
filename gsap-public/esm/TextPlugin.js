@@ -6,42 +6,50 @@
  * Subject to the terms at https://gsap.com/standard-license or for
  * Club GSAP members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
-*/
+ */
 
 /* eslint-disable */
 import { emojiSafeSplit, getText, splitInnerHTML } from "./utils/strings.js";
 
 var gsap,
-    _tempDiv,
-    _getGSAP = function _getGSAP() {
-  return gsap || typeof window !== "undefined" && (gsap = window.gsap) && gsap.registerPlugin && gsap;
-};
+  _tempDiv,
+  _getGSAP = function _getGSAP() {
+    return (
+      gsap ||
+      (typeof window !== "undefined" &&
+        (gsap = window.gsap) &&
+        gsap.registerPlugin &&
+        gsap)
+    );
+  };
 
 export var TextPlugin = {
   version: "3.12.5",
   name: "text",
   init: function init(target, value, tween) {
-    typeof value !== "object" && (value = {
-      value: value
-    });
+    typeof value !== "object" &&
+      (value = {
+        value: value,
+      });
 
     var i = target.nodeName.toUpperCase(),
-        data = this,
-        _value = value,
-        newClass = _value.newClass,
-        oldClass = _value.oldClass,
-        preserveSpaces = _value.preserveSpaces,
-        rtl = _value.rtl,
-        delimiter = data.delimiter = value.delimiter || "",
-        fillChar = data.fillChar = value.fillChar || (value.padSpace ? "&nbsp;" : ""),
-        _short,
-        text,
-        original,
-        j,
-        condensedText,
-        condensedOriginal,
-        aggregate,
-        s;
+      data = this,
+      _value = value,
+      newClass = _value.newClass,
+      oldClass = _value.oldClass,
+      preserveSpaces = _value.preserveSpaces,
+      rtl = _value.rtl,
+      delimiter = (data.delimiter = value.delimiter || ""),
+      fillChar = (data.fillChar =
+        value.fillChar || (value.padSpace ? "&nbsp;" : "")),
+      _short,
+      text,
+      original,
+      j,
+      condensedText,
+      condensedOriginal,
+      aggregate,
+      s;
 
     data.svg = target.getBBox && (i === "TEXT" || i === "TSPAN");
 
@@ -110,7 +118,13 @@ export var TextPlugin = {
       }
     }
 
-    value.speed && tween.duration(Math.min(0.05 / value.speed * _short.length, value.maxDuration || 9999));
+    value.speed &&
+      tween.duration(
+        Math.min(
+          (0.05 / value.speed) * _short.length,
+          value.maxDuration || 9999,
+        ),
+      );
     data.rtl = rtl;
     data.original = original;
     data.text = text;
@@ -129,35 +143,48 @@ export var TextPlugin = {
     }
 
     var text = data.text,
-        hasClass = data.hasClass,
-        newClass = data.newClass,
-        oldClass = data.oldClass,
-        delimiter = data.delimiter,
-        target = data.target,
-        fillChar = data.fillChar,
-        original = data.original,
-        rtl = data.rtl,
-        l = text.length,
-        i = (rtl ? 1 - ratio : ratio) * l + 0.5 | 0,
-        applyNew,
-        applyOld,
-        str;
+      hasClass = data.hasClass,
+      newClass = data.newClass,
+      oldClass = data.oldClass,
+      delimiter = data.delimiter,
+      target = data.target,
+      fillChar = data.fillChar,
+      original = data.original,
+      rtl = data.rtl,
+      l = text.length,
+      i = ((rtl ? 1 - ratio : ratio) * l + 0.5) | 0,
+      applyNew,
+      applyOld,
+      str;
 
     if (hasClass && ratio) {
       applyNew = newClass && i;
       applyOld = oldClass && i !== l;
-      str = (applyNew ? "<span class='" + newClass + "'>" : "") + text.slice(0, i).join(delimiter) + (applyNew ? "</span>" : "") + (applyOld ? "<span class='" + oldClass + "'>" : "") + delimiter + original.slice(i).join(delimiter) + (applyOld ? "</span>" : "");
+      str =
+        (applyNew ? "<span class='" + newClass + "'>" : "") +
+        text.slice(0, i).join(delimiter) +
+        (applyNew ? "</span>" : "") +
+        (applyOld ? "<span class='" + oldClass + "'>" : "") +
+        delimiter +
+        original.slice(i).join(delimiter) +
+        (applyOld ? "</span>" : "");
     } else {
-      str = text.slice(0, i).join(delimiter) + delimiter + original.slice(i).join(delimiter);
+      str =
+        text.slice(0, i).join(delimiter) +
+        delimiter +
+        original.slice(i).join(delimiter);
     }
 
     if (data.svg) {
       //SVG text elements don't have an "innerHTML" in Microsoft browsers.
       target.textContent = str;
     } else {
-      target.innerHTML = fillChar === "&nbsp;" && ~str.indexOf("  ") ? str.split("  ").join("&nbsp;&nbsp;") : str;
+      target.innerHTML =
+        fillChar === "&nbsp;" && ~str.indexOf("  ")
+          ? str.split("  ").join("&nbsp;&nbsp;")
+          : str;
     }
-  }
+  },
 };
 TextPlugin.splitInnerHTML = splitInnerHTML;
 TextPlugin.emojiSafeSplit = emojiSafeSplit;

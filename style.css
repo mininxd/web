@@ -55,8 +55,6 @@ fieldset {
   justify-content: flex-end;
 }
 
-
-
 hr {
   border: none;
   width: 100%;
@@ -74,13 +72,9 @@ hr {
   );
 }
 
-
-
-
-
 .no-padding {
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
 }
 .full-w-h {
   width: 100% !important;
@@ -95,11 +89,12 @@ hr {
   display: none;
 }
 
-#changelogs, #warning {
+#changelogs,
+#warning {
   position: absolute;
-  width:65vw; 
-  max-width:65vw; 
+  width: 65vw;
+  max-width: 65vw;
   top: 50%;
   left: 50%;
-  transform:translate(-50%, -50%)
+  transform: translate(-50%, -50%);
 }

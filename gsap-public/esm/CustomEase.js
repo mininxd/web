@@ -6,75 +6,102 @@
  * Subject to the terms at https://gsap.com/standard-license or for
  * Club GSAP members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
-*/
+ */
 
 /* eslint-disable */
-import { stringToRawPath, rawPathToString, transformRawPath } from "./utils/paths.js";
+import {
+  stringToRawPath,
+  rawPathToString,
+  transformRawPath,
+} from "./utils/paths.js";
 
 var gsap,
-    _coreInitted,
-    _getGSAP = function _getGSAP() {
-  return gsap || typeof window !== "undefined" && (gsap = window.gsap) && gsap.registerPlugin && gsap;
-},
-    _initCore = function _initCore() {
-  gsap = _getGSAP();
+  _coreInitted,
+  _getGSAP = function _getGSAP() {
+    return (
+      gsap ||
+      (typeof window !== "undefined" &&
+        (gsap = window.gsap) &&
+        gsap.registerPlugin &&
+        gsap)
+    );
+  },
+  _initCore = function _initCore() {
+    gsap = _getGSAP();
 
-  if (gsap) {
-    gsap.registerEase("_CE", CustomEase.create);
-    _coreInitted = 1;
-  } else {
-    console.warn("Please gsap.registerPlugin(CustomEase)");
-  }
-},
-    _bigNum = 1e20,
-    _round = function _round(value) {
-  return ~~(value * 1000 + (value < 0 ? -.5 : .5)) / 1000;
-},
-    _bonusValidated = 1,
-    //<name>CustomEase</name>
-_numExp = /[-+=.]*\d+[.e\-+]*\d*[e\-+]*\d*/gi,
-    //finds any numbers, including ones that start with += or -=, negative numbers, and ones in scientific notation like 1e-8.
-_needsParsingExp = /[cLlsSaAhHvVtTqQ]/g,
-    _findMinimum = function _findMinimum(values) {
-  var l = values.length,
+    if (gsap) {
+      gsap.registerEase("_CE", CustomEase.create);
+      _coreInitted = 1;
+    } else {
+      console.warn("Please gsap.registerPlugin(CustomEase)");
+    }
+  },
+  _bigNum = 1e20,
+  _round = function _round(value) {
+    return ~~(value * 1000 + (value < 0 ? -0.5 : 0.5)) / 1000;
+  },
+  _bonusValidated = 1,
+  //<name>CustomEase</name>
+  _numExp = /[-+=.]*\d+[.e\-+]*\d*[e\-+]*\d*/gi,
+  //finds any numbers, including ones that start with += or -=, negative numbers, and ones in scientific notation like 1e-8.
+  _needsParsingExp = /[cLlsSaAhHvVtTqQ]/g,
+  _findMinimum = function _findMinimum(values) {
+    var l = values.length,
       min = _bigNum,
       i;
 
-  for (i = 1; i < l; i += 6) {
-    +values[i] < min && (min = +values[i]);
-  }
+    for (i = 1; i < l; i += 6) {
+      +values[i] < min && (min = +values[i]);
+    }
 
-  return min;
-},
-    //takes all the points and translates/scales them so that the x starts at 0 and ends at 1.
-_normalize = function _normalize(values, height, originY) {
-  if (!originY && originY !== 0) {
-    originY = Math.max(+values[values.length - 1], +values[1]);
-  }
+    return min;
+  },
+  //takes all the points and translates/scales them so that the x starts at 0 and ends at 1.
+  _normalize = function _normalize(values, height, originY) {
+    if (!originY && originY !== 0) {
+      originY = Math.max(+values[values.length - 1], +values[1]);
+    }
 
-  var tx = +values[0] * -1,
+    var tx = +values[0] * -1,
       ty = -originY,
       l = values.length,
       sx = 1 / (+values[l - 2] + tx),
-      sy = -height || (Math.abs(+values[l - 1] - +values[1]) < 0.01 * (+values[l - 2] - +values[0]) ? _findMinimum(values) + ty : +values[l - 1] + ty),
+      sy =
+        -height ||
+        (Math.abs(+values[l - 1] - +values[1]) <
+        0.01 * (+values[l - 2] - +values[0])
+          ? _findMinimum(values) + ty
+          : +values[l - 1] + ty),
       i;
 
-  if (sy) {
-    //typically y ends at 1 (so that the end values are reached)
-    sy = 1 / sy;
-  } else {
-    //in case the ease returns to its beginning value, scale everything proportionally
-    sy = -sx;
-  }
+    if (sy) {
+      //typically y ends at 1 (so that the end values are reached)
+      sy = 1 / sy;
+    } else {
+      //in case the ease returns to its beginning value, scale everything proportionally
+      sy = -sx;
+    }
 
-  for (i = 0; i < l; i += 2) {
-    values[i] = (+values[i] + tx) * sx;
-    values[i + 1] = (+values[i + 1] + ty) * sy;
-  }
-},
-    //note that this function returns point objects like {x, y} rather than working with segments which are arrays with alternating x, y values as in the similar function in paths.js
-_bezierToPoints = function _bezierToPoints(x1, y1, x2, y2, x3, y3, x4, y4, threshold, points, index) {
-  var x12 = (x1 + x2) / 2,
+    for (i = 0; i < l; i += 2) {
+      values[i] = (+values[i] + tx) * sx;
+      values[i + 1] = (+values[i + 1] + ty) * sy;
+    }
+  },
+  //note that this function returns point objects like {x, y} rather than working with segments which are arrays with alternating x, y values as in the similar function in paths.js
+  _bezierToPoints = function _bezierToPoints(
+    x1,
+    y1,
+    x2,
+    y2,
+    x3,
+    y3,
+    x4,
+    y4,
+    threshold,
+    points,
+    index,
+  ) {
+    var x12 = (x1 + x2) / 2,
       y12 = (y1 + y2) / 2,
       x23 = (x2 + x3) / 2,
       y23 = (y2 + y3) / 2,
@@ -92,34 +119,61 @@ _bezierToPoints = function _bezierToPoints(x1, y1, x2, y2, x3, y3, x4, y4, thres
       d3 = Math.abs((x3 - x4) * dy - (y3 - y4) * dx),
       length;
 
-  if (!points) {
-    points = [{
-      x: x1,
-      y: y1
-    }, {
-      x: x4,
-      y: y4
-    }];
-    index = 1;
-  }
+    if (!points) {
+      points = [
+        {
+          x: x1,
+          y: y1,
+        },
+        {
+          x: x4,
+          y: y4,
+        },
+      ];
+      index = 1;
+    }
 
-  points.splice(index || points.length - 1, 0, {
-    x: x1234,
-    y: y1234
-  });
+    points.splice(index || points.length - 1, 0, {
+      x: x1234,
+      y: y1234,
+    });
 
-  if ((d2 + d3) * (d2 + d3) > threshold * (dx * dx + dy * dy)) {
-    length = points.length;
+    if ((d2 + d3) * (d2 + d3) > threshold * (dx * dx + dy * dy)) {
+      length = points.length;
 
-    _bezierToPoints(x1, y1, x12, y12, x123, y123, x1234, y1234, threshold, points, index);
+      _bezierToPoints(
+        x1,
+        y1,
+        x12,
+        y12,
+        x123,
+        y123,
+        x1234,
+        y1234,
+        threshold,
+        points,
+        index,
+      );
 
-    _bezierToPoints(x1234, y1234, x234, y234, x34, y34, x4, y4, threshold, points, index + 1 + (points.length - length));
-  }
+      _bezierToPoints(
+        x1234,
+        y1234,
+        x234,
+        y234,
+        x34,
+        y34,
+        x4,
+        y4,
+        threshold,
+        points,
+        index + 1 + (points.length - length),
+      );
+    }
 
-  return points;
-};
+    return points;
+  };
 
-export var CustomEase = /*#__PURE__*/function () {
+export var CustomEase = /*#__PURE__*/ (function () {
   function CustomEase(id, data, config) {
     _coreInitted || _initCore();
     this.id = id;
@@ -132,23 +186,26 @@ export var CustomEase = /*#__PURE__*/function () {
     config = config || {};
     data = data || "0,0,1,1";
     var values = data.match(_numExp),
-        closest = 1,
-        points = [],
-        lookup = [],
-        precision = config.precision || 1,
-        fast = precision <= 1,
-        l,
-        a1,
-        a2,
-        i,
-        inc,
-        j,
-        point,
-        prevPoint,
-        p;
+      closest = 1,
+      points = [],
+      lookup = [],
+      precision = config.precision || 1,
+      fast = precision <= 1,
+      l,
+      a1,
+      a2,
+      i,
+      inc,
+      j,
+      point,
+      prevPoint,
+      p;
     this.data = data;
 
-    if (_needsParsingExp.test(data) || ~data.indexOf("M") && data.indexOf("C") < 0) {
+    if (
+      _needsParsingExp.test(data) ||
+      (~data.indexOf("M") && data.indexOf("C") < 0)
+    ) {
       values = stringToRawPath(data)[0];
     }
 
@@ -171,15 +228,27 @@ export var CustomEase = /*#__PURE__*/function () {
     for (i = 2; i < l; i += 6) {
       a1 = {
         x: +values[i - 2],
-        y: +values[i - 1]
+        y: +values[i - 1],
       };
       a2 = {
         x: +values[i + 4],
-        y: +values[i + 5]
+        y: +values[i + 5],
       };
       points.push(a1, a2);
 
-      _bezierToPoints(a1.x, a1.y, +values[i], +values[i + 1], +values[i + 2], +values[i + 3], a2.x, a2.y, 1 / (precision * 200000), points, points.length - 1);
+      _bezierToPoints(
+        a1.x,
+        a1.y,
+        +values[i],
+        +values[i + 1],
+        +values[i + 2],
+        +values[i + 3],
+        a2.x,
+        a2.y,
+        1 / (precision * 200000),
+        points,
+        points.length - 1,
+      );
     }
 
     l = points.length;
@@ -188,7 +257,12 @@ export var CustomEase = /*#__PURE__*/function () {
       point = points[i];
       prevPoint = points[i - 1] || point;
 
-      if ((point.x > prevPoint.x || prevPoint.y !== point.y && prevPoint.x === point.x || point === prevPoint) && point.x <= 1) {
+      if (
+        (point.x > prevPoint.x ||
+          (prevPoint.y !== point.y && prevPoint.x === point.x) ||
+          point === prevPoint) &&
+        point.x <= 1
+      ) {
         //if a point goes BACKWARD in time or is a duplicate, just drop it. Also it shouldn't go past 1 on the x axis, as could happen in a string like "M0,0 C0,0 0.12,0.68 0.18,0.788 0.195,0.845 0.308,1 0.32,1 0.403,1.005 0.398,1 0.5,1 0.602,1 0.816,1.005 0.9,1 0.91,1 0.948,0.69 0.962,0.615 1.003,0.376 1,0 1,0".
         prevPoint.cx = point.x - prevPoint.x; //change in x between this point and the next point (performance optimization)
 
@@ -196,7 +270,13 @@ export var CustomEase = /*#__PURE__*/function () {
         prevPoint.n = point;
         prevPoint.nx = point.x; //next point's x value (performance optimization, making lookups faster in getRatio()). Remember, the lookup will always land on a spot where it's either this point or the very next one (never beyond that)
 
-        if (fast && i > 1 && Math.abs(prevPoint.cy / prevPoint.cx - points[i - 2].cy / points[i - 2].cx) > 2) {
+        if (
+          fast &&
+          i > 1 &&
+          Math.abs(
+            prevPoint.cy / prevPoint.cx - points[i - 2].cy / points[i - 2].cx,
+          ) > 2
+        ) {
           //if there's a sudden change in direction, prioritize accuracy over speed. Like a bounce ease - you don't want to risk the sampling chunks landing on each side of the bounce anchor and having it clipped off.
           fast = 0;
         }
@@ -221,7 +301,7 @@ export var CustomEase = /*#__PURE__*/function () {
       }
     }
 
-    l = 1 / closest + 1 | 0;
+    l = (1 / closest + 1) | 0;
     inc = 1 / l;
     j = 0;
     point = points[0];
@@ -235,13 +315,13 @@ export var CustomEase = /*#__PURE__*/function () {
           point = points[++j];
         }
 
-        a1 = point.y + (p - point.x) / point.cx * point.cy;
+        a1 = point.y + ((p - point.x) / point.cx) * point.cy;
         lookup[i] = {
           x: p,
           cx: inc,
           y: a1,
           cy: 0,
-          nx: 9
+          nx: 9,
         };
 
         if (i) {
@@ -266,15 +346,14 @@ export var CustomEase = /*#__PURE__*/function () {
       }
     } //this._calcEnd = (points[points.length-1].y !== 1 || points[0].y !== 0); //ensures that we don't run into floating point errors. As long as we're starting at 0 and ending at 1, tell GSAP to skip the final calculation and use 0/1 as the factor.
 
-
     this.ease = function (p) {
-      var point = lookup[p * l | 0] || lookup[l - 1];
+      var point = lookup[(p * l) | 0] || lookup[l - 1];
 
       if (point.nx < p) {
         point = point.n;
       }
 
-      return point.y + (p - point.x) / point.cx * point.cy;
+      return point.y + ((p - point.x) / point.cx) * point.cy;
     };
 
     this.ease.custom = this;
@@ -303,20 +382,20 @@ export var CustomEase = /*#__PURE__*/function () {
   CustomEase.getSVGData = function getSVGData(ease, config) {
     config = config || {};
     var width = config.width || 100,
-        height = config.height || 100,
-        x = config.x || 0,
-        y = (config.y || 0) + height,
-        e = gsap.utils.toArray(config.path)[0],
-        a,
-        slope,
-        i,
-        inc,
-        tx,
-        ty,
-        precision,
-        threshold,
-        prevX,
-        prevY;
+      height = config.height || 100,
+      x = config.x || 0,
+      y = (config.y || 0) + height,
+      e = gsap.utils.toArray(config.path)[0],
+      a,
+      slope,
+      i,
+      inc,
+      tx,
+      ty,
+      precision,
+      threshold,
+      prevX,
+      prevY;
 
     if (config.invert) {
       height = -height;
@@ -332,7 +411,9 @@ export var CustomEase = /*#__PURE__*/function () {
     }
 
     if (ease instanceof CustomEase) {
-      a = rawPathToString(transformRawPath([ease.segment], width, 0, 0, -height, x, y));
+      a = rawPathToString(
+        transformRawPath([ease.segment], width, 0, 0, -height, x, y),
+      );
     } else {
       a = [x, y];
       precision = Math.max(5, (config.precision || 1) * 200);
@@ -347,7 +428,10 @@ export var CustomEase = /*#__PURE__*/function () {
         tx = _round(x + i * inc * width);
         ty = _round(y + ease(i * inc) * -height);
 
-        if (Math.abs((ty - prevY) / (tx - prevX) - slope) > threshold || i === precision - 1) {
+        if (
+          Math.abs((ty - prevY) / (tx - prevX) - slope) > threshold ||
+          i === precision - 1
+        ) {
           //only add points when the slope changes beyond the threshold
           a.push(prevX, prevY);
           slope = (ty - prevY) / (tx - prevX);
@@ -365,7 +449,7 @@ export var CustomEase = /*#__PURE__*/function () {
   };
 
   return CustomEase;
-}();
+})();
 _getGSAP() && gsap.registerPlugin(CustomEase);
 CustomEase.version = "3.12.5";
 export { CustomEase as default };

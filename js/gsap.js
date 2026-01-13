@@ -1,19 +1,19 @@
-gsap.registerPlugin(Draggable)
+gsap.registerPlugin(Draggable);
 
 function drag(elem) {
-Draggable.create(elem, {
-  type: "x,y",
-  inertia: true,
-  allowEventDefault: true,
-  zIndexBoost:true,
-  // bounds: bodyEl
-});
+  Draggable.create(elem, {
+    type: "x,y",
+    inertia: true,
+    allowEventDefault: true,
+    zIndexBoost: true,
+    // bounds: bodyEl
+  });
 }
 
-drag("#changelogs")
-drag("#warning")
-drag("#errLogs")
+drag("#changelogs");
+drag("#warning");
+drag("#errLogs");
 
-if(!navigator.userAgent.includes("Mobile")) {
-  drag("#windowEl")
+if (!navigator.userAgent.includes("Mobile")) {
+  drag("#windowEl");
 }

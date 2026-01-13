@@ -1,159 +1,164 @@
 <html>
   <head>
-<title>Brat Generator</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#222" />
-<link rel="stylesheet" href="./style.css">
-<script type="module" src="./script.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+    <title>Brat Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#222" />
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
 
-<link rel="icon" type="image/x-icon" href="/assets/Program.ico">
-</head>
-  
-<body id="bodyEl">
-  <div id="windowEl" class="window">
-    <div class="title-bar">
-      <div class="title-bar-text">
-        <img style="width:12px; margin-right:8px" src="/assets/Program.ico"> Brat Generator</div>
-    <div class="title-bar-controls">
-      <button id="maximize" aria-label="Maximize"></button>
-      <button aria-label="Close"></button>
-    </div>
-  </div>
+    <link rel="icon" type="image/x-icon" href="/assets/Program.ico" />
+  </head>
 
-
-<div class="window-body">
-  <fieldset>
-    <legend>Settings</legend>
-      <div class="flex">
-        <input id="inputText" autocomplete="off" placeholder="Input text">
-        <button id="generateBtn">generate</button>
-      </div>
-
-  <fieldset>
-    <legend>Result</legend>
-      <center>
-        <div id="imgWrapper">
-          <div id="canvas">
-            <img src="./assets/Blank_sheet.ico" id="bratImg">
-          </div>
+  <body id="bodyEl">
+    <div id="windowEl" class="window">
+      <div class="title-bar">
+        <div class="title-bar-text">
+          <img
+            style="width: 12px; margin-right: 8px"
+            src="/assets/Program.ico"
+          />
+          Brat Generator
         </div>
+        <div class="title-bar-controls">
+          <button id="maximize" aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+
+      <div class="window-body">
+        <fieldset>
+          <legend>Settings</legend>
+          <div class="flex">
+            <input id="inputText" autocomplete="off" placeholder="Input text" />
+            <button id="generateBtn">generate</button>
+          </div>
+
+          <fieldset>
+            <legend>Result</legend>
+            <center>
+              <div id="imgWrapper">
+                <div id="canvas">
+                  <img src="./assets/Blank_sheet.ico" id="bratImg" />
+                </div>
+              </div>
+            </center>
+          </fieldset>
+        </fieldset>
+
+        <div id="msgBar" class="status-bar hidden">
+          <p class="status-bar-field">
+            <span id="msg"></span>
+          </p>
+        </div>
+        <br />
+
+        <div class="flex-end">
+          <button class="hidden" id="downBtn">Download</button>
+          <a target="_blank" href="https://github.com/mininxd/web/tree/brat">
+            <button>Source Code</button>
+          </a>
+          <a target="_blank" href="https://saweria.co/mininxd">
+            <button>Donate</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer">
+      <center>
+        <p>&copy; 2024 - Present.</p>
       </center>
-  </fieldset>
-</fieldset>
-
-<div id="msgBar" class="status-bar hidden">
-  <p class="status-bar-field">
-      <span id="msg"></span>
-    </p>
-</div>
-<br>
-
-  <div class="flex-end">
-        <button class="hidden" id="downBtn">Download</button>
-      <a target="_blank" href="https://github.com/mininxd/web/tree/brat">
-        <button>Source Code</button>
-      </a>
-      <a target="_blank" href="https://saweria.co/mininxd">
-        <button>Donate</button>
-      </a>
-  </div>
-</div>
-
-</div>
-
-
-
-
-<div id="footer">
-<center>
- <p>&copy; 2024 - Present. </p>
-</center>
-</div>
-
-
-
-
-
-<!---GSAP Content--->
-<div id="changelogs" class="window">
-    <div class="title-bar">
-      <div class="title-bar-text">
-        <img style="width:12px; margin-right:8px" src="/assets/Program.ico">
-        Changelogs v1.4
-      </div>
-    <div class="title-bar-controls">
-      <button id="closeChangelog" aria-label="Close"></button>
     </div>
-  </div>
-  <div class="window-body">
-   <fieldset>
-     <legend>Items :</legend>
-     <ul class="tree-view">
-     <details open>
-      <summary>Fitur :</summary>
-        <ul>
-          <li>tombol download</li>
-          <li>fungsi maximize</li>
-          <li>Peringatan ketika pakai browser bawaan facebook</li>
-        </ul>
-      </details>
-      <details open>
-        <summary>Perubahan :</summary>
-        <ul>
-          <li>Hapus tombol minimize</li>
-          <li>Latar background berwarna #008080</li>
-          <li>nambah error logs <strong>v1.2.1</strong></li>
-          <li>fix CORS <strong>v1.3</strong></li>
-          <li>Improved download button <strong>v1.4</strong></li>
-        </ul>
-      </details>
-      <details open>
-        <summary>Ads :</summary>
-        <ul>
-         <li><strong>
-          <a href="https://nevacloud.com/?ref=mininxd" target="_blank">
-            bonus 50rb untuk VPS di NevaCloud
-            </a>
-            </strong>
-            </li>  
+
+    <!---GSAP Content--->
+    <div id="changelogs" class="window">
+      <div class="title-bar">
+        <div class="title-bar-text">
+          <img
+            style="width: 12px; margin-right: 8px"
+            src="/assets/Program.ico"
+          />
+          Changelogs v1.4
+        </div>
+        <div class="title-bar-controls">
+          <button id="closeChangelog" aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <fieldset>
+          <legend>Items :</legend>
+          <ul class="tree-view">
+            <details open>
+              <summary>Fitur :</summary>
+              <ul>
+                <li>tombol download</li>
+                <li>fungsi maximize</li>
+                <li>Peringatan ketika pakai browser bawaan facebook</li>
+              </ul>
+            </details>
+            <details open>
+              <summary>Perubahan :</summary>
+              <ul>
+                <li>Hapus tombol minimize</li>
+                <li>Latar background berwarna #008080</li>
+                <li>nambah error logs <strong>v1.2.1</strong></li>
+                <li>fix CORS <strong>v1.3</strong></li>
+                <li>Improved download button <strong>v1.4</strong></li>
+              </ul>
+            </details>
+            <details open>
+              <summary>Ads :</summary>
+              <ul>
+                <li>
+                  <strong>
+                    <a
+                      href="https://nevacloud.com/?ref=mininxd"
+                      target="_blank"
+                    >
+                      bonus 50rb untuk VPS di NevaCloud
+                    </a>
+                  </strong>
+                </li>
+              </ul>
+            </details>
           </ul>
-      </details>
-     </ul>
-   </fieldset>
-</div>
-</div>
-
-<div id="errLogs" class="window hidden">
-    <div class="title-bar">
-      <div class="title-bar-text">
-        <img style="width:12px; margin-right:8px" src="/assets/Program.ico">
-        Error Logs
+        </fieldset>
       </div>
-    <div class="title-bar-controls">
-      <button id="closeErrLogs" aria-label="Close"></button>
     </div>
-  </div>
-  <div class="window-body">
-  <textarea readonly id="logs">
-  </textarea>
-  </div>
-</div>
 
-
-
-<div id="warning" style="max-width:50vw" class="window hidden">
-  <div class="title-bar">
-      <div class="title-bar-text">
-        <img style="width:12px; margin-right:8px" src="/assets/Program.ico">
-        Warning
+    <div id="errLogs" class="window hidden">
+      <div class="title-bar">
+        <div class="title-bar-text">
+          <img
+            style="width: 12px; margin-right: 8px"
+            src="/assets/Program.ico"
+          />
+          Error Logs
+        </div>
+        <div class="title-bar-controls">
+          <button id="closeErrLogs" aria-label="Close"></button>
+        </div>
       </div>
-  </div>
-  <div class="window-body">
-     <p id="warnMsg"></p>
-  </div>
-</div>
+      <div class="window-body">
+        <textarea readonly id="logs"> </textarea>
+      </div>
+    </div>
 
-</body>
+    <div id="warning" style="max-width: 50vw" class="window hidden">
+      <div class="title-bar">
+        <div class="title-bar-text">
+          <img
+            style="width: 12px; margin-right: 8px"
+            src="/assets/Program.ico"
+          />
+          Warning
+        </div>
+      </div>
+      <div class="window-body">
+        <p id="warnMsg"></p>
+      </div>
+    </div>
+  </body>
 </html>

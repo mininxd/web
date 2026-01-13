@@ -6,47 +6,50 @@
  * Subject to the terms at https://gsap.com/standard-license or for
  * Club GSAP members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
-*/
+ */
 
 /* eslint-disable */
 var gsap,
-    _coreInitted,
-    _win,
-    _doc,
-    CSSPlugin,
-    _windowExists = function _windowExists() {
-  return typeof window !== "undefined";
-},
-    _getGSAP = function _getGSAP() {
-  return gsap || _windowExists() && (gsap = window.gsap) && gsap.registerPlugin && gsap;
-},
-    _checkRegister = function _checkRegister() {
-  if (!_coreInitted) {
-    _initCore();
+  _coreInitted,
+  _win,
+  _doc,
+  CSSPlugin,
+  _windowExists = function _windowExists() {
+    return typeof window !== "undefined";
+  },
+  _getGSAP = function _getGSAP() {
+    return (
+      gsap ||
+      (_windowExists() && (gsap = window.gsap) && gsap.registerPlugin && gsap)
+    );
+  },
+  _checkRegister = function _checkRegister() {
+    if (!_coreInitted) {
+      _initCore();
 
-    if (!CSSPlugin) {
-      console.warn("Please gsap.registerPlugin(CSSPlugin, CSSRulePlugin)");
+      if (!CSSPlugin) {
+        console.warn("Please gsap.registerPlugin(CSSPlugin, CSSRulePlugin)");
+      }
     }
-  }
 
-  return _coreInitted;
-},
-    _initCore = function _initCore(core) {
-  gsap = core || _getGSAP();
+    return _coreInitted;
+  },
+  _initCore = function _initCore(core) {
+    gsap = core || _getGSAP();
 
-  if (_windowExists()) {
-    _win = window;
-    _doc = document;
-  }
-
-  if (gsap) {
-    CSSPlugin = gsap.plugins.css;
-
-    if (CSSPlugin) {
-      _coreInitted = 1;
+    if (_windowExists()) {
+      _win = window;
+      _doc = document;
     }
-  }
-};
+
+    if (gsap) {
+      CSSPlugin = gsap.plugins.css;
+
+      if (CSSPlugin) {
+        _coreInitted = 1;
+      }
+    }
+  };
 
 export var CSSRulePlugin = {
   version: "3.12.5",
@@ -56,7 +59,7 @@ export var CSSRulePlugin = {
       return false;
     }
 
-    var div = target._gsProxy = target._gsProxy || _doc.createElement("div");
+    var div = (target._gsProxy = target._gsProxy || _doc.createElement("div"));
 
     this.ss = target;
     this.style = div.style;
@@ -65,9 +68,9 @@ export var CSSRulePlugin = {
   },
   render: function render(ratio, data) {
     var pt = data._pt,
-        style = data.style,
-        ss = data.ss,
-        i;
+      style = data.style,
+      ss = data.ss,
+      i;
 
     while (pt) {
       pt.r(ratio, pt.d);
@@ -84,14 +87,15 @@ export var CSSRulePlugin = {
     _checkRegister();
 
     var ruleProp = _doc.all ? "rules" : "cssRules",
-        styleSheets = _doc.styleSheets,
-        i = styleSheets.length,
-        pseudo = selector.charAt(0) === ":",
-        j,
-        curSS,
-        cs,
-        a;
-    selector = (pseudo ? "" : ",") + selector.split("::").join(":").toLowerCase() + ","; //note: old versions of IE report tag name selectors as upper case, so we just change everything to lowercase.
+      styleSheets = _doc.styleSheets,
+      i = styleSheets.length,
+      pseudo = selector.charAt(0) === ":",
+      j,
+      curSS,
+      cs,
+      a;
+    selector =
+      (pseudo ? "" : ",") + selector.split("::").join(":").toLowerCase() + ","; //note: old versions of IE report tag name selectors as upper case, so we just change everything to lowercase.
 
     if (pseudo) {
       a = [];
@@ -115,7 +119,14 @@ export var CSSRulePlugin = {
       while (--j > -1) {
         cs = curSS[j];
 
-        if (cs.selectorText && ("," + cs.selectorText.split("::").join(":").toLowerCase() + ",").indexOf(selector) !== -1) {
+        if (
+          cs.selectorText &&
+          (
+            "," +
+            cs.selectorText.split("::").join(":").toLowerCase() +
+            ","
+          ).indexOf(selector) !== -1
+        ) {
           //note: IE adds an extra ":" to pseudo selectors, so .myClass:after becomes .myClass::after, so we need to strip the extra one out.
           if (pseudo) {
             a.push(cs.style);
@@ -128,7 +139,7 @@ export var CSSRulePlugin = {
 
     return a;
   },
-  register: _initCore
+  register: _initCore,
 };
 _getGSAP() && gsap.registerPlugin(CSSRulePlugin);
 export { CSSRulePlugin as default };
