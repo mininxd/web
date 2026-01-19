@@ -28,7 +28,7 @@ export function initMasonry(containerSelector) {
 export function updateMasonry() {
   if (masonryInstance) {
     // Add a class to temporarily disable transitions during layout update
-    document.body.classList.add('masonry-updating');
+    document.body.classList.add("masonry-updating");
 
     // Force immediate layout update without waiting for images
     setTimeout(() => {
@@ -37,7 +37,7 @@ export function updateMasonry() {
 
       // Remove the class after layout settles to restore transitions
       setTimeout(() => {
-        document.body.classList.remove('masonry-updating');
+        document.body.classList.remove("masonry-updating");
       }, 50); // Slightly longer delay to ensure layout is stable
     }, 100);
   }
@@ -51,10 +51,10 @@ export function destroyMasonry() {
 }
 
 // Make updateMasonry globally available for use in other scripts
-window.updateMasonryLayout = function() {
+window.updateMasonryLayout = function () {
   if (masonryInstance) {
     // Add a class to temporarily disable transitions during layout update
-    document.body.classList.add('masonry-updating');
+    document.body.classList.add("masonry-updating");
 
     // Force immediate layout update without waiting for images
     setTimeout(() => {
@@ -63,7 +63,7 @@ window.updateMasonryLayout = function() {
 
       // Remove the class after layout settles to restore transitions
       setTimeout(() => {
-        document.body.classList.remove('masonry-updating');
+        document.body.classList.remove("masonry-updating");
       }, 30); // Slightly longer delay to ensure layout is stable
     }, 100);
   }

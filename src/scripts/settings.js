@@ -25,7 +25,7 @@ if (inputFontSize) {
       `${size}px`,
     );
     localStorage.setItem("stickerFontSize", size);
-    
+
     // Update masonry layout when font size changes
     if (window.updateMasonryLayout) {
       window.updateMasonryLayout();

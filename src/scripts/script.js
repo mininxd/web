@@ -41,7 +41,8 @@ if (localStorage.getItem("QRIS_Utama")) {
 
     // Check if merchant should be hidden based on saved setting
     const savedShowMerchant = localStorage.getItem("stickerShowMerchant");
-    const isMerchantEnabled = savedShowMerchant === null ? true : savedShowMerchant === "true";
+    const isMerchantEnabled =
+      savedShowMerchant === null ? true : savedShowMerchant === "true";
 
     if (!isMerchantEnabled) {
       document.documentElement.classList.add("hide-merchant");

@@ -126,7 +126,7 @@ export function parseQrisData(qrisCode) {
 
     // Find ID type
     const searchId = qrisCode.search("A01");
-    const id = (searchId === -1) ? "01" : "A01";
+    const id = searchId === -1 ? "01" : "A01";
 
     // Extract merchant name using the same logic as in original dataQris
     let merchantSection = getBetween(qrisCode, "ID59", "60");
@@ -156,8 +156,13 @@ export function parseQrisData(qrisCode) {
       const getPencetak = qrisCode.match(/(?<=ID|COM).+?(?=0118)/g);
       if (getPencetak && getPencetak.length > 0) {
         const jmlPencetak = getPencetak.length;
-        const getNamePencetak = getPencetak[jmlPencetak - 1].split('.');
-        pencetak = (getNamePencetak.length == 3) ? getNamePencetak[1] : (getNamePencetak.length > 1 ? getNamePencetak[getNamePencetak.length - 1] : getNamePencetak[0]);
+        const getNamePencetak = getPencetak[jmlPencetak - 1].split(".");
+        pencetak =
+          getNamePencetak.length == 3
+            ? getNamePencetak[1]
+            : getNamePencetak.length > 1
+              ? getNamePencetak[getNamePencetak.length - 1]
+              : getNamePencetak[0];
       }
     } catch (e) {
       // If regex fails, default to unknown
@@ -188,7 +193,7 @@ export function parseQrisData(qrisCode) {
       merchantName: merchantName,
       pencetak: pencetak,
       nns: nns,
-      crc: crcValid
+      crc: crcValid,
     };
   } catch (e) {
     console.error("Error parsing QRIS data:", e);
@@ -198,7 +203,7 @@ export function parseQrisData(qrisCode) {
       merchantName: "Invalid QRIS Code",
       pencetak: "",
       nns: "",
-      crc: false
+      crc: false,
     };
   }
 }
