@@ -1,10 +1,3 @@
-@import url("./navbar.css");
-@import url("./canvas.css");
-@import url("./fonts.css");
-
-@import "tailwindcss";
-@plugin "daisyui";
-
 * {
   scroll-behavior: smooth;
   transition: all 0.1s ease-out;
@@ -136,3 +129,4 @@ input[type="checkbox"]:checked + label .deleteListItem .delItem:nth-child(2) {
 .hide-merchant .namaToko {
   display: none;
 }
+

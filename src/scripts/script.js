@@ -8,6 +8,13 @@ import "./isDesktop.js";
 import "./deleteList.js";
 import "./settings.js";
 import "remixicon/fonts/remixicon.css";
+
+import "../styles/navbar.css";
+import "../styles/canvas.css";
+import "../styles/fonts.css";
+import "../styles/theme.css";
+
+
 // Define global variables for elements used in imported modules
 const submitTambahItem = document.getElementById("submitTambahItem");
 const inputNamaItem = document.getElementById("inputNamaItem");
