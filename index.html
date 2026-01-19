@@ -5,33 +5,39 @@
   <title>QRIS Sticker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<script type="module" src="/js/script.js"></script>
+<script type="module" src="/src/scripts/script.js"></script>
 <script src="https://unpkg.com/html-to-image@latest/dist/html-to-image.js"></script>
 <script src="https://unpkg.com/file-saver@latest/dist/FileSaver.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 
 <link rel="icon" type="image/png" href="favicon.ico">
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/src/styles/style.css">
 </head>
 <body id="body" class="roboto-regular">
   
 <div id="loginFirst">
-  <div class="is-flex">
-  <h1 class="is-2 title">QRIS Sticker</h1>
+  <div class="flex justify-start">
+  <h1 class="text-3xl font-bold">QRIS Sticker</h1>
   </div>
-  <div id="loginWrapper" class="p-4 card">
-    <label>Upload QRIS atau QRIS Sticker</label>
-     <input id="fileInput" accept="image/*" type="file" class="input">
+  <div id="loginWrapper" class="p-4 card bg-base-100 shadow-xl">
+    <label class="label">
+      <span class="label-text">Upload QRIS atau QRIS Sticker</span>
+    </label>
+     <input id="fileInput" accept="image/*" type="file" class="file-input file-input-bordered w-full mb-4">
     <span id="fileInputMsg" class="msg"></span>
-    <br><br>
-    atau masukan kode QRIS manual
-    <input autocomplete="off" id="inputLogin" placeholder="0002010..." class="input is-fullwidth my-1">
-    <button id="submitLogin" class="button is-dark is-fullwidth">Login</button>
+
+    <div class="divider">ATAU</div>
+
+    <label class="label">
+      <span class="label-text">Masukan kode QRIS manual</span>
+    </label>
+    <input autocomplete="off" id="inputLogin" placeholder="0002010..." class="input input-bordered w-full mb-4">
+    <button id="submitLogin" class="btn btn-neutral w-full">Login</button>
     <span id="submitLoginMsg" class="msg"></span>
     <br>
   </div>
   <br>
-  <center style="opacity:0.90">mininxd 2024 - Present.</center>
+  <div class="text-center opacity-90">mininxd 2024 - Present.</div>
 </div>
   
   
@@ -42,16 +48,16 @@
 
 <div style="display:none" id="content">
   <div class="header">
-<h1 class="is-3 subtitle">Halo,</h1>
-<h1 id="namaMerchant" class="is-2 is-skeleton title">Merchant</h1>
+<h1 class="text-xl font-bold">Halo,</h1>
+<h1 id="namaMerchant" class="text-3xl font-bold skeleton w-1/2 h-8">Merchant</h1>
 <span>Klik pada stiker untuk mendownload stiker satuan</span>
 </div>
 
 <div id="navbar" class="flex md:justify-start justify-around px-1">
-<button class="js-modal-trigger button p-2 md:w-[75px] w-full is-dark" data-target="modalBuatStiker"><i class="ri-add-fill"></i></button>
-  <button class="js-modal-trigger button p-2 md:w-[75px] w-full is-dark" data-target="modalGantiQris"><i class="ri-reset-left-fill"></i></button>
-  <button class="js-modal-trigger button p-2 md:w-[75px] w-full is-dark" data-target="modalFontSize"><i class="ri-settings-3-fill"></i></button>
-<button class="js-modal-trigger button p-2 md:w-[75px] w-full is-danger" data-target="modalLogout"><i class="ri-expand-right-line"></i></button>
+<button class="js-modal-trigger btn p-2 md:w-[75px] w-full btn-neutral" data-target="modalBuatStiker"><i class="ri-add-fill"></i></button>
+  <button class="js-modal-trigger btn p-2 md:w-[75px] w-full btn-neutral" data-target="modalGantiQris"><i class="ri-reset-left-fill"></i></button>
+  <button class="js-modal-trigger btn p-2 md:w-[75px] w-full btn-neutral" data-target="modalFontSize"><i class="ri-settings-3-fill"></i></button>
+<button class="js-modal-trigger btn p-2 md:w-[75px] w-full btn-error text-white" data-target="modalLogout"><i class="ri-expand-right-line"></i></button>
 </div>
 
 
@@ -61,8 +67,8 @@
 </div>
 
 <div id="">
-<button id="downloadAll" class="button is-dark">Download Semua Stiker (.png)</button>
-<button id="hapusItem" class="js-modal-trigger button is-danger" data-target="modalHapusItem">Hapus Item</button>
+<button id="downloadAll" class="btn btn-neutral">Download Semua Stiker (.png)</button>
+<button id="hapusItem" class="js-modal-trigger btn btn-error text-white" data-target="modalHapusItem">Hapus Item</button>
 </div>
 </div>
 </div>
@@ -70,79 +76,85 @@
 </div>
 
 
+<!-- Modals -->
 
 <div id="modalBuatStiker" class="modal">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-      <div class="p-3 card">
-        <h1 class="is-3 title">Buat Stiker</h1>
-        <input id="inputNamaItem" autocomplete="off" placeholder="Nama" class="input is-fullwidth my-1">
-        <input id="inputHargaItem" type="number" autocomplete="off" placeholder="Harga" class="input is-fullwidth my-1">
-        <button id="submitTambahItem" class="button is-fullwidth is-dark">Buat</button>
+  <div class="modal-box">
+        <h1 class="text-xl font-bold">Buat Stiker</h1>
+        <input id="inputNamaItem" autocomplete="off" placeholder="Nama" class="input input-bordered w-full my-1">
+        <input id="inputHargaItem" type="number" autocomplete="off" placeholder="Harga" class="input input-bordered w-full my-1">
+        <button id="submitTambahItem" class="btn w-full btn-neutral mt-2">Buat</button>
         <span class="msg" id="buatStikerMsg"></span>
-      </div>
   </div>
+  <form method="dialog" class="modal-backdrop">
+    <button class="modal-close">close</button>
+  </form>
 </div>
+
 <div id="modalLogout" class="modal">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <div class="p-3 card">
-        <h1 class="is-4 title">Keluar dengan hapus semua stiker?</h1>
-        <button id="submitLogoutHapus" class="button is-fullwidth is-danger">Hapus</button>
-        <button id="submitLogout" class="button is-fullwidth is-dark">Tidak</button>
-        <button id="submitLogoutCancel" class="button is-fullwidth is-dark">Batalkan</button>
-      </div>
+  <div class="modal-box">
+        <h1 class="text-lg font-bold">Keluar dengan hapus semua stiker?</h1>
+        <div class="flex flex-col gap-2 mt-4">
+        <button id="submitLogoutHapus" class="btn w-full btn-error text-white">Hapus</button>
+        <button id="submitLogout" class="btn w-full btn-neutral">Tidak</button>
+        <button id="submitLogoutCancel" class="btn w-full btn-neutral">Batalkan</button>
+        </div>
   </div>
+   <form method="dialog" class="modal-backdrop">
+    <button class="modal-close">close</button>
+  </form>
 </div>
+
 <div id="modalGantiQris" class="modal">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-      <div class="p-3 card">
-        <h1 class="is-3 title">Ubah Kode QRIS</h1>
+  <div class="modal-box">
+        <h1 class="text-xl font-bold">Ubah Kode QRIS</h1>
         <label>Upload QRIS</label>
-        <input id="uploadGantiQris" accept="image/*" type="file" class="input">
+        <input id="uploadGantiQris" accept="image/*" type="file" class="file-input file-input-bordered w-full my-1">
         <span id="uploadGantiQrisMsg" class="msg"></span>
         <br><br>
         atau masukan kode QRIS manual
-        <input id="inputGantiQris" autocomplete="off" placeholder="Kode QRIS baru" class="input is-fullwidth my-1">
-        <button id="submitGantiQris" class="button is-fullwidth is-dark">Ubah</button>
-          <span id="gantiQrisMsg" class="msg is-danger">Sticker yang tersimpan tidak terubah dengan kode QRIS baru</span>
-      </div>
+        <input id="inputGantiQris" autocomplete="off" placeholder="Kode QRIS baru" class="input input-bordered w-full my-1">
+        <button id="submitGantiQris" class="btn w-full btn-neutral mt-2">Ubah</button>
+          <span id="gantiQrisMsg" class="msg text-error">Sticker yang tersimpan tidak terubah dengan kode QRIS baru</span>
   </div>
+   <form method="dialog" class="modal-backdrop">
+    <button class="modal-close">close</button>
+  </form>
 </div>
+
 <div id="modalHapusItem" class="modal">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-      <div class="p-3 card">
-          <h1 class="is-3 title">Hapus Item</h1>
+  <div class="modal-box">
+          <h1 class="text-xl font-bold">Hapus Item</h1>
       <ul id="itemListToDelete">
       </ul>
-      <button id="deleteItemBtn" class="is-fullwidth button is-dark">OK</button><br>
+      <button id="deleteItemBtn" class="w-full btn btn-neutral mt-2">OK</button><br>
 <span class="">Experimental, <br> Coba hapus item satu per satu untuk menghindari terhapus semua</span>
-      </div>
   </div>
+   <form method="dialog" class="modal-backdrop">
+    <button class="modal-close">close</button>
+  </form>
 </div>
+
 <div id="modalFontSize" class="modal">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-      <div class="p-3 card">
-        <h1 class="is-3 title">Pengaturan</h1>
+  <div class="modal-box">
+        <h1 class="text-xl font-bold">Pengaturan</h1>
 
         <label>Ukuran Font</label>
-        <input id="inputFontSize" type="range" min="8" max="40" step="1" class="input is-fullwidth">
-        <div class="has-text-centered">
-          <span id="valueFontSize" class="title is-4">16px</span>
+        <input id="inputFontSize" type="range" min="8" max="40" step="1" class="range w-full">
+        <div class="text-center">
+          <span id="valueFontSize" class="text-xl font-bold">16px</span>
         </div>
         <br>
-        <label class="checkbox">
-          <input id="inputShowCurrency" type="checkbox" checked>
-          Tampilkan Mata Uang (Rp)
+        <label class="label cursor-pointer justify-start gap-2">
+          <input id="inputShowCurrency" type="checkbox" checked class="checkbox">
+          <span class="label-text">Tampilkan Mata Uang (Rp)</span>
         </label>
         <br><br>
-        <button class="button is-fullwidth is-dark" aria-label="close">OK</button>
-      </div>
+        <button class="btn w-full btn-neutral modal-close" aria-label="close">OK</button>
   </div>
-  <button class="modal-close is-large" aria-label="close"></button>
+   <form method="dialog" class="modal-backdrop">
+    <button class="modal-close">close</button>
+  </form>
 </div>
 </body>
 </html>

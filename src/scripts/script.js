@@ -1,6 +1,6 @@
 import QRCode from "qrcode";
-import {qris} from "/src/lib/qris.js";
-import "/lib/modal.js";
+import {qris} from "../lib/qris.js";
+import "../lib/modal.js";
 import "./login.js";
 import "./localStorage.js";
 import "./canvas.js";
@@ -39,7 +39,7 @@ downloadAll.disabled = false;
 downloadAll.classList.remove("is-loading");
 
 namaMerchant.innerHTML = data.merchant;
-namaMerchant.classList.remove("is-skeleton");
+namaMerchant.classList.remove("skeleton");
 
 downloadAll.addEventListener("click", () => {
   downloadAll.classList.add("is-loading");
@@ -83,7 +83,7 @@ submitLogoutHapus.addEventListener('click', () => {
 submitLogoutCancel.addEventListener('click', () => {
   // Close the logout modal by removing the 'is-active' class
   const logoutModal = document.getElementById('modalLogout');
-  logoutModal.classList.remove('is-active');
+  logoutModal.classList.remove('modal-open');
 })
 
 submitGantiQris.addEventListener("click", () => {
@@ -91,7 +91,7 @@ submitGantiQris.addEventListener("click", () => {
   if(inputGantiQris.value.length < 1) {
   gantiQrisMsg.innerHTML = "Field masih kosong"
   submitGantiQris.classList.remove("is-loading")
-  gantiQrisMsg.classList.remove("is-danger")
+  gantiQrisMsg.classList.remove("text-error")
   } else {
   setTimeout(() => {
   localStorage.setItem("QRIS_Utama", inputGantiQris.value);

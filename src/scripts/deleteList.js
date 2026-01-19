@@ -52,7 +52,7 @@ for (let i = 0; i < Number(stickerLength); i++) {
 const li = document.createElement('li');
 
 const input = document.createElement('input');
-input.classList.add('is-hidden');
+input.classList.add('hidden');
 input.id = `delItem${i}`;
 input.value = `${i}.qris.${stickerData[i].nama}`;
 input.type = 'checkbox';
