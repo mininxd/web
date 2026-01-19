@@ -1,7 +1,4 @@
-import {
-  __commonJS,
-  __toESM
-} from "./chunk-5WRI5ZAA.js";
+import { __commonJS, __toESM } from "./chunk-5WRI5ZAA.js";
 
 // node_modules/jsqr/dist/jsQR.js
 var require_jsQR = __commonJS({
@@ -9,37 +6,39 @@ var require_jsQR = __commonJS({
     (function webpackUniversalModuleDefinition(root, factory) {
       if (typeof exports === "object" && typeof module === "object")
         module.exports = factory();
-      else if (typeof define === "function" && define.amd)
-        define([], factory);
-      else if (typeof exports === "object")
-        exports["jsQR"] = factory();
-      else
-        root["jsQR"] = factory();
-    })(typeof self !== "undefined" ? self : exports, function() {
+      else if (typeof define === "function" && define.amd) define([], factory);
+      else if (typeof exports === "object") exports["jsQR"] = factory();
+      else root["jsQR"] = factory();
+    })(typeof self !== "undefined" ? self : exports, function () {
       return (
         /******/
-        function(modules) {
+        (function (modules) {
           var installedModules = {};
           function __webpack_require__(moduleId) {
             if (installedModules[moduleId]) {
               return installedModules[moduleId].exports;
             }
-            var module2 = installedModules[moduleId] = {
+            var module2 = (installedModules[moduleId] = {
               /******/
               i: moduleId,
               /******/
               l: false,
               /******/
-              exports: {}
+              exports: {},
               /******/
-            };
-            modules[moduleId].call(module2.exports, module2, module2.exports, __webpack_require__);
+            });
+            modules[moduleId].call(
+              module2.exports,
+              module2,
+              module2.exports,
+              __webpack_require__,
+            );
             module2.l = true;
             return module2.exports;
           }
           __webpack_require__.m = modules;
           __webpack_require__.c = installedModules;
-          __webpack_require__.d = function(exports2, name, getter) {
+          __webpack_require__.d = function (exports2, name, getter) {
             if (!__webpack_require__.o(exports2, name)) {
               Object.defineProperty(exports2, name, {
                 /******/
@@ -47,58 +46,66 @@ var require_jsQR = __commonJS({
                 /******/
                 enumerable: true,
                 /******/
-                get: getter
+                get: getter,
                 /******/
               });
             }
           };
-          __webpack_require__.n = function(module2) {
-            var getter = module2 && module2.__esModule ? (
-              /******/
-              function getDefault() {
-                return module2["default"];
-              }
-            ) : (
-              /******/
-              function getModuleExports() {
-                return module2;
-              }
-            );
+          __webpack_require__.n = function (module2) {
+            var getter =
+              module2 && module2.__esModule
+                ? /******/
+                  function getDefault() {
+                    return module2["default"];
+                  }
+                : /******/
+                  function getModuleExports() {
+                    return module2;
+                  };
             __webpack_require__.d(getter, "a", getter);
             return getter;
           };
-          __webpack_require__.o = function(object, property) {
+          __webpack_require__.o = function (object, property) {
             return Object.prototype.hasOwnProperty.call(object, property);
           };
           __webpack_require__.p = "";
-          return __webpack_require__(__webpack_require__.s = 3);
-        }([
+          return __webpack_require__((__webpack_require__.s = 3));
+        })([
           /* 0 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
-            var BitMatrix = (
+            var BitMatrix =
               /** @class */
-              function() {
+              (function () {
                 function BitMatrix2(data, width) {
                   this.width = width;
                   this.height = data.length / width;
                   this.data = data;
                 }
-                BitMatrix2.createEmpty = function(width, height) {
-                  return new BitMatrix2(new Uint8ClampedArray(width * height), width);
+                BitMatrix2.createEmpty = function (width, height) {
+                  return new BitMatrix2(
+                    new Uint8ClampedArray(width * height),
+                    width,
+                  );
                 };
-                BitMatrix2.prototype.get = function(x, y) {
+                BitMatrix2.prototype.get = function (x, y) {
                   if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
                     return false;
                   }
                   return !!this.data[y * this.width + x];
                 };
-                BitMatrix2.prototype.set = function(x, y, v) {
+                BitMatrix2.prototype.set = function (x, y, v) {
                   this.data[y * this.width + x] = v ? 1 : 0;
                 };
-                BitMatrix2.prototype.setRegion = function(left, top, width, height, v) {
+                BitMatrix2.prototype.setRegion = function (
+                  left,
+                  top,
+                  width,
+                  height,
+                  v,
+                ) {
                   for (var y = top; y < top + height; y++) {
                     for (var x = left; x < left + width; x++) {
                       this.set(x, y, !!v);
@@ -106,13 +113,12 @@ var require_jsQR = __commonJS({
                   }
                 };
                 return BitMatrix2;
-              }()
-            );
+              })();
             exports2.BitMatrix = BitMatrix;
           },
           /* 1 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
             var GenericGFPoly_1 = __webpack_require__(2);
@@ -120,9 +126,9 @@ var require_jsQR = __commonJS({
               return a ^ b;
             }
             exports2.addOrSubtractGF = addOrSubtractGF;
-            var GenericGF = (
+            var GenericGF =
               /** @class */
-              function() {
+              (function () {
                 function GenericGF2(primitive, size, genBase) {
                   this.primitive = primitive;
                   this.size = size;
@@ -134,28 +140,39 @@ var require_jsQR = __commonJS({
                     this.expTable[i] = x;
                     x = x * 2;
                     if (x >= this.size) {
-                      x = (x ^ this.primitive) & this.size - 1;
+                      x = (x ^ this.primitive) & (this.size - 1);
                     }
                   }
                   for (var i = 0; i < this.size - 1; i++) {
                     this.logTable[this.expTable[i]] = i;
                   }
-                  this.zero = new GenericGFPoly_1.default(this, Uint8ClampedArray.from([0]));
-                  this.one = new GenericGFPoly_1.default(this, Uint8ClampedArray.from([1]));
+                  this.zero = new GenericGFPoly_1.default(
+                    this,
+                    Uint8ClampedArray.from([0]),
+                  );
+                  this.one = new GenericGFPoly_1.default(
+                    this,
+                    Uint8ClampedArray.from([1]),
+                  );
                 }
-                GenericGF2.prototype.multiply = function(a, b) {
+                GenericGF2.prototype.multiply = function (a, b) {
                   if (a === 0 || b === 0) {
                     return 0;
                   }
-                  return this.expTable[(this.logTable[a] + this.logTable[b]) % (this.size - 1)];
+                  return this.expTable[
+                    (this.logTable[a] + this.logTable[b]) % (this.size - 1)
+                  ];
                 };
-                GenericGF2.prototype.inverse = function(a) {
+                GenericGF2.prototype.inverse = function (a) {
                   if (a === 0) {
                     throw new Error("Can't invert 0");
                   }
                   return this.expTable[this.size - this.logTable[a] - 1];
                 };
-                GenericGF2.prototype.buildMonomial = function(degree, coefficient) {
+                GenericGF2.prototype.buildMonomial = function (
+                  degree,
+                  coefficient,
+                ) {
                   if (degree < 0) {
                     throw new Error("Invalid monomial degree less than 0");
                   }
@@ -166,29 +183,28 @@ var require_jsQR = __commonJS({
                   coefficients[0] = coefficient;
                   return new GenericGFPoly_1.default(this, coefficients);
                 };
-                GenericGF2.prototype.log = function(a) {
+                GenericGF2.prototype.log = function (a) {
                   if (a === 0) {
                     throw new Error("Can't take log(0)");
                   }
                   return this.logTable[a];
                 };
-                GenericGF2.prototype.exp = function(a) {
+                GenericGF2.prototype.exp = function (a) {
                   return this.expTable[a];
                 };
                 return GenericGF2;
-              }()
-            );
+              })();
             exports2.default = GenericGF;
           },
           /* 2 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
             var GenericGF_1 = __webpack_require__(1);
-            var GenericGFPoly = (
+            var GenericGFPoly =
               /** @class */
-              function() {
+              (function () {
                 function GenericGFPoly2(field, coefficients) {
                   if (coefficients.length === 0) {
                     throw new Error("No coefficients.");
@@ -197,13 +213,18 @@ var require_jsQR = __commonJS({
                   var coefficientsLength = coefficients.length;
                   if (coefficientsLength > 1 && coefficients[0] === 0) {
                     var firstNonZero = 1;
-                    while (firstNonZero < coefficientsLength && coefficients[firstNonZero] === 0) {
+                    while (
+                      firstNonZero < coefficientsLength &&
+                      coefficients[firstNonZero] === 0
+                    ) {
                       firstNonZero++;
                     }
                     if (firstNonZero === coefficientsLength) {
                       this.coefficients = field.zero.coefficients;
                     } else {
-                      this.coefficients = new Uint8ClampedArray(coefficientsLength - firstNonZero);
+                      this.coefficients = new Uint8ClampedArray(
+                        coefficientsLength - firstNonZero,
+                      );
                       for (var i = 0; i < this.coefficients.length; i++) {
                         this.coefficients[i] = coefficients[firstNonZero + i];
                       }
@@ -212,16 +233,18 @@ var require_jsQR = __commonJS({
                     this.coefficients = coefficients;
                   }
                 }
-                GenericGFPoly2.prototype.degree = function() {
+                GenericGFPoly2.prototype.degree = function () {
                   return this.coefficients.length - 1;
                 };
-                GenericGFPoly2.prototype.isZero = function() {
+                GenericGFPoly2.prototype.isZero = function () {
                   return this.coefficients[0] === 0;
                 };
-                GenericGFPoly2.prototype.getCoefficient = function(degree) {
-                  return this.coefficients[this.coefficients.length - 1 - degree];
+                GenericGFPoly2.prototype.getCoefficient = function (degree) {
+                  return this.coefficients[
+                    this.coefficients.length - 1 - degree
+                  ];
                 };
-                GenericGFPoly2.prototype.addOrSubtract = function(other) {
+                GenericGFPoly2.prototype.addOrSubtract = function (other) {
                   var _a;
                   if (this.isZero()) {
                     return other;
@@ -232,19 +255,27 @@ var require_jsQR = __commonJS({
                   var smallerCoefficients = this.coefficients;
                   var largerCoefficients = other.coefficients;
                   if (smallerCoefficients.length > largerCoefficients.length) {
-                    _a = [largerCoefficients, smallerCoefficients], smallerCoefficients = _a[0], largerCoefficients = _a[1];
+                    ((_a = [largerCoefficients, smallerCoefficients]),
+                      (smallerCoefficients = _a[0]),
+                      (largerCoefficients = _a[1]));
                   }
-                  var sumDiff = new Uint8ClampedArray(largerCoefficients.length);
-                  var lengthDiff = largerCoefficients.length - smallerCoefficients.length;
+                  var sumDiff = new Uint8ClampedArray(
+                    largerCoefficients.length,
+                  );
+                  var lengthDiff =
+                    largerCoefficients.length - smallerCoefficients.length;
                   for (var i = 0; i < lengthDiff; i++) {
                     sumDiff[i] = largerCoefficients[i];
                   }
                   for (var i = lengthDiff; i < largerCoefficients.length; i++) {
-                    sumDiff[i] = GenericGF_1.addOrSubtractGF(smallerCoefficients[i - lengthDiff], largerCoefficients[i]);
+                    sumDiff[i] = GenericGF_1.addOrSubtractGF(
+                      smallerCoefficients[i - lengthDiff],
+                      largerCoefficients[i],
+                    );
                   }
                   return new GenericGFPoly2(this.field, sumDiff);
                 };
-                GenericGFPoly2.prototype.multiply = function(scalar) {
+                GenericGFPoly2.prototype.multiply = function (scalar) {
                   if (scalar === 0) {
                     return this.field.zero;
                   }
@@ -254,11 +285,14 @@ var require_jsQR = __commonJS({
                   var size = this.coefficients.length;
                   var product = new Uint8ClampedArray(size);
                   for (var i = 0; i < size; i++) {
-                    product[i] = this.field.multiply(this.coefficients[i], scalar);
+                    product[i] = this.field.multiply(
+                      this.coefficients[i],
+                      scalar,
+                    );
                   }
                   return new GenericGFPoly2(this.field, product);
                 };
-                GenericGFPoly2.prototype.multiplyPoly = function(other) {
+                GenericGFPoly2.prototype.multiplyPoly = function (other) {
                   if (this.isZero() || other.isZero()) {
                     return this.field.zero;
                   }
@@ -270,12 +304,18 @@ var require_jsQR = __commonJS({
                   for (var i = 0; i < aLength; i++) {
                     var aCoeff = aCoefficients[i];
                     for (var j = 0; j < bLength; j++) {
-                      product[i + j] = GenericGF_1.addOrSubtractGF(product[i + j], this.field.multiply(aCoeff, bCoefficients[j]));
+                      product[i + j] = GenericGF_1.addOrSubtractGF(
+                        product[i + j],
+                        this.field.multiply(aCoeff, bCoefficients[j]),
+                      );
                     }
                   }
                   return new GenericGFPoly2(this.field, product);
                 };
-                GenericGFPoly2.prototype.multiplyByMonomial = function(degree, coefficient) {
+                GenericGFPoly2.prototype.multiplyByMonomial = function (
+                  degree,
+                  coefficient,
+                ) {
                   if (degree < 0) {
                     throw new Error("Invalid degree less than 0");
                   }
@@ -285,36 +325,41 @@ var require_jsQR = __commonJS({
                   var size = this.coefficients.length;
                   var product = new Uint8ClampedArray(size + degree);
                   for (var i = 0; i < size; i++) {
-                    product[i] = this.field.multiply(this.coefficients[i], coefficient);
+                    product[i] = this.field.multiply(
+                      this.coefficients[i],
+                      coefficient,
+                    );
                   }
                   return new GenericGFPoly2(this.field, product);
                 };
-                GenericGFPoly2.prototype.evaluateAt = function(a) {
+                GenericGFPoly2.prototype.evaluateAt = function (a) {
                   var result = 0;
                   if (a === 0) {
                     return this.getCoefficient(0);
                   }
                   var size = this.coefficients.length;
                   if (a === 1) {
-                    this.coefficients.forEach(function(coefficient) {
+                    this.coefficients.forEach(function (coefficient) {
                       result = GenericGF_1.addOrSubtractGF(result, coefficient);
                     });
                     return result;
                   }
                   result = this.coefficients[0];
                   for (var i = 1; i < size; i++) {
-                    result = GenericGF_1.addOrSubtractGF(this.field.multiply(a, result), this.coefficients[i]);
+                    result = GenericGF_1.addOrSubtractGF(
+                      this.field.multiply(a, result),
+                      this.coefficients[i],
+                    );
                   }
                   return result;
                 };
                 return GenericGFPoly2;
-              }()
-            );
+              })();
             exports2.default = GenericGFPoly;
           },
           /* 3 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
             var binarizer_1 = __webpack_require__(4);
@@ -326,7 +371,11 @@ var require_jsQR = __commonJS({
               if (!locations) {
                 return null;
               }
-              for (var _i = 0, locations_1 = locations; _i < locations_1.length; _i++) {
+              for (
+                var _i = 0, locations_1 = locations;
+                _i < locations_1.length;
+                _i++
+              ) {
                 var location_1 = locations_1[_i];
                 var extracted = extractor_1.extract(matrix, location_1);
                 var decoded = decoder_1.decode(extracted.matrix);
@@ -337,36 +386,55 @@ var require_jsQR = __commonJS({
                     chunks: decoded.chunks,
                     version: decoded.version,
                     location: {
-                      topRightCorner: extracted.mappingFunction(location_1.dimension, 0),
+                      topRightCorner: extracted.mappingFunction(
+                        location_1.dimension,
+                        0,
+                      ),
                       topLeftCorner: extracted.mappingFunction(0, 0),
-                      bottomRightCorner: extracted.mappingFunction(location_1.dimension, location_1.dimension),
-                      bottomLeftCorner: extracted.mappingFunction(0, location_1.dimension),
+                      bottomRightCorner: extracted.mappingFunction(
+                        location_1.dimension,
+                        location_1.dimension,
+                      ),
+                      bottomLeftCorner: extracted.mappingFunction(
+                        0,
+                        location_1.dimension,
+                      ),
                       topRightFinderPattern: location_1.topRight,
                       topLeftFinderPattern: location_1.topLeft,
                       bottomLeftFinderPattern: location_1.bottomLeft,
-                      bottomRightAlignmentPattern: location_1.alignmentPattern
-                    }
+                      bottomRightAlignmentPattern: location_1.alignmentPattern,
+                    },
                   };
                 }
               }
               return null;
             }
             var defaultOptions = {
-              inversionAttempts: "attemptBoth"
+              inversionAttempts: "attemptBoth",
             };
             function jsQR2(data, width, height, providedOptions) {
               if (providedOptions === void 0) {
                 providedOptions = {};
               }
               var options = defaultOptions;
-              Object.keys(options || {}).forEach(function(opt) {
+              Object.keys(options || {}).forEach(function (opt) {
                 options[opt] = providedOptions[opt] || options[opt];
               });
-              var shouldInvert = options.inversionAttempts === "attemptBoth" || options.inversionAttempts === "invertFirst";
-              var tryInvertedFirst = options.inversionAttempts === "onlyInvert" || options.inversionAttempts === "invertFirst";
-              var _a = binarizer_1.binarize(data, width, height, shouldInvert), binarized = _a.binarized, inverted = _a.inverted;
+              var shouldInvert =
+                options.inversionAttempts === "attemptBoth" ||
+                options.inversionAttempts === "invertFirst";
+              var tryInvertedFirst =
+                options.inversionAttempts === "onlyInvert" ||
+                options.inversionAttempts === "invertFirst";
+              var _a = binarizer_1.binarize(data, width, height, shouldInvert),
+                binarized = _a.binarized,
+                inverted = _a.inverted;
               var result = scan(tryInvertedFirst ? inverted : binarized);
-              if (!result && (options.inversionAttempts === "attemptBoth" || options.inversionAttempts === "invertFirst")) {
+              if (
+                !result &&
+                (options.inversionAttempts === "attemptBoth" ||
+                  options.inversionAttempts === "invertFirst")
+              ) {
                 result = scan(tryInvertedFirst ? binarized : inverted);
               }
               return result;
@@ -376,7 +444,7 @@ var require_jsQR = __commonJS({
           },
           /* 4 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
             var BitMatrix_1 = __webpack_require__(0);
@@ -385,22 +453,21 @@ var require_jsQR = __commonJS({
             function numBetween(value, min, max) {
               return value < min ? min : value > max ? max : value;
             }
-            var Matrix = (
+            var Matrix =
               /** @class */
-              function() {
+              (function () {
                 function Matrix2(width, height) {
                   this.width = width;
                   this.data = new Uint8ClampedArray(width * height);
                 }
-                Matrix2.prototype.get = function(x, y) {
+                Matrix2.prototype.get = function (x, y) {
                   return this.data[y * this.width + x];
                 };
-                Matrix2.prototype.set = function(x, y, value) {
+                Matrix2.prototype.set = function (x, y, value) {
                   this.data[y * this.width + x] = value;
                 };
                 return Matrix2;
-              }()
-            );
+              })();
             function binarize(data, width, height, returnInverted) {
               if (data.length !== width * height * 4) {
                 throw new Error("Malformed data passed to binarizer.");
@@ -411,20 +478,38 @@ var require_jsQR = __commonJS({
                   var r = data[(y * width + x) * 4 + 0];
                   var g = data[(y * width + x) * 4 + 1];
                   var b = data[(y * width + x) * 4 + 2];
-                  greyscalePixels.set(x, y, 0.2126 * r + 0.7152 * g + 0.0722 * b);
+                  greyscalePixels.set(
+                    x,
+                    y,
+                    0.2126 * r + 0.7152 * g + 0.0722 * b,
+                  );
                 }
               }
               var horizontalRegionCount = Math.ceil(width / REGION_SIZE);
               var verticalRegionCount = Math.ceil(height / REGION_SIZE);
-              var blackPoints = new Matrix(horizontalRegionCount, verticalRegionCount);
-              for (var verticalRegion = 0; verticalRegion < verticalRegionCount; verticalRegion++) {
-                for (var hortizontalRegion = 0; hortizontalRegion < horizontalRegionCount; hortizontalRegion++) {
+              var blackPoints = new Matrix(
+                horizontalRegionCount,
+                verticalRegionCount,
+              );
+              for (
+                var verticalRegion = 0;
+                verticalRegion < verticalRegionCount;
+                verticalRegion++
+              ) {
+                for (
+                  var hortizontalRegion = 0;
+                  hortizontalRegion < horizontalRegionCount;
+                  hortizontalRegion++
+                ) {
                   var sum = 0;
                   var min = Infinity;
                   var max = 0;
                   for (var y = 0; y < REGION_SIZE; y++) {
                     for (var x = 0; x < REGION_SIZE; x++) {
-                      var pixelLumosity = greyscalePixels.get(hortizontalRegion * REGION_SIZE + x, verticalRegion * REGION_SIZE + y);
+                      var pixelLumosity = greyscalePixels.get(
+                        hortizontalRegion * REGION_SIZE + x,
+                        verticalRegion * REGION_SIZE + y,
+                      );
                       sum += pixelLumosity;
                       min = Math.min(min, pixelLumosity);
                       max = Math.max(max, pixelLumosity);
@@ -434,7 +519,21 @@ var require_jsQR = __commonJS({
                   if (max - min <= MIN_DYNAMIC_RANGE) {
                     average = min / 2;
                     if (verticalRegion > 0 && hortizontalRegion > 0) {
-                      var averageNeighborBlackPoint = (blackPoints.get(hortizontalRegion, verticalRegion - 1) + 2 * blackPoints.get(hortizontalRegion - 1, verticalRegion) + blackPoints.get(hortizontalRegion - 1, verticalRegion - 1)) / 4;
+                      var averageNeighborBlackPoint =
+                        (blackPoints.get(
+                          hortizontalRegion,
+                          verticalRegion - 1,
+                        ) +
+                          2 *
+                            blackPoints.get(
+                              hortizontalRegion - 1,
+                              verticalRegion,
+                            ) +
+                          blackPoints.get(
+                            hortizontalRegion - 1,
+                            verticalRegion - 1,
+                          )) /
+                        4;
                       if (min < averageNeighborBlackPoint) {
                         average = averageNeighborBlackPoint;
                       }
@@ -448,10 +547,26 @@ var require_jsQR = __commonJS({
               if (returnInverted) {
                 inverted = BitMatrix_1.BitMatrix.createEmpty(width, height);
               }
-              for (var verticalRegion = 0; verticalRegion < verticalRegionCount; verticalRegion++) {
-                for (var hortizontalRegion = 0; hortizontalRegion < horizontalRegionCount; hortizontalRegion++) {
-                  var left = numBetween(hortizontalRegion, 2, horizontalRegionCount - 3);
-                  var top_1 = numBetween(verticalRegion, 2, verticalRegionCount - 3);
+              for (
+                var verticalRegion = 0;
+                verticalRegion < verticalRegionCount;
+                verticalRegion++
+              ) {
+                for (
+                  var hortizontalRegion = 0;
+                  hortizontalRegion < horizontalRegionCount;
+                  hortizontalRegion++
+                ) {
+                  var left = numBetween(
+                    hortizontalRegion,
+                    2,
+                    horizontalRegionCount - 3,
+                  );
+                  var top_1 = numBetween(
+                    verticalRegion,
+                    2,
+                    verticalRegionCount - 3,
+                  );
                   var sum = 0;
                   for (var xRegion = -2; xRegion <= 2; xRegion++) {
                     for (var yRegion = -2; yRegion <= 2; yRegion++) {
@@ -481,7 +596,7 @@ var require_jsQR = __commonJS({
           },
           /* 5 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
             var BitMatrix_1 = __webpack_require__(0);
@@ -498,79 +613,192 @@ var require_jsQR = __commonJS({
               return bitCount;
             }
             function pushBit(bit, byte) {
-              return byte << 1 | bit;
+              return (byte << 1) | bit;
             }
             var FORMAT_INFO_TABLE = [
-              { bits: 21522, formatInfo: { errorCorrectionLevel: 1, dataMask: 0 } },
-              { bits: 20773, formatInfo: { errorCorrectionLevel: 1, dataMask: 1 } },
-              { bits: 24188, formatInfo: { errorCorrectionLevel: 1, dataMask: 2 } },
-              { bits: 23371, formatInfo: { errorCorrectionLevel: 1, dataMask: 3 } },
-              { bits: 17913, formatInfo: { errorCorrectionLevel: 1, dataMask: 4 } },
-              { bits: 16590, formatInfo: { errorCorrectionLevel: 1, dataMask: 5 } },
-              { bits: 20375, formatInfo: { errorCorrectionLevel: 1, dataMask: 6 } },
-              { bits: 19104, formatInfo: { errorCorrectionLevel: 1, dataMask: 7 } },
-              { bits: 30660, formatInfo: { errorCorrectionLevel: 0, dataMask: 0 } },
-              { bits: 29427, formatInfo: { errorCorrectionLevel: 0, dataMask: 1 } },
-              { bits: 32170, formatInfo: { errorCorrectionLevel: 0, dataMask: 2 } },
-              { bits: 30877, formatInfo: { errorCorrectionLevel: 0, dataMask: 3 } },
-              { bits: 26159, formatInfo: { errorCorrectionLevel: 0, dataMask: 4 } },
-              { bits: 25368, formatInfo: { errorCorrectionLevel: 0, dataMask: 5 } },
-              { bits: 27713, formatInfo: { errorCorrectionLevel: 0, dataMask: 6 } },
-              { bits: 26998, formatInfo: { errorCorrectionLevel: 0, dataMask: 7 } },
-              { bits: 5769, formatInfo: { errorCorrectionLevel: 3, dataMask: 0 } },
-              { bits: 5054, formatInfo: { errorCorrectionLevel: 3, dataMask: 1 } },
-              { bits: 7399, formatInfo: { errorCorrectionLevel: 3, dataMask: 2 } },
-              { bits: 6608, formatInfo: { errorCorrectionLevel: 3, dataMask: 3 } },
-              { bits: 1890, formatInfo: { errorCorrectionLevel: 3, dataMask: 4 } },
-              { bits: 597, formatInfo: { errorCorrectionLevel: 3, dataMask: 5 } },
-              { bits: 3340, formatInfo: { errorCorrectionLevel: 3, dataMask: 6 } },
-              { bits: 2107, formatInfo: { errorCorrectionLevel: 3, dataMask: 7 } },
-              { bits: 13663, formatInfo: { errorCorrectionLevel: 2, dataMask: 0 } },
-              { bits: 12392, formatInfo: { errorCorrectionLevel: 2, dataMask: 1 } },
-              { bits: 16177, formatInfo: { errorCorrectionLevel: 2, dataMask: 2 } },
-              { bits: 14854, formatInfo: { errorCorrectionLevel: 2, dataMask: 3 } },
-              { bits: 9396, formatInfo: { errorCorrectionLevel: 2, dataMask: 4 } },
-              { bits: 8579, formatInfo: { errorCorrectionLevel: 2, dataMask: 5 } },
-              { bits: 11994, formatInfo: { errorCorrectionLevel: 2, dataMask: 6 } },
-              { bits: 11245, formatInfo: { errorCorrectionLevel: 2, dataMask: 7 } }
+              {
+                bits: 21522,
+                formatInfo: { errorCorrectionLevel: 1, dataMask: 0 },
+              },
+              {
+                bits: 20773,
+                formatInfo: { errorCorrectionLevel: 1, dataMask: 1 },
+              },
+              {
+                bits: 24188,
+                formatInfo: { errorCorrectionLevel: 1, dataMask: 2 },
+              },
+              {
+                bits: 23371,
+                formatInfo: { errorCorrectionLevel: 1, dataMask: 3 },
+              },
+              {
+                bits: 17913,
+                formatInfo: { errorCorrectionLevel: 1, dataMask: 4 },
+              },
+              {
+                bits: 16590,
+                formatInfo: { errorCorrectionLevel: 1, dataMask: 5 },
+              },
+              {
+                bits: 20375,
+                formatInfo: { errorCorrectionLevel: 1, dataMask: 6 },
+              },
+              {
+                bits: 19104,
+                formatInfo: { errorCorrectionLevel: 1, dataMask: 7 },
+              },
+              {
+                bits: 30660,
+                formatInfo: { errorCorrectionLevel: 0, dataMask: 0 },
+              },
+              {
+                bits: 29427,
+                formatInfo: { errorCorrectionLevel: 0, dataMask: 1 },
+              },
+              {
+                bits: 32170,
+                formatInfo: { errorCorrectionLevel: 0, dataMask: 2 },
+              },
+              {
+                bits: 30877,
+                formatInfo: { errorCorrectionLevel: 0, dataMask: 3 },
+              },
+              {
+                bits: 26159,
+                formatInfo: { errorCorrectionLevel: 0, dataMask: 4 },
+              },
+              {
+                bits: 25368,
+                formatInfo: { errorCorrectionLevel: 0, dataMask: 5 },
+              },
+              {
+                bits: 27713,
+                formatInfo: { errorCorrectionLevel: 0, dataMask: 6 },
+              },
+              {
+                bits: 26998,
+                formatInfo: { errorCorrectionLevel: 0, dataMask: 7 },
+              },
+              {
+                bits: 5769,
+                formatInfo: { errorCorrectionLevel: 3, dataMask: 0 },
+              },
+              {
+                bits: 5054,
+                formatInfo: { errorCorrectionLevel: 3, dataMask: 1 },
+              },
+              {
+                bits: 7399,
+                formatInfo: { errorCorrectionLevel: 3, dataMask: 2 },
+              },
+              {
+                bits: 6608,
+                formatInfo: { errorCorrectionLevel: 3, dataMask: 3 },
+              },
+              {
+                bits: 1890,
+                formatInfo: { errorCorrectionLevel: 3, dataMask: 4 },
+              },
+              {
+                bits: 597,
+                formatInfo: { errorCorrectionLevel: 3, dataMask: 5 },
+              },
+              {
+                bits: 3340,
+                formatInfo: { errorCorrectionLevel: 3, dataMask: 6 },
+              },
+              {
+                bits: 2107,
+                formatInfo: { errorCorrectionLevel: 3, dataMask: 7 },
+              },
+              {
+                bits: 13663,
+                formatInfo: { errorCorrectionLevel: 2, dataMask: 0 },
+              },
+              {
+                bits: 12392,
+                formatInfo: { errorCorrectionLevel: 2, dataMask: 1 },
+              },
+              {
+                bits: 16177,
+                formatInfo: { errorCorrectionLevel: 2, dataMask: 2 },
+              },
+              {
+                bits: 14854,
+                formatInfo: { errorCorrectionLevel: 2, dataMask: 3 },
+              },
+              {
+                bits: 9396,
+                formatInfo: { errorCorrectionLevel: 2, dataMask: 4 },
+              },
+              {
+                bits: 8579,
+                formatInfo: { errorCorrectionLevel: 2, dataMask: 5 },
+              },
+              {
+                bits: 11994,
+                formatInfo: { errorCorrectionLevel: 2, dataMask: 6 },
+              },
+              {
+                bits: 11245,
+                formatInfo: { errorCorrectionLevel: 2, dataMask: 7 },
+              },
             ];
             var DATA_MASKS = [
-              function(p) {
+              function (p) {
                 return (p.y + p.x) % 2 === 0;
               },
-              function(p) {
+              function (p) {
                 return p.y % 2 === 0;
               },
-              function(p) {
+              function (p) {
                 return p.x % 3 === 0;
               },
-              function(p) {
+              function (p) {
                 return (p.y + p.x) % 3 === 0;
               },
-              function(p) {
+              function (p) {
                 return (Math.floor(p.y / 2) + Math.floor(p.x / 3)) % 2 === 0;
               },
-              function(p) {
-                return p.x * p.y % 2 + p.x * p.y % 3 === 0;
+              function (p) {
+                return ((p.x * p.y) % 2) + ((p.x * p.y) % 3) === 0;
               },
-              function(p) {
-                return (p.y * p.x % 2 + p.y * p.x % 3) % 2 === 0;
+              function (p) {
+                return (((p.y * p.x) % 2) + ((p.y * p.x) % 3)) % 2 === 0;
               },
-              function(p) {
-                return ((p.y + p.x) % 2 + p.y * p.x % 3) % 2 === 0;
-              }
+              function (p) {
+                return (((p.y + p.x) % 2) + ((p.y * p.x) % 3)) % 2 === 0;
+              },
             ];
             function buildFunctionPatternMask(version) {
               var dimension = 17 + 4 * version.versionNumber;
-              var matrix = BitMatrix_1.BitMatrix.createEmpty(dimension, dimension);
+              var matrix = BitMatrix_1.BitMatrix.createEmpty(
+                dimension,
+                dimension,
+              );
               matrix.setRegion(0, 0, 9, 9, true);
               matrix.setRegion(dimension - 8, 0, 8, 9, true);
               matrix.setRegion(0, dimension - 8, 9, 8, true);
-              for (var _i = 0, _a = version.alignmentPatternCenters; _i < _a.length; _i++) {
+              for (
+                var _i = 0, _a = version.alignmentPatternCenters;
+                _i < _a.length;
+                _i++
+              ) {
                 var x = _a[_i];
-                for (var _b = 0, _c = version.alignmentPatternCenters; _b < _c.length; _b++) {
+                for (
+                  var _b = 0, _c = version.alignmentPatternCenters;
+                  _b < _c.length;
+                  _b++
+                ) {
                   var y = _c[_b];
-                  if (!(x === 6 && y === 6 || x === 6 && y === dimension - 7 || x === dimension - 7 && y === 6)) {
+                  if (
+                    !(
+                      (x === 6 && y === 6) ||
+                      (x === 6 && y === dimension - 7) ||
+                      (x === dimension - 7 && y === 6)
+                    )
+                  ) {
                     matrix.setRegion(x - 2, y - 2, 5, 5, true);
                   }
                 }
@@ -591,7 +819,11 @@ var require_jsQR = __commonJS({
               var currentByte = 0;
               var bitsRead = 0;
               var readingUp = true;
-              for (var columnIndex = dimension - 1; columnIndex > 0; columnIndex -= 2) {
+              for (
+                var columnIndex = dimension - 1;
+                columnIndex > 0;
+                columnIndex -= 2
+              ) {
                 if (columnIndex === 6) {
                   columnIndex--;
                 }
@@ -627,28 +859,47 @@ var require_jsQR = __commonJS({
               var topRightVersionBits = 0;
               for (var y = 5; y >= 0; y--) {
                 for (var x = dimension - 9; x >= dimension - 11; x--) {
-                  topRightVersionBits = pushBit(matrix.get(x, y), topRightVersionBits);
+                  topRightVersionBits = pushBit(
+                    matrix.get(x, y),
+                    topRightVersionBits,
+                  );
                 }
               }
               var bottomLeftVersionBits = 0;
               for (var x = 5; x >= 0; x--) {
                 for (var y = dimension - 9; y >= dimension - 11; y--) {
-                  bottomLeftVersionBits = pushBit(matrix.get(x, y), bottomLeftVersionBits);
+                  bottomLeftVersionBits = pushBit(
+                    matrix.get(x, y),
+                    bottomLeftVersionBits,
+                  );
                 }
               }
               var bestDifference = Infinity;
               var bestVersion;
-              for (var _i = 0, VERSIONS_1 = version_1.VERSIONS; _i < VERSIONS_1.length; _i++) {
+              for (
+                var _i = 0, VERSIONS_1 = version_1.VERSIONS;
+                _i < VERSIONS_1.length;
+                _i++
+              ) {
                 var version = VERSIONS_1[_i];
-                if (version.infoBits === topRightVersionBits || version.infoBits === bottomLeftVersionBits) {
+                if (
+                  version.infoBits === topRightVersionBits ||
+                  version.infoBits === bottomLeftVersionBits
+                ) {
                   return version;
                 }
-                var difference = numBitsDiffering(topRightVersionBits, version.infoBits);
+                var difference = numBitsDiffering(
+                  topRightVersionBits,
+                  version.infoBits,
+                );
                 if (difference < bestDifference) {
                   bestVersion = version;
                   bestDifference = difference;
                 }
-                difference = numBitsDiffering(bottomLeftVersionBits, version.infoBits);
+                difference = numBitsDiffering(
+                  bottomLeftVersionBits,
+                  version.infoBits,
+                );
                 if (difference < bestDifference) {
                   bestVersion = version;
                   bestDifference = difference;
@@ -662,27 +913,48 @@ var require_jsQR = __commonJS({
               var topLeftFormatInfoBits = 0;
               for (var x = 0; x <= 8; x++) {
                 if (x !== 6) {
-                  topLeftFormatInfoBits = pushBit(matrix.get(x, 8), topLeftFormatInfoBits);
+                  topLeftFormatInfoBits = pushBit(
+                    matrix.get(x, 8),
+                    topLeftFormatInfoBits,
+                  );
                 }
               }
               for (var y = 7; y >= 0; y--) {
                 if (y !== 6) {
-                  topLeftFormatInfoBits = pushBit(matrix.get(8, y), topLeftFormatInfoBits);
+                  topLeftFormatInfoBits = pushBit(
+                    matrix.get(8, y),
+                    topLeftFormatInfoBits,
+                  );
                 }
               }
               var dimension = matrix.height;
               var topRightBottomRightFormatInfoBits = 0;
               for (var y = dimension - 1; y >= dimension - 7; y--) {
-                topRightBottomRightFormatInfoBits = pushBit(matrix.get(8, y), topRightBottomRightFormatInfoBits);
+                topRightBottomRightFormatInfoBits = pushBit(
+                  matrix.get(8, y),
+                  topRightBottomRightFormatInfoBits,
+                );
               }
               for (var x = dimension - 8; x < dimension; x++) {
-                topRightBottomRightFormatInfoBits = pushBit(matrix.get(x, 8), topRightBottomRightFormatInfoBits);
+                topRightBottomRightFormatInfoBits = pushBit(
+                  matrix.get(x, 8),
+                  topRightBottomRightFormatInfoBits,
+                );
               }
               var bestDifference = Infinity;
               var bestFormatInfo = null;
-              for (var _i = 0, FORMAT_INFO_TABLE_1 = FORMAT_INFO_TABLE; _i < FORMAT_INFO_TABLE_1.length; _i++) {
-                var _a = FORMAT_INFO_TABLE_1[_i], bits = _a.bits, formatInfo = _a.formatInfo;
-                if (bits === topLeftFormatInfoBits || bits === topRightBottomRightFormatInfoBits) {
+              for (
+                var _i = 0, FORMAT_INFO_TABLE_1 = FORMAT_INFO_TABLE;
+                _i < FORMAT_INFO_TABLE_1.length;
+                _i++
+              ) {
+                var _a = FORMAT_INFO_TABLE_1[_i],
+                  bits = _a.bits,
+                  formatInfo = _a.formatInfo;
+                if (
+                  bits === topLeftFormatInfoBits ||
+                  bits === topRightBottomRightFormatInfoBits
+                ) {
                   return formatInfo;
                 }
                 var difference = numBitsDiffering(topLeftFormatInfoBits, bits);
@@ -690,8 +962,13 @@ var require_jsQR = __commonJS({
                   bestFormatInfo = formatInfo;
                   bestDifference = difference;
                 }
-                if (topLeftFormatInfoBits !== topRightBottomRightFormatInfoBits) {
-                  difference = numBitsDiffering(topRightBottomRightFormatInfoBits, bits);
+                if (
+                  topLeftFormatInfoBits !== topRightBottomRightFormatInfoBits
+                ) {
+                  difference = numBitsDiffering(
+                    topRightBottomRightFormatInfoBits,
+                    bits,
+                  );
                   if (difference < bestDifference) {
                     bestFormatInfo = formatInfo;
                     bestDifference = difference;
@@ -707,10 +984,14 @@ var require_jsQR = __commonJS({
               var ecInfo = version.errorCorrectionLevels[ecLevel];
               var dataBlocks = [];
               var totalCodewords = 0;
-              ecInfo.ecBlocks.forEach(function(block) {
+              ecInfo.ecBlocks.forEach(function (block) {
                 for (var i2 = 0; i2 < block.numBlocks; i2++) {
-                  dataBlocks.push({ numDataCodewords: block.dataCodewordsPerBlock, codewords: [] });
-                  totalCodewords += block.dataCodewordsPerBlock + ecInfo.ecCodewordsPerBlock;
+                  dataBlocks.push({
+                    numDataCodewords: block.dataCodewordsPerBlock,
+                    codewords: [],
+                  });
+                  totalCodewords +=
+                    block.dataCodewordsPerBlock + ecInfo.ecCodewordsPerBlock;
                 }
               });
               if (codewords.length < totalCodewords) {
@@ -719,7 +1000,11 @@ var require_jsQR = __commonJS({
               codewords = codewords.slice(0, totalCodewords);
               var shortBlockSize = ecInfo.ecBlocks[0].dataCodewordsPerBlock;
               for (var i = 0; i < shortBlockSize; i++) {
-                for (var _i = 0, dataBlocks_1 = dataBlocks; _i < dataBlocks_1.length; _i++) {
+                for (
+                  var _i = 0, dataBlocks_1 = dataBlocks;
+                  _i < dataBlocks_1.length;
+                  _i++
+                ) {
                   var dataBlock = dataBlocks_1[_i];
                   dataBlock.codewords.push(codewords.shift());
                 }
@@ -728,11 +1013,17 @@ var require_jsQR = __commonJS({
                 var smallBlockCount = ecInfo.ecBlocks[0].numBlocks;
                 var largeBlockCount = ecInfo.ecBlocks[1].numBlocks;
                 for (var i = 0; i < largeBlockCount; i++) {
-                  dataBlocks[smallBlockCount + i].codewords.push(codewords.shift());
+                  dataBlocks[smallBlockCount + i].codewords.push(
+                    codewords.shift(),
+                  );
                 }
               }
               while (codewords.length > 0) {
-                for (var _a = 0, dataBlocks_2 = dataBlocks; _a < dataBlocks_2.length; _a++) {
+                for (
+                  var _a = 0, dataBlocks_2 = dataBlocks;
+                  _a < dataBlocks_2.length;
+                  _a++
+                ) {
                   var dataBlock = dataBlocks_2[_a];
                   dataBlock.codewords.push(codewords.shift());
                 }
@@ -749,18 +1040,29 @@ var require_jsQR = __commonJS({
                 return null;
               }
               var codewords = readCodewords(matrix, version, formatInfo);
-              var dataBlocks = getDataBlocks(codewords, version, formatInfo.errorCorrectionLevel);
+              var dataBlocks = getDataBlocks(
+                codewords,
+                version,
+                formatInfo.errorCorrectionLevel,
+              );
               if (!dataBlocks) {
                 return null;
               }
-              var totalBytes = dataBlocks.reduce(function(a, b) {
+              var totalBytes = dataBlocks.reduce(function (a, b) {
                 return a + b.numDataCodewords;
               }, 0);
               var resultBytes = new Uint8ClampedArray(totalBytes);
               var resultIndex = 0;
-              for (var _i = 0, dataBlocks_3 = dataBlocks; _i < dataBlocks_3.length; _i++) {
+              for (
+                var _i = 0, dataBlocks_3 = dataBlocks;
+                _i < dataBlocks_3.length;
+                _i++
+              ) {
                 var dataBlock = dataBlocks_3[_i];
-                var correctedBytes = reedsolomon_1.decode(dataBlock.codewords, dataBlock.codewords.length - dataBlock.numDataCodewords);
+                var correctedBytes = reedsolomon_1.decode(
+                  dataBlock.codewords,
+                  dataBlock.codewords.length - dataBlock.numDataCodewords,
+                );
                 if (!correctedBytes) {
                   return null;
                 }
@@ -796,27 +1098,27 @@ var require_jsQR = __commonJS({
           },
           /* 6 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
             var BitStream_1 = __webpack_require__(7);
             var shiftJISTable_1 = __webpack_require__(8);
             var Mode;
-            (function(Mode2) {
+            (function (Mode2) {
               Mode2["Numeric"] = "numeric";
               Mode2["Alphanumeric"] = "alphanumeric";
               Mode2["Byte"] = "byte";
               Mode2["Kanji"] = "kanji";
               Mode2["ECI"] = "eci";
-            })(Mode = exports2.Mode || (exports2.Mode = {}));
+            })((Mode = exports2.Mode || (exports2.Mode = {})));
             var ModeByte;
-            (function(ModeByte2) {
-              ModeByte2[ModeByte2["Terminator"] = 0] = "Terminator";
-              ModeByte2[ModeByte2["Numeric"] = 1] = "Numeric";
-              ModeByte2[ModeByte2["Alphanumeric"] = 2] = "Alphanumeric";
-              ModeByte2[ModeByte2["Byte"] = 4] = "Byte";
-              ModeByte2[ModeByte2["Kanji"] = 8] = "Kanji";
-              ModeByte2[ModeByte2["ECI"] = 7] = "ECI";
+            (function (ModeByte2) {
+              ModeByte2[(ModeByte2["Terminator"] = 0)] = "Terminator";
+              ModeByte2[(ModeByte2["Numeric"] = 1)] = "Numeric";
+              ModeByte2[(ModeByte2["Alphanumeric"] = 2)] = "Alphanumeric";
+              ModeByte2[(ModeByte2["Byte"] = 4)] = "Byte";
+              ModeByte2[(ModeByte2["Kanji"] = 8)] = "Kanji";
+              ModeByte2[(ModeByte2["ECI"] = 7)] = "ECI";
             })(ModeByte || (ModeByte = {}));
             function decodeNumeric(stream, size) {
               var bytes = [];
@@ -899,7 +1201,7 @@ var require_jsQR = __commonJS({
               "-",
               ".",
               "/",
-              ":"
+              ":",
             ];
             function decodeAlphanumeric(stream, size) {
               var bytes = [];
@@ -910,8 +1212,12 @@ var require_jsQR = __commonJS({
                 var v = stream.readBits(11);
                 var a = Math.floor(v / 45);
                 var b = v % 45;
-                bytes.push(AlphanumericCharacterCodes[a].charCodeAt(0), AlphanumericCharacterCodes[b].charCodeAt(0));
-                text += AlphanumericCharacterCodes[a] + AlphanumericCharacterCodes[b];
+                bytes.push(
+                  AlphanumericCharacterCodes[a].charCodeAt(0),
+                  AlphanumericCharacterCodes[b].charCodeAt(0),
+                );
+                text +=
+                  AlphanumericCharacterCodes[a] + AlphanumericCharacterCodes[b];
                 length -= 2;
               }
               if (length === 1) {
@@ -931,11 +1237,14 @@ var require_jsQR = __commonJS({
                 bytes.push(b);
               }
               try {
-                text += decodeURIComponent(bytes.map(function(b2) {
-                  return "%" + ("0" + b2.toString(16)).substr(-2);
-                }).join(""));
-              } catch (_a) {
-              }
+                text += decodeURIComponent(
+                  bytes
+                    .map(function (b2) {
+                      return "%" + ("0" + b2.toString(16)).substr(-2);
+                    })
+                    .join(""),
+                );
+              } catch (_a) {}
               return { bytes, text };
             }
             function decodeKanji(stream, size) {
@@ -945,7 +1254,7 @@ var require_jsQR = __commonJS({
               var length = stream.readBits(characterCountSize);
               for (var i = 0; i < length; i++) {
                 var k = stream.readBits(13);
-                var c = Math.floor(k / 192) << 8 | k % 192;
+                var c = (Math.floor(k / 192) << 8) | (k % 192);
                 if (c < 7936) {
                   c += 33088;
                 } else {
@@ -964,7 +1273,7 @@ var require_jsQR = __commonJS({
                 text: "",
                 bytes: [],
                 chunks: [],
-                version
+                version,
               };
               while (stream.available() >= 4) {
                 var mode = stream.readBits(4);
@@ -974,22 +1283,22 @@ var require_jsQR = __commonJS({
                   if (stream.readBits(1) === 0) {
                     result.chunks.push({
                       type: Mode.ECI,
-                      assignmentNumber: stream.readBits(7)
+                      assignmentNumber: stream.readBits(7),
                     });
                   } else if (stream.readBits(1) === 0) {
                     result.chunks.push({
                       type: Mode.ECI,
-                      assignmentNumber: stream.readBits(14)
+                      assignmentNumber: stream.readBits(14),
                     });
                   } else if (stream.readBits(1) === 0) {
                     result.chunks.push({
                       type: Mode.ECI,
-                      assignmentNumber: stream.readBits(21)
+                      assignmentNumber: stream.readBits(21),
                     });
                   } else {
                     result.chunks.push({
                       type: Mode.ECI,
-                      assignmentNumber: -1
+                      assignmentNumber: -1,
                     });
                   }
                 } else if (mode === ModeByte.Numeric) {
@@ -998,7 +1307,7 @@ var require_jsQR = __commonJS({
                   (_a = result.bytes).push.apply(_a, numericResult.bytes);
                   result.chunks.push({
                     type: Mode.Numeric,
-                    text: numericResult.text
+                    text: numericResult.text,
                   });
                 } else if (mode === ModeByte.Alphanumeric) {
                   var alphanumericResult = decodeAlphanumeric(stream, size);
@@ -1006,7 +1315,7 @@ var require_jsQR = __commonJS({
                   (_b = result.bytes).push.apply(_b, alphanumericResult.bytes);
                   result.chunks.push({
                     type: Mode.Alphanumeric,
-                    text: alphanumericResult.text
+                    text: alphanumericResult.text,
                   });
                 } else if (mode === ModeByte.Byte) {
                   var byteResult = decodeByte(stream, size);
@@ -1015,7 +1324,7 @@ var require_jsQR = __commonJS({
                   result.chunks.push({
                     type: Mode.Byte,
                     bytes: byteResult.bytes,
-                    text: byteResult.text
+                    text: byteResult.text,
                   });
                 } else if (mode === ModeByte.Kanji) {
                   var kanjiResult = decodeKanji(stream, size);
@@ -1024,11 +1333,14 @@ var require_jsQR = __commonJS({
                   result.chunks.push({
                     type: Mode.Kanji,
                     bytes: kanjiResult.bytes,
-                    text: kanjiResult.text
+                    text: kanjiResult.text,
                   });
                 }
               }
-              if (stream.available() === 0 || stream.readBits(stream.available()) === 0) {
+              if (
+                stream.available() === 0 ||
+                stream.readBits(stream.available()) === 0
+              ) {
                 return result;
               }
             }
@@ -1036,28 +1348,35 @@ var require_jsQR = __commonJS({
           },
           /* 7 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
-            var BitStream = (
+            var BitStream =
               /** @class */
-              function() {
+              (function () {
                 function BitStream2(bytes) {
                   this.byteOffset = 0;
                   this.bitOffset = 0;
                   this.bytes = bytes;
                 }
-                BitStream2.prototype.readBits = function(numBits) {
-                  if (numBits < 1 || numBits > 32 || numBits > this.available()) {
-                    throw new Error("Cannot read " + numBits.toString() + " bits");
+                BitStream2.prototype.readBits = function (numBits) {
+                  if (
+                    numBits < 1 ||
+                    numBits > 32 ||
+                    numBits > this.available()
+                  ) {
+                    throw new Error(
+                      "Cannot read " + numBits.toString() + " bits",
+                    );
                   }
                   var result = 0;
                   if (this.bitOffset > 0) {
                     var bitsLeft = 8 - this.bitOffset;
                     var toRead = numBits < bitsLeft ? numBits : bitsLeft;
                     var bitsToNotRead = bitsLeft - toRead;
-                    var mask = 255 >> 8 - toRead << bitsToNotRead;
-                    result = (this.bytes[this.byteOffset] & mask) >> bitsToNotRead;
+                    var mask = (255 >> (8 - toRead)) << bitsToNotRead;
+                    result =
+                      (this.bytes[this.byteOffset] & mask) >> bitsToNotRead;
                     numBits -= toRead;
                     this.bitOffset += toRead;
                     if (this.bitOffset === 8) {
@@ -1067,30 +1386,34 @@ var require_jsQR = __commonJS({
                   }
                   if (numBits > 0) {
                     while (numBits >= 8) {
-                      result = result << 8 | this.bytes[this.byteOffset] & 255;
+                      result =
+                        (result << 8) | (this.bytes[this.byteOffset] & 255);
                       this.byteOffset++;
                       numBits -= 8;
                     }
                     if (numBits > 0) {
                       var bitsToNotRead = 8 - numBits;
-                      var mask = 255 >> bitsToNotRead << bitsToNotRead;
-                      result = result << numBits | (this.bytes[this.byteOffset] & mask) >> bitsToNotRead;
+                      var mask = (255 >> bitsToNotRead) << bitsToNotRead;
+                      result =
+                        (result << numBits) |
+                        ((this.bytes[this.byteOffset] & mask) >> bitsToNotRead);
                       this.bitOffset += numBits;
                     }
                   }
                   return result;
                 };
-                BitStream2.prototype.available = function() {
-                  return 8 * (this.bytes.length - this.byteOffset) - this.bitOffset;
+                BitStream2.prototype.available = function () {
+                  return (
+                    8 * (this.bytes.length - this.byteOffset) - this.bitOffset
+                  );
                 };
                 return BitStream2;
-              }()
-            );
+              })();
             exports2.BitStream = BitStream;
           },
           /* 8 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
             exports2.shiftJISTable = {
@@ -8130,12 +8453,12 @@ var require_jsQR = __commonJS({
               60065: 36953,
               60066: 29796,
               60067: 20956,
-              60068: 29081
+              60068: 29081,
             };
           },
           /* 9 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
             var GenericGF_1 = __webpack_require__(1);
@@ -8143,7 +8466,7 @@ var require_jsQR = __commonJS({
             function runEuclideanAlgorithm(field, a, b, R) {
               var _a;
               if (a.degree() < b.degree()) {
-                _a = [b, a], a = _a[0], b = _a[1];
+                ((_a = [b, a]), (a = _a[0]), (b = _a[1]));
               }
               var rLast = a;
               var r = b;
@@ -8159,13 +8482,20 @@ var require_jsQR = __commonJS({
                 }
                 r = rLastLast;
                 var q = field.zero;
-                var denominatorLeadingTerm = rLast.getCoefficient(rLast.degree());
+                var denominatorLeadingTerm = rLast.getCoefficient(
+                  rLast.degree(),
+                );
                 var dltInverse = field.inverse(denominatorLeadingTerm);
                 while (r.degree() >= rLast.degree() && !r.isZero()) {
                   var degreeDiff = r.degree() - rLast.degree();
-                  var scale = field.multiply(r.getCoefficient(r.degree()), dltInverse);
+                  var scale = field.multiply(
+                    r.getCoefficient(r.degree()),
+                    dltInverse,
+                  );
                   q = q.addOrSubtract(field.buildMonomial(degreeDiff, scale));
-                  r = r.addOrSubtract(rLast.multiplyByMonomial(degreeDiff, scale));
+                  r = r.addOrSubtract(
+                    rLast.multiplyByMonomial(degreeDiff, scale),
+                  );
                 }
                 t = q.multiplyPoly(tLast).addOrSubtract(tLastLast);
                 if (r.degree() >= rLast.degree()) {
@@ -8197,7 +8527,11 @@ var require_jsQR = __commonJS({
               }
               return result;
             }
-            function findErrorMagnitudes(field, errorEvaluator, errorLocations) {
+            function findErrorMagnitudes(
+              field,
+              errorEvaluator,
+              errorLocations,
+            ) {
               var s = errorLocations.length;
               var result = new Array(s);
               for (var i = 0; i < s; i++) {
@@ -8205,10 +8539,19 @@ var require_jsQR = __commonJS({
                 var denominator = 1;
                 for (var j = 0; j < s; j++) {
                   if (i !== j) {
-                    denominator = field.multiply(denominator, GenericGF_1.addOrSubtractGF(1, field.multiply(errorLocations[j], xiInverse)));
+                    denominator = field.multiply(
+                      denominator,
+                      GenericGF_1.addOrSubtractGF(
+                        1,
+                        field.multiply(errorLocations[j], xiInverse),
+                      ),
+                    );
                   }
                 }
-                result[i] = field.multiply(errorEvaluator.evaluateAt(xiInverse), field.inverse(denominator));
+                result[i] = field.multiply(
+                  errorEvaluator.evaluateAt(xiInverse),
+                  field.inverse(denominator),
+                );
                 if (field.generatorBase !== 0) {
                   result[i] = field.multiply(result[i], xiInverse);
                 }
@@ -8223,8 +8566,11 @@ var require_jsQR = __commonJS({
               var syndromeCoefficients = new Uint8ClampedArray(twoS);
               var error = false;
               for (var s = 0; s < twoS; s++) {
-                var evaluation = poly.evaluateAt(field.exp(s + field.generatorBase));
-                syndromeCoefficients[syndromeCoefficients.length - 1 - s] = evaluation;
+                var evaluation = poly.evaluateAt(
+                  field.exp(s + field.generatorBase),
+                );
+                syndromeCoefficients[syndromeCoefficients.length - 1 - s] =
+                  evaluation;
                 if (evaluation !== 0) {
                   error = true;
                 }
@@ -8232,8 +8578,16 @@ var require_jsQR = __commonJS({
               if (!error) {
                 return outputBytes;
               }
-              var syndrome = new GenericGFPoly_1.default(field, syndromeCoefficients);
-              var sigmaOmega = runEuclideanAlgorithm(field, field.buildMonomial(twoS, 1), syndrome, twoS);
+              var syndrome = new GenericGFPoly_1.default(
+                field,
+                syndromeCoefficients,
+              );
+              var sigmaOmega = runEuclideanAlgorithm(
+                field,
+                field.buildMonomial(twoS, 1),
+                syndrome,
+                twoS,
+              );
               if (sigmaOmega === null) {
                 return null;
               }
@@ -8241,13 +8595,21 @@ var require_jsQR = __commonJS({
               if (errorLocations == null) {
                 return null;
               }
-              var errorMagnitudes = findErrorMagnitudes(field, sigmaOmega[1], errorLocations);
+              var errorMagnitudes = findErrorMagnitudes(
+                field,
+                sigmaOmega[1],
+                errorLocations,
+              );
               for (var i = 0; i < errorLocations.length; i++) {
-                var position = outputBytes.length - 1 - field.log(errorLocations[i]);
+                var position =
+                  outputBytes.length - 1 - field.log(errorLocations[i]);
                 if (position < 0) {
                   return null;
                 }
-                outputBytes[position] = GenericGF_1.addOrSubtractGF(outputBytes[position], errorMagnitudes[i]);
+                outputBytes[position] = GenericGF_1.addOrSubtractGF(
+                  outputBytes[position],
+                  errorMagnitudes[i],
+                );
               }
               return outputBytes;
             }
@@ -8255,7 +8617,7 @@ var require_jsQR = __commonJS({
           },
           /* 10 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
             exports2.VERSIONS = [
@@ -8266,21 +8628,21 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 7,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 19 }]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 19 }],
                   },
                   {
                     ecCodewordsPerBlock: 10,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 16 }]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 16 }],
                   },
                   {
                     ecCodewordsPerBlock: 13,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 13 }]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 13 }],
                   },
                   {
                     ecCodewordsPerBlock: 17,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 9 }]
-                  }
-                ]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 9 }],
+                  },
+                ],
               },
               {
                 infoBits: null,
@@ -8289,21 +8651,21 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 10,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 34 }]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 34 }],
                   },
                   {
                     ecCodewordsPerBlock: 16,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 28 }]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 28 }],
                   },
                   {
                     ecCodewordsPerBlock: 22,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 22 }]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 22 }],
                   },
                   {
                     ecCodewordsPerBlock: 28,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 16 }]
-                  }
-                ]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 16 }],
+                  },
+                ],
               },
               {
                 infoBits: null,
@@ -8312,21 +8674,21 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 15,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 55 }]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 55 }],
                   },
                   {
                     ecCodewordsPerBlock: 26,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 44 }]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 44 }],
                   },
                   {
                     ecCodewordsPerBlock: 18,
-                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 17 }]
+                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 17 }],
                   },
                   {
                     ecCodewordsPerBlock: 22,
-                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 13 }]
-                  }
-                ]
+                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 13 }],
+                  },
+                ],
               },
               {
                 infoBits: null,
@@ -8335,21 +8697,21 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 20,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 80 }]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 80 }],
                   },
                   {
                     ecCodewordsPerBlock: 18,
-                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 32 }]
+                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 32 }],
                   },
                   {
                     ecCodewordsPerBlock: 26,
-                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 24 }]
+                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 24 }],
                   },
                   {
                     ecCodewordsPerBlock: 16,
-                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 9 }]
-                  }
-                ]
+                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 9 }],
+                  },
+                ],
               },
               {
                 infoBits: null,
@@ -8358,27 +8720,27 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 26,
-                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 108 }]
+                    ecBlocks: [{ numBlocks: 1, dataCodewordsPerBlock: 108 }],
                   },
                   {
                     ecCodewordsPerBlock: 24,
-                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 43 }]
+                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 43 }],
                   },
                   {
                     ecCodewordsPerBlock: 18,
                     ecBlocks: [
                       { numBlocks: 2, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 16 }
-                    ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 16 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 22,
                     ecBlocks: [
                       { numBlocks: 2, dataCodewordsPerBlock: 11 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 12 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 12 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: null,
@@ -8387,21 +8749,21 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 18,
-                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 68 }]
+                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 68 }],
                   },
                   {
                     ecCodewordsPerBlock: 16,
-                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 27 }]
+                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 27 }],
                   },
                   {
                     ecCodewordsPerBlock: 24,
-                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 19 }]
+                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 19 }],
                   },
                   {
                     ecCodewordsPerBlock: 28,
-                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 15 }]
-                  }
-                ]
+                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 15 }],
+                  },
+                ],
               },
               {
                 infoBits: 31892,
@@ -8410,27 +8772,27 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 20,
-                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 78 }]
+                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 78 }],
                   },
                   {
                     ecCodewordsPerBlock: 18,
-                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 31 }]
+                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 31 }],
                   },
                   {
                     ecCodewordsPerBlock: 18,
                     ecBlocks: [
                       { numBlocks: 2, dataCodewordsPerBlock: 14 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 15 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 15 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 26,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 13 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 14 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 14 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 34236,
@@ -8439,30 +8801,30 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 24,
-                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 97 }]
+                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 97 }],
                   },
                   {
                     ecCodewordsPerBlock: 22,
                     ecBlocks: [
                       { numBlocks: 2, dataCodewordsPerBlock: 38 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 39 }
-                    ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 39 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 22,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 18 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 19 }
-                    ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 19 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 26,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 14 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 15 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 15 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 39577,
@@ -8471,30 +8833,30 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 30,
-                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 116 }]
+                    ecBlocks: [{ numBlocks: 2, dataCodewordsPerBlock: 116 }],
                   },
                   {
                     ecCodewordsPerBlock: 22,
                     ecBlocks: [
                       { numBlocks: 3, dataCodewordsPerBlock: 36 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 37 }
-                    ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 37 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 20,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 16 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 17 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 17 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 24,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 12 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 13 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 13 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 42195,
@@ -8505,31 +8867,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 18,
                     ecBlocks: [
                       { numBlocks: 2, dataCodewordsPerBlock: 68 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 69 }
-                    ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 69 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 26,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 43 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 44 }
-                    ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 44 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 24,
                     ecBlocks: [
                       { numBlocks: 6, dataCodewordsPerBlock: 19 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 20 }
-                    ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 20 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 6, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 48118,
@@ -8538,30 +8900,30 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 20,
-                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 81 }]
+                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 81 }],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 1, dataCodewordsPerBlock: 50 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 51 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 51 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 22 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 23 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 23 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 24,
                     ecBlocks: [
                       { numBlocks: 3, dataCodewordsPerBlock: 12 },
-                      { numBlocks: 8, dataCodewordsPerBlock: 13 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 8, dataCodewordsPerBlock: 13 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 51042,
@@ -8572,31 +8934,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 24,
                     ecBlocks: [
                       { numBlocks: 2, dataCodewordsPerBlock: 92 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 93 }
-                    ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 93 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 22,
                     ecBlocks: [
                       { numBlocks: 6, dataCodewordsPerBlock: 36 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 37 }
-                    ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 37 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 26,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 20 },
-                      { numBlocks: 6, dataCodewordsPerBlock: 21 }
-                    ]
+                      { numBlocks: 6, dataCodewordsPerBlock: 21 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 7, dataCodewordsPerBlock: 14 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 15 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 15 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 55367,
@@ -8605,30 +8967,30 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 26,
-                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 107 }]
+                    ecBlocks: [{ numBlocks: 4, dataCodewordsPerBlock: 107 }],
                   },
                   {
                     ecCodewordsPerBlock: 22,
                     ecBlocks: [
                       { numBlocks: 8, dataCodewordsPerBlock: 37 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 38 }
-                    ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 38 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 24,
                     ecBlocks: [
                       { numBlocks: 8, dataCodewordsPerBlock: 20 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 21 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 21 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 22,
                     ecBlocks: [
                       { numBlocks: 12, dataCodewordsPerBlock: 11 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 12 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 12 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 58893,
@@ -8639,31 +9001,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 3, dataCodewordsPerBlock: 115 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 116 }
-                    ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 116 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 24,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 40 },
-                      { numBlocks: 5, dataCodewordsPerBlock: 41 }
-                    ]
+                      { numBlocks: 5, dataCodewordsPerBlock: 41 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 20,
                     ecBlocks: [
                       { numBlocks: 11, dataCodewordsPerBlock: 16 },
-                      { numBlocks: 5, dataCodewordsPerBlock: 17 }
-                    ]
+                      { numBlocks: 5, dataCodewordsPerBlock: 17 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 24,
                     ecBlocks: [
                       { numBlocks: 11, dataCodewordsPerBlock: 12 },
-                      { numBlocks: 5, dataCodewordsPerBlock: 13 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 5, dataCodewordsPerBlock: 13 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 63784,
@@ -8674,31 +9036,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 22,
                     ecBlocks: [
                       { numBlocks: 5, dataCodewordsPerBlock: 87 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 88 }
-                    ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 88 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 24,
                     ecBlocks: [
                       { numBlocks: 5, dataCodewordsPerBlock: 41 },
-                      { numBlocks: 5, dataCodewordsPerBlock: 42 }
-                    ]
+                      { numBlocks: 5, dataCodewordsPerBlock: 42 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 5, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 7, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 7, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 24,
                     ecBlocks: [
                       { numBlocks: 11, dataCodewordsPerBlock: 12 },
-                      { numBlocks: 7, dataCodewordsPerBlock: 13 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 7, dataCodewordsPerBlock: 13 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 68472,
@@ -8709,31 +9071,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 24,
                     ecBlocks: [
                       { numBlocks: 5, dataCodewordsPerBlock: 98 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 99 }
-                    ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 99 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 7, dataCodewordsPerBlock: 45 },
-                      { numBlocks: 3, dataCodewordsPerBlock: 46 }
-                    ]
+                      { numBlocks: 3, dataCodewordsPerBlock: 46 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 24,
                     ecBlocks: [
                       { numBlocks: 15, dataCodewordsPerBlock: 19 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 20 }
-                    ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 20 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 3, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 13, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 13, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 70749,
@@ -8744,31 +9106,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 1, dataCodewordsPerBlock: 107 },
-                      { numBlocks: 5, dataCodewordsPerBlock: 108 }
-                    ]
+                      { numBlocks: 5, dataCodewordsPerBlock: 108 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 10, dataCodewordsPerBlock: 46 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 47 }
-                    ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 47 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 1, dataCodewordsPerBlock: 22 },
-                      { numBlocks: 15, dataCodewordsPerBlock: 23 }
-                    ]
+                      { numBlocks: 15, dataCodewordsPerBlock: 23 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 2, dataCodewordsPerBlock: 14 },
-                      { numBlocks: 17, dataCodewordsPerBlock: 15 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 17, dataCodewordsPerBlock: 15 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 76311,
@@ -8779,31 +9141,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 5, dataCodewordsPerBlock: 120 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 121 }
-                    ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 121 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 26,
                     ecBlocks: [
                       { numBlocks: 9, dataCodewordsPerBlock: 43 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 44 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 44 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 17, dataCodewordsPerBlock: 22 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 23 }
-                    ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 23 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 2, dataCodewordsPerBlock: 14 },
-                      { numBlocks: 19, dataCodewordsPerBlock: 15 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 19, dataCodewordsPerBlock: 15 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 79154,
@@ -8814,31 +9176,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 3, dataCodewordsPerBlock: 113 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 114 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 114 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 26,
                     ecBlocks: [
                       { numBlocks: 3, dataCodewordsPerBlock: 44 },
-                      { numBlocks: 11, dataCodewordsPerBlock: 45 }
-                    ]
+                      { numBlocks: 11, dataCodewordsPerBlock: 45 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 26,
                     ecBlocks: [
                       { numBlocks: 17, dataCodewordsPerBlock: 21 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 22 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 22 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 26,
                     ecBlocks: [
                       { numBlocks: 9, dataCodewordsPerBlock: 13 },
-                      { numBlocks: 16, dataCodewordsPerBlock: 14 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 16, dataCodewordsPerBlock: 14 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 84390,
@@ -8849,31 +9211,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 3, dataCodewordsPerBlock: 107 },
-                      { numBlocks: 5, dataCodewordsPerBlock: 108 }
-                    ]
+                      { numBlocks: 5, dataCodewordsPerBlock: 108 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 26,
                     ecBlocks: [
                       { numBlocks: 3, dataCodewordsPerBlock: 41 },
-                      { numBlocks: 13, dataCodewordsPerBlock: 42 }
-                    ]
+                      { numBlocks: 13, dataCodewordsPerBlock: 42 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 15, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 5, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 5, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 15, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 10, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 10, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 87683,
@@ -8884,28 +9246,28 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 116 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 117 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 117 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 26,
-                    ecBlocks: [{ numBlocks: 17, dataCodewordsPerBlock: 42 }]
+                    ecBlocks: [{ numBlocks: 17, dataCodewordsPerBlock: 42 }],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 17, dataCodewordsPerBlock: 22 },
-                      { numBlocks: 6, dataCodewordsPerBlock: 23 }
-                    ]
+                      { numBlocks: 6, dataCodewordsPerBlock: 23 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 19, dataCodewordsPerBlock: 16 },
-                      { numBlocks: 6, dataCodewordsPerBlock: 17 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 6, dataCodewordsPerBlock: 17 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 92361,
@@ -8916,25 +9278,25 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 2, dataCodewordsPerBlock: 111 },
-                      { numBlocks: 7, dataCodewordsPerBlock: 112 }
-                    ]
+                      { numBlocks: 7, dataCodewordsPerBlock: 112 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
-                    ecBlocks: [{ numBlocks: 17, dataCodewordsPerBlock: 46 }]
+                    ecBlocks: [{ numBlocks: 17, dataCodewordsPerBlock: 46 }],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 7, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 16, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 16, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 24,
-                    ecBlocks: [{ numBlocks: 34, dataCodewordsPerBlock: 13 }]
-                  }
-                ]
+                    ecBlocks: [{ numBlocks: 34, dataCodewordsPerBlock: 13 }],
+                  },
+                ],
               },
               {
                 infoBits: 96236,
@@ -8945,31 +9307,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 121 },
-                      { numBlocks: 5, dataCodewordsPerBlock: 122 }
-                    ]
+                      { numBlocks: 5, dataCodewordsPerBlock: 122 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 47 },
-                      { numBlocks: 14, dataCodewordsPerBlock: 48 }
-                    ]
+                      { numBlocks: 14, dataCodewordsPerBlock: 48 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 11, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 14, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 14, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 16, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 14, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 14, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 102084,
@@ -8980,31 +9342,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 6, dataCodewordsPerBlock: 117 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 118 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 118 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 6, dataCodewordsPerBlock: 45 },
-                      { numBlocks: 14, dataCodewordsPerBlock: 46 }
-                    ]
+                      { numBlocks: 14, dataCodewordsPerBlock: 46 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 11, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 16, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 16, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 30, dataCodewordsPerBlock: 16 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 17 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 17 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 102881,
@@ -9015,31 +9377,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 26,
                     ecBlocks: [
                       { numBlocks: 8, dataCodewordsPerBlock: 106 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 107 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 107 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 8, dataCodewordsPerBlock: 47 },
-                      { numBlocks: 13, dataCodewordsPerBlock: 48 }
-                    ]
+                      { numBlocks: 13, dataCodewordsPerBlock: 48 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 7, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 22, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 22, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 22, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 13, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 13, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 110507,
@@ -9050,31 +9412,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 10, dataCodewordsPerBlock: 114 },
-                      { numBlocks: 2, dataCodewordsPerBlock: 115 }
-                    ]
+                      { numBlocks: 2, dataCodewordsPerBlock: 115 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 19, dataCodewordsPerBlock: 46 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 47 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 47 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 28, dataCodewordsPerBlock: 22 },
-                      { numBlocks: 6, dataCodewordsPerBlock: 23 }
-                    ]
+                      { numBlocks: 6, dataCodewordsPerBlock: 23 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 33, dataCodewordsPerBlock: 16 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 17 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 17 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 110734,
@@ -9085,31 +9447,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 8, dataCodewordsPerBlock: 122 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 123 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 123 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 22, dataCodewordsPerBlock: 45 },
-                      { numBlocks: 3, dataCodewordsPerBlock: 46 }
-                    ]
+                      { numBlocks: 3, dataCodewordsPerBlock: 46 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 8, dataCodewordsPerBlock: 23 },
-                      { numBlocks: 26, dataCodewordsPerBlock: 24 }
-                    ]
+                      { numBlocks: 26, dataCodewordsPerBlock: 24 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 12, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 28, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 28, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 117786,
@@ -9120,31 +9482,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 3, dataCodewordsPerBlock: 117 },
-                      { numBlocks: 10, dataCodewordsPerBlock: 118 }
-                    ]
+                      { numBlocks: 10, dataCodewordsPerBlock: 118 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 3, dataCodewordsPerBlock: 45 },
-                      { numBlocks: 23, dataCodewordsPerBlock: 46 }
-                    ]
+                      { numBlocks: 23, dataCodewordsPerBlock: 46 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 31, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 31, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 11, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 31, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 31, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 119615,
@@ -9155,31 +9517,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 7, dataCodewordsPerBlock: 116 },
-                      { numBlocks: 7, dataCodewordsPerBlock: 117 }
-                    ]
+                      { numBlocks: 7, dataCodewordsPerBlock: 117 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 21, dataCodewordsPerBlock: 45 },
-                      { numBlocks: 7, dataCodewordsPerBlock: 46 }
-                    ]
+                      { numBlocks: 7, dataCodewordsPerBlock: 46 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 1, dataCodewordsPerBlock: 23 },
-                      { numBlocks: 37, dataCodewordsPerBlock: 24 }
-                    ]
+                      { numBlocks: 37, dataCodewordsPerBlock: 24 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 19, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 26, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 26, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 126325,
@@ -9190,31 +9552,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 5, dataCodewordsPerBlock: 115 },
-                      { numBlocks: 10, dataCodewordsPerBlock: 116 }
-                    ]
+                      { numBlocks: 10, dataCodewordsPerBlock: 116 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 19, dataCodewordsPerBlock: 47 },
-                      { numBlocks: 10, dataCodewordsPerBlock: 48 }
-                    ]
+                      { numBlocks: 10, dataCodewordsPerBlock: 48 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 15, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 25, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 25, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 23, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 25, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 25, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 127568,
@@ -9225,31 +9587,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 13, dataCodewordsPerBlock: 115 },
-                      { numBlocks: 3, dataCodewordsPerBlock: 116 }
-                    ]
+                      { numBlocks: 3, dataCodewordsPerBlock: 116 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 2, dataCodewordsPerBlock: 46 },
-                      { numBlocks: 29, dataCodewordsPerBlock: 47 }
-                    ]
+                      { numBlocks: 29, dataCodewordsPerBlock: 47 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 42, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 23, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 28, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 28, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 133589,
@@ -9258,30 +9620,30 @@ var require_jsQR = __commonJS({
                 errorCorrectionLevels: [
                   {
                     ecCodewordsPerBlock: 30,
-                    ecBlocks: [{ numBlocks: 17, dataCodewordsPerBlock: 115 }]
+                    ecBlocks: [{ numBlocks: 17, dataCodewordsPerBlock: 115 }],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 10, dataCodewordsPerBlock: 46 },
-                      { numBlocks: 23, dataCodewordsPerBlock: 47 }
-                    ]
+                      { numBlocks: 23, dataCodewordsPerBlock: 47 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 10, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 35, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 35, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 19, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 35, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 35, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 136944,
@@ -9292,31 +9654,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 17, dataCodewordsPerBlock: 115 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 116 }
-                    ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 116 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 14, dataCodewordsPerBlock: 46 },
-                      { numBlocks: 21, dataCodewordsPerBlock: 47 }
-                    ]
+                      { numBlocks: 21, dataCodewordsPerBlock: 47 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 29, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 19, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 19, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 11, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 46, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 46, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 141498,
@@ -9327,31 +9689,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 13, dataCodewordsPerBlock: 115 },
-                      { numBlocks: 6, dataCodewordsPerBlock: 116 }
-                    ]
+                      { numBlocks: 6, dataCodewordsPerBlock: 116 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 14, dataCodewordsPerBlock: 46 },
-                      { numBlocks: 23, dataCodewordsPerBlock: 47 }
-                    ]
+                      { numBlocks: 23, dataCodewordsPerBlock: 47 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 44, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 7, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 7, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 59, dataCodewordsPerBlock: 16 },
-                      { numBlocks: 1, dataCodewordsPerBlock: 17 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 1, dataCodewordsPerBlock: 17 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 145311,
@@ -9362,31 +9724,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 12, dataCodewordsPerBlock: 121 },
-                      { numBlocks: 7, dataCodewordsPerBlock: 122 }
-                    ]
+                      { numBlocks: 7, dataCodewordsPerBlock: 122 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 12, dataCodewordsPerBlock: 47 },
-                      { numBlocks: 26, dataCodewordsPerBlock: 48 }
-                    ]
+                      { numBlocks: 26, dataCodewordsPerBlock: 48 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 39, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 14, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 14, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 22, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 41, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 41, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 150283,
@@ -9397,31 +9759,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 6, dataCodewordsPerBlock: 121 },
-                      { numBlocks: 14, dataCodewordsPerBlock: 122 }
-                    ]
+                      { numBlocks: 14, dataCodewordsPerBlock: 122 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 6, dataCodewordsPerBlock: 47 },
-                      { numBlocks: 34, dataCodewordsPerBlock: 48 }
-                    ]
+                      { numBlocks: 34, dataCodewordsPerBlock: 48 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 46, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 10, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 10, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 2, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 64, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 64, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 152622,
@@ -9432,31 +9794,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 17, dataCodewordsPerBlock: 122 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 123 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 123 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 29, dataCodewordsPerBlock: 46 },
-                      { numBlocks: 14, dataCodewordsPerBlock: 47 }
-                    ]
+                      { numBlocks: 14, dataCodewordsPerBlock: 47 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 49, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 10, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 10, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 24, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 46, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 46, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 158308,
@@ -9467,31 +9829,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 4, dataCodewordsPerBlock: 122 },
-                      { numBlocks: 18, dataCodewordsPerBlock: 123 }
-                    ]
+                      { numBlocks: 18, dataCodewordsPerBlock: 123 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 13, dataCodewordsPerBlock: 46 },
-                      { numBlocks: 32, dataCodewordsPerBlock: 47 }
-                    ]
+                      { numBlocks: 32, dataCodewordsPerBlock: 47 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 48, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 14, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 14, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 42, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 32, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 32, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 161089,
@@ -9502,31 +9864,31 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 20, dataCodewordsPerBlock: 117 },
-                      { numBlocks: 4, dataCodewordsPerBlock: 118 }
-                    ]
+                      { numBlocks: 4, dataCodewordsPerBlock: 118 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 40, dataCodewordsPerBlock: 47 },
-                      { numBlocks: 7, dataCodewordsPerBlock: 48 }
-                    ]
+                      { numBlocks: 7, dataCodewordsPerBlock: 48 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 43, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 22, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 22, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 10, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 67, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
+                      { numBlocks: 67, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
               },
               {
                 infoBits: 167017,
@@ -9537,37 +9899,37 @@ var require_jsQR = __commonJS({
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 19, dataCodewordsPerBlock: 118 },
-                      { numBlocks: 6, dataCodewordsPerBlock: 119 }
-                    ]
+                      { numBlocks: 6, dataCodewordsPerBlock: 119 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 28,
                     ecBlocks: [
                       { numBlocks: 18, dataCodewordsPerBlock: 47 },
-                      { numBlocks: 31, dataCodewordsPerBlock: 48 }
-                    ]
+                      { numBlocks: 31, dataCodewordsPerBlock: 48 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 34, dataCodewordsPerBlock: 24 },
-                      { numBlocks: 34, dataCodewordsPerBlock: 25 }
-                    ]
+                      { numBlocks: 34, dataCodewordsPerBlock: 25 },
+                    ],
                   },
                   {
                     ecCodewordsPerBlock: 30,
                     ecBlocks: [
                       { numBlocks: 20, dataCodewordsPerBlock: 15 },
-                      { numBlocks: 61, dataCodewordsPerBlock: 16 }
-                    ]
-                  }
-                ]
-              }
+                      { numBlocks: 61, dataCodewordsPerBlock: 16 },
+                    ],
+                  },
+                ],
+              },
             ];
           },
           /* 11 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
             var BitMatrix_1 = __webpack_require__(0);
@@ -9584,7 +9946,7 @@ var require_jsQR = __commonJS({
                   a23: 0,
                   a31: p1.x,
                   a32: p1.y,
-                  a33: 1
+                  a33: 1,
                 };
               } else {
                 var dx1 = p2.x - p3.x;
@@ -9603,7 +9965,7 @@ var require_jsQR = __commonJS({
                   a23,
                   a31: p1.x,
                   a32: p1.y,
-                  a33: 1
+                  a33: 1,
                 };
               }
             }
@@ -9618,7 +9980,7 @@ var require_jsQR = __commonJS({
                 a23: sToQ.a13 * sToQ.a21 - sToQ.a11 * sToQ.a23,
                 a31: sToQ.a21 * sToQ.a32 - sToQ.a22 * sToQ.a31,
                 a32: sToQ.a12 * sToQ.a31 - sToQ.a11 * sToQ.a32,
-                a33: sToQ.a11 * sToQ.a22 - sToQ.a12 * sToQ.a21
+                a33: sToQ.a11 * sToQ.a22 - sToQ.a12 * sToQ.a21,
               };
             }
             function times(a, b) {
@@ -9631,19 +9993,37 @@ var require_jsQR = __commonJS({
                 a23: a.a13 * b.a21 + a.a23 * b.a22 + a.a33 * b.a23,
                 a31: a.a11 * b.a31 + a.a21 * b.a32 + a.a31 * b.a33,
                 a32: a.a12 * b.a31 + a.a22 * b.a32 + a.a32 * b.a33,
-                a33: a.a13 * b.a31 + a.a23 * b.a32 + a.a33 * b.a33
+                a33: a.a13 * b.a31 + a.a23 * b.a32 + a.a33 * b.a33,
               };
             }
             function extract(image, location) {
-              var qToS = quadrilateralToSquare({ x: 3.5, y: 3.5 }, { x: location.dimension - 3.5, y: 3.5 }, { x: location.dimension - 6.5, y: location.dimension - 6.5 }, { x: 3.5, y: location.dimension - 3.5 });
-              var sToQ = squareToQuadrilateral(location.topLeft, location.topRight, location.alignmentPattern, location.bottomLeft);
+              var qToS = quadrilateralToSquare(
+                { x: 3.5, y: 3.5 },
+                { x: location.dimension - 3.5, y: 3.5 },
+                { x: location.dimension - 6.5, y: location.dimension - 6.5 },
+                { x: 3.5, y: location.dimension - 3.5 },
+              );
+              var sToQ = squareToQuadrilateral(
+                location.topLeft,
+                location.topRight,
+                location.alignmentPattern,
+                location.bottomLeft,
+              );
               var transform = times(sToQ, qToS);
-              var matrix = BitMatrix_1.BitMatrix.createEmpty(location.dimension, location.dimension);
-              var mappingFunction = function(x2, y2) {
-                var denominator = transform.a13 * x2 + transform.a23 * y2 + transform.a33;
+              var matrix = BitMatrix_1.BitMatrix.createEmpty(
+                location.dimension,
+                location.dimension,
+              );
+              var mappingFunction = function (x2, y2) {
+                var denominator =
+                  transform.a13 * x2 + transform.a23 * y2 + transform.a33;
                 return {
-                  x: (transform.a11 * x2 + transform.a21 * y2 + transform.a31) / denominator,
-                  y: (transform.a12 * x2 + transform.a22 * y2 + transform.a32) / denominator
+                  x:
+                    (transform.a11 * x2 + transform.a21 * y2 + transform.a31) /
+                    denominator,
+                  y:
+                    (transform.a12 * x2 + transform.a22 * y2 + transform.a32) /
+                    denominator,
                 };
               };
               for (var y = 0; y < location.dimension; y++) {
@@ -9651,29 +10031,36 @@ var require_jsQR = __commonJS({
                   var xValue = x + 0.5;
                   var yValue = y + 0.5;
                   var sourcePixel = mappingFunction(xValue, yValue);
-                  matrix.set(x, y, image.get(Math.floor(sourcePixel.x), Math.floor(sourcePixel.y)));
+                  matrix.set(
+                    x,
+                    y,
+                    image.get(
+                      Math.floor(sourcePixel.x),
+                      Math.floor(sourcePixel.y),
+                    ),
+                  );
                 }
               }
               return {
                 matrix,
-                mappingFunction
+                mappingFunction,
               };
             }
             exports2.extract = extract;
           },
           /* 12 */
           /***/
-          function(module2, exports2, __webpack_require__) {
+          function (module2, exports2, __webpack_require__) {
             "use strict";
             Object.defineProperty(exports2, "__esModule", { value: true });
             var MAX_FINDERPATTERNS_TO_SEARCH = 4;
             var MIN_QUAD_RATIO = 0.5;
             var MAX_QUAD_RATIO = 1.5;
-            var distance = function(a, b) {
+            var distance = function (a, b) {
               return Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2));
             };
             function sum(values) {
-              return values.reduce(function(a, b) {
+              return values.reduce(function (a, b) {
                 return a + b;
               });
             }
@@ -9685,27 +10072,57 @@ var require_jsQR = __commonJS({
               var bottomLeft;
               var topLeft;
               var topRight;
-              if (twoThreeDistance >= oneTwoDistance && twoThreeDistance >= oneThreeDistance) {
-                _a = [pattern2, pattern1, pattern3], bottomLeft = _a[0], topLeft = _a[1], topRight = _a[2];
-              } else if (oneThreeDistance >= twoThreeDistance && oneThreeDistance >= oneTwoDistance) {
-                _b = [pattern1, pattern2, pattern3], bottomLeft = _b[0], topLeft = _b[1], topRight = _b[2];
+              if (
+                twoThreeDistance >= oneTwoDistance &&
+                twoThreeDistance >= oneThreeDistance
+              ) {
+                ((_a = [pattern2, pattern1, pattern3]),
+                  (bottomLeft = _a[0]),
+                  (topLeft = _a[1]),
+                  (topRight = _a[2]));
+              } else if (
+                oneThreeDistance >= twoThreeDistance &&
+                oneThreeDistance >= oneTwoDistance
+              ) {
+                ((_b = [pattern1, pattern2, pattern3]),
+                  (bottomLeft = _b[0]),
+                  (topLeft = _b[1]),
+                  (topRight = _b[2]));
               } else {
-                _c = [pattern1, pattern3, pattern2], bottomLeft = _c[0], topLeft = _c[1], topRight = _c[2];
+                ((_c = [pattern1, pattern3, pattern2]),
+                  (bottomLeft = _c[0]),
+                  (topLeft = _c[1]),
+                  (topRight = _c[2]));
               }
-              if ((topRight.x - topLeft.x) * (bottomLeft.y - topLeft.y) - (topRight.y - topLeft.y) * (bottomLeft.x - topLeft.x) < 0) {
-                _d = [topRight, bottomLeft], bottomLeft = _d[0], topRight = _d[1];
+              if (
+                (topRight.x - topLeft.x) * (bottomLeft.y - topLeft.y) -
+                  (topRight.y - topLeft.y) * (bottomLeft.x - topLeft.x) <
+                0
+              ) {
+                ((_d = [topRight, bottomLeft]),
+                  (bottomLeft = _d[0]),
+                  (topRight = _d[1]));
               }
               return { bottomLeft, topLeft, topRight };
             }
             function computeDimension(topLeft, topRight, bottomLeft, matrix) {
-              var moduleSize = (sum(countBlackWhiteRun(topLeft, bottomLeft, matrix, 5)) / 7 + // Divide by 7 since the ratio is 1:1:3:1:1
-              sum(countBlackWhiteRun(topLeft, topRight, matrix, 5)) / 7 + sum(countBlackWhiteRun(bottomLeft, topLeft, matrix, 5)) / 7 + sum(countBlackWhiteRun(topRight, topLeft, matrix, 5)) / 7) / 4;
+              var moduleSize =
+                (sum(countBlackWhiteRun(topLeft, bottomLeft, matrix, 5)) / 7 + // Divide by 7 since the ratio is 1:1:3:1:1
+                  sum(countBlackWhiteRun(topLeft, topRight, matrix, 5)) / 7 +
+                  sum(countBlackWhiteRun(bottomLeft, topLeft, matrix, 5)) / 7 +
+                  sum(countBlackWhiteRun(topRight, topLeft, matrix, 5)) / 7) /
+                4;
               if (moduleSize < 1) {
                 throw new Error("Invalid module size");
               }
-              var topDimension = Math.round(distance(topLeft, topRight) / moduleSize);
-              var sideDimension = Math.round(distance(topLeft, bottomLeft) / moduleSize);
-              var dimension = Math.floor((topDimension + sideDimension) / 2) + 7;
+              var topDimension = Math.round(
+                distance(topLeft, topRight) / moduleSize,
+              );
+              var sideDimension = Math.round(
+                distance(topLeft, bottomLeft) / moduleSize,
+              );
+              var dimension =
+                Math.floor((topDimension + sideDimension) / 2) + 7;
               switch (dimension % 4) {
                 case 0:
                   dimension++;
@@ -9716,9 +10133,17 @@ var require_jsQR = __commonJS({
               }
               return { dimension, moduleSize };
             }
-            function countBlackWhiteRunTowardsPoint(origin, end, matrix, length) {
-              var switchPoints = [{ x: Math.floor(origin.x), y: Math.floor(origin.y) }];
-              var steep = Math.abs(end.y - origin.y) > Math.abs(end.x - origin.x);
+            function countBlackWhiteRunTowardsPoint(
+              origin,
+              end,
+              matrix,
+              length,
+            ) {
+              var switchPoints = [
+                { x: Math.floor(origin.x), y: Math.floor(origin.y) },
+              ];
+              var steep =
+                Math.abs(end.y - origin.y) > Math.abs(end.x - origin.x);
               var fromX;
               var fromY;
               var toX;
@@ -9762,7 +10187,9 @@ var require_jsQR = __commonJS({
               var distances = [];
               for (var i = 0; i < length; i++) {
                 if (switchPoints[i] && switchPoints[i + 1]) {
-                  distances.push(distance(switchPoints[i], switchPoints[i + 1]));
+                  distances.push(
+                    distance(switchPoints[i], switchPoints[i + 1]),
+                  );
                 } else {
                   distances.push(0);
                 }
@@ -9773,40 +10200,94 @@ var require_jsQR = __commonJS({
               var _a;
               var rise = end.y - origin.y;
               var run = end.x - origin.x;
-              var towardsEnd = countBlackWhiteRunTowardsPoint(origin, end, matrix, Math.ceil(length / 2));
-              var awayFromEnd = countBlackWhiteRunTowardsPoint(origin, { x: origin.x - run, y: origin.y - rise }, matrix, Math.ceil(length / 2));
+              var towardsEnd = countBlackWhiteRunTowardsPoint(
+                origin,
+                end,
+                matrix,
+                Math.ceil(length / 2),
+              );
+              var awayFromEnd = countBlackWhiteRunTowardsPoint(
+                origin,
+                { x: origin.x - run, y: origin.y - rise },
+                matrix,
+                Math.ceil(length / 2),
+              );
               var middleValue = towardsEnd.shift() + awayFromEnd.shift() - 1;
-              return (_a = awayFromEnd.concat(middleValue)).concat.apply(_a, towardsEnd);
+              return (_a = awayFromEnd.concat(middleValue)).concat.apply(
+                _a,
+                towardsEnd,
+              );
             }
             function scoreBlackWhiteRun(sequence, ratios) {
               var averageSize = sum(sequence) / sum(ratios);
               var error = 0;
-              ratios.forEach(function(ratio, i) {
+              ratios.forEach(function (ratio, i) {
                 error += Math.pow(sequence[i] - ratio * averageSize, 2);
               });
               return { averageSize, error };
             }
             function scorePattern(point, ratios, matrix) {
               try {
-                var horizontalRun = countBlackWhiteRun(point, { x: -1, y: point.y }, matrix, ratios.length);
-                var verticalRun = countBlackWhiteRun(point, { x: point.x, y: -1 }, matrix, ratios.length);
+                var horizontalRun = countBlackWhiteRun(
+                  point,
+                  { x: -1, y: point.y },
+                  matrix,
+                  ratios.length,
+                );
+                var verticalRun = countBlackWhiteRun(
+                  point,
+                  { x: point.x, y: -1 },
+                  matrix,
+                  ratios.length,
+                );
                 var topLeftPoint = {
                   x: Math.max(0, point.x - point.y) - 1,
-                  y: Math.max(0, point.y - point.x) - 1
+                  y: Math.max(0, point.y - point.x) - 1,
                 };
-                var topLeftBottomRightRun = countBlackWhiteRun(point, topLeftPoint, matrix, ratios.length);
+                var topLeftBottomRightRun = countBlackWhiteRun(
+                  point,
+                  topLeftPoint,
+                  matrix,
+                  ratios.length,
+                );
                 var bottomLeftPoint = {
                   x: Math.min(matrix.width, point.x + point.y) + 1,
-                  y: Math.min(matrix.height, point.y + point.x) + 1
+                  y: Math.min(matrix.height, point.y + point.x) + 1,
                 };
-                var bottomLeftTopRightRun = countBlackWhiteRun(point, bottomLeftPoint, matrix, ratios.length);
+                var bottomLeftTopRightRun = countBlackWhiteRun(
+                  point,
+                  bottomLeftPoint,
+                  matrix,
+                  ratios.length,
+                );
                 var horzError = scoreBlackWhiteRun(horizontalRun, ratios);
                 var vertError = scoreBlackWhiteRun(verticalRun, ratios);
-                var diagDownError = scoreBlackWhiteRun(topLeftBottomRightRun, ratios);
-                var diagUpError = scoreBlackWhiteRun(bottomLeftTopRightRun, ratios);
-                var ratioError = Math.sqrt(horzError.error * horzError.error + vertError.error * vertError.error + diagDownError.error * diagDownError.error + diagUpError.error * diagUpError.error);
-                var avgSize = (horzError.averageSize + vertError.averageSize + diagDownError.averageSize + diagUpError.averageSize) / 4;
-                var sizeError = (Math.pow(horzError.averageSize - avgSize, 2) + Math.pow(vertError.averageSize - avgSize, 2) + Math.pow(diagDownError.averageSize - avgSize, 2) + Math.pow(diagUpError.averageSize - avgSize, 2)) / avgSize;
+                var diagDownError = scoreBlackWhiteRun(
+                  topLeftBottomRightRun,
+                  ratios,
+                );
+                var diagUpError = scoreBlackWhiteRun(
+                  bottomLeftTopRightRun,
+                  ratios,
+                );
+                var ratioError = Math.sqrt(
+                  horzError.error * horzError.error +
+                    vertError.error * vertError.error +
+                    diagDownError.error * diagDownError.error +
+                    diagUpError.error * diagUpError.error,
+                );
+                var avgSize =
+                  (horzError.averageSize +
+                    vertError.averageSize +
+                    diagDownError.averageSize +
+                    diagUpError.averageSize) /
+                  4;
+                var sizeError =
+                  (Math.pow(horzError.averageSize - avgSize, 2) +
+                    Math.pow(vertError.averageSize - avgSize, 2) +
+                    Math.pow(diagDownError.averageSize - avgSize, 2) +
+                    Math.pow(diagUpError.averageSize - avgSize, 2)) /
+                  avgSize;
                 return ratioError + sizeError;
               } catch (_a) {
                 return Infinity;
@@ -9838,11 +10319,11 @@ var require_jsQR = __commonJS({
               var activeFinderPatternQuads = [];
               var alignmentPatternQuads = [];
               var activeAlignmentPatternQuads = [];
-              var _loop_1 = function(y2) {
+              var _loop_1 = function (y2) {
                 var length_1 = 0;
                 var lastBit = false;
                 var scans = [0, 0, 0, 0, 0];
-                var _loop_2 = function(x2) {
+                var _loop_2 = function (x2) {
                   var v = matrix.get(x2, y2);
                   if (v === lastBit) {
                     length_1++;
@@ -9851,33 +10332,84 @@ var require_jsQR = __commonJS({
                     length_1 = 1;
                     lastBit = v;
                     var averageFinderPatternBlocksize = sum(scans) / 7;
-                    var validFinderPattern = Math.abs(scans[0] - averageFinderPatternBlocksize) < averageFinderPatternBlocksize && Math.abs(scans[1] - averageFinderPatternBlocksize) < averageFinderPatternBlocksize && Math.abs(scans[2] - 3 * averageFinderPatternBlocksize) < 3 * averageFinderPatternBlocksize && Math.abs(scans[3] - averageFinderPatternBlocksize) < averageFinderPatternBlocksize && Math.abs(scans[4] - averageFinderPatternBlocksize) < averageFinderPatternBlocksize && !v;
-                    var averageAlignmentPatternBlocksize = sum(scans.slice(-3)) / 3;
-                    var validAlignmentPattern = Math.abs(scans[2] - averageAlignmentPatternBlocksize) < averageAlignmentPatternBlocksize && Math.abs(scans[3] - averageAlignmentPatternBlocksize) < averageAlignmentPatternBlocksize && Math.abs(scans[4] - averageAlignmentPatternBlocksize) < averageAlignmentPatternBlocksize && v;
+                    var validFinderPattern =
+                      Math.abs(scans[0] - averageFinderPatternBlocksize) <
+                        averageFinderPatternBlocksize &&
+                      Math.abs(scans[1] - averageFinderPatternBlocksize) <
+                        averageFinderPatternBlocksize &&
+                      Math.abs(scans[2] - 3 * averageFinderPatternBlocksize) <
+                        3 * averageFinderPatternBlocksize &&
+                      Math.abs(scans[3] - averageFinderPatternBlocksize) <
+                        averageFinderPatternBlocksize &&
+                      Math.abs(scans[4] - averageFinderPatternBlocksize) <
+                        averageFinderPatternBlocksize &&
+                      !v;
+                    var averageAlignmentPatternBlocksize =
+                      sum(scans.slice(-3)) / 3;
+                    var validAlignmentPattern =
+                      Math.abs(scans[2] - averageAlignmentPatternBlocksize) <
+                        averageAlignmentPatternBlocksize &&
+                      Math.abs(scans[3] - averageAlignmentPatternBlocksize) <
+                        averageAlignmentPatternBlocksize &&
+                      Math.abs(scans[4] - averageAlignmentPatternBlocksize) <
+                        averageAlignmentPatternBlocksize &&
+                      v;
                     if (validFinderPattern) {
                       var endX_1 = x2 - scans[3] - scans[4];
                       var startX_1 = endX_1 - scans[2];
                       var line = { startX: startX_1, endX: endX_1, y: y2 };
-                      var matchingQuads = activeFinderPatternQuads.filter(function(q) {
-                        return startX_1 >= q.bottom.startX && startX_1 <= q.bottom.endX || endX_1 >= q.bottom.startX && startX_1 <= q.bottom.endX || startX_1 <= q.bottom.startX && endX_1 >= q.bottom.endX && (scans[2] / (q.bottom.endX - q.bottom.startX) < MAX_QUAD_RATIO && scans[2] / (q.bottom.endX - q.bottom.startX) > MIN_QUAD_RATIO);
-                      });
+                      var matchingQuads = activeFinderPatternQuads.filter(
+                        function (q) {
+                          return (
+                            (startX_1 >= q.bottom.startX &&
+                              startX_1 <= q.bottom.endX) ||
+                            (endX_1 >= q.bottom.startX &&
+                              startX_1 <= q.bottom.endX) ||
+                            (startX_1 <= q.bottom.startX &&
+                              endX_1 >= q.bottom.endX &&
+                              scans[2] / (q.bottom.endX - q.bottom.startX) <
+                                MAX_QUAD_RATIO &&
+                              scans[2] / (q.bottom.endX - q.bottom.startX) >
+                                MIN_QUAD_RATIO)
+                          );
+                        },
+                      );
                       if (matchingQuads.length > 0) {
                         matchingQuads[0].bottom = line;
                       } else {
-                        activeFinderPatternQuads.push({ top: line, bottom: line });
+                        activeFinderPatternQuads.push({
+                          top: line,
+                          bottom: line,
+                        });
                       }
                     }
                     if (validAlignmentPattern) {
                       var endX_2 = x2 - scans[4];
                       var startX_2 = endX_2 - scans[3];
                       var line = { startX: startX_2, y: y2, endX: endX_2 };
-                      var matchingQuads = activeAlignmentPatternQuads.filter(function(q) {
-                        return startX_2 >= q.bottom.startX && startX_2 <= q.bottom.endX || endX_2 >= q.bottom.startX && startX_2 <= q.bottom.endX || startX_2 <= q.bottom.startX && endX_2 >= q.bottom.endX && (scans[2] / (q.bottom.endX - q.bottom.startX) < MAX_QUAD_RATIO && scans[2] / (q.bottom.endX - q.bottom.startX) > MIN_QUAD_RATIO);
-                      });
+                      var matchingQuads = activeAlignmentPatternQuads.filter(
+                        function (q) {
+                          return (
+                            (startX_2 >= q.bottom.startX &&
+                              startX_2 <= q.bottom.endX) ||
+                            (endX_2 >= q.bottom.startX &&
+                              startX_2 <= q.bottom.endX) ||
+                            (startX_2 <= q.bottom.startX &&
+                              endX_2 >= q.bottom.endX &&
+                              scans[2] / (q.bottom.endX - q.bottom.startX) <
+                                MAX_QUAD_RATIO &&
+                              scans[2] / (q.bottom.endX - q.bottom.startX) >
+                                MIN_QUAD_RATIO)
+                          );
+                        },
+                      );
                       if (matchingQuads.length > 0) {
                         matchingQuads[0].bottom = line;
                       } else {
-                        activeAlignmentPatternQuads.push({ top: line, bottom: line });
+                        activeAlignmentPatternQuads.push({
+                          top: line,
+                          bottom: line,
+                        });
                       }
                     }
                   }
@@ -9885,89 +10417,163 @@ var require_jsQR = __commonJS({
                 for (var x = -1; x <= matrix.width; x++) {
                   _loop_2(x);
                 }
-                finderPatternQuads.push.apply(finderPatternQuads, activeFinderPatternQuads.filter(function(q) {
-                  return q.bottom.y !== y2 && q.bottom.y - q.top.y >= 2;
-                }));
-                activeFinderPatternQuads = activeFinderPatternQuads.filter(function(q) {
-                  return q.bottom.y === y2;
-                });
-                alignmentPatternQuads.push.apply(alignmentPatternQuads, activeAlignmentPatternQuads.filter(function(q) {
-                  return q.bottom.y !== y2;
-                }));
-                activeAlignmentPatternQuads = activeAlignmentPatternQuads.filter(function(q) {
-                  return q.bottom.y === y2;
-                });
+                finderPatternQuads.push.apply(
+                  finderPatternQuads,
+                  activeFinderPatternQuads.filter(function (q) {
+                    return q.bottom.y !== y2 && q.bottom.y - q.top.y >= 2;
+                  }),
+                );
+                activeFinderPatternQuads = activeFinderPatternQuads.filter(
+                  function (q) {
+                    return q.bottom.y === y2;
+                  },
+                );
+                alignmentPatternQuads.push.apply(
+                  alignmentPatternQuads,
+                  activeAlignmentPatternQuads.filter(function (q) {
+                    return q.bottom.y !== y2;
+                  }),
+                );
+                activeAlignmentPatternQuads =
+                  activeAlignmentPatternQuads.filter(function (q) {
+                    return q.bottom.y === y2;
+                  });
               };
               for (var y = 0; y <= matrix.height; y++) {
                 _loop_1(y);
               }
-              finderPatternQuads.push.apply(finderPatternQuads, activeFinderPatternQuads.filter(function(q) {
-                return q.bottom.y - q.top.y >= 2;
-              }));
-              alignmentPatternQuads.push.apply(alignmentPatternQuads, activeAlignmentPatternQuads);
-              var finderPatternGroups = finderPatternQuads.filter(function(q) {
-                return q.bottom.y - q.top.y >= 2;
-              }).map(function(q) {
-                var x = (q.top.startX + q.top.endX + q.bottom.startX + q.bottom.endX) / 4;
-                var y2 = (q.top.y + q.bottom.y + 1) / 2;
-                if (!matrix.get(Math.round(x), Math.round(y2))) {
-                  return;
-                }
-                var lengths = [q.top.endX - q.top.startX, q.bottom.endX - q.bottom.startX, q.bottom.y - q.top.y + 1];
-                var size = sum(lengths) / lengths.length;
-                var score = scorePattern({ x: Math.round(x), y: Math.round(y2) }, [1, 1, 3, 1, 1], matrix);
-                return { score, x, y: y2, size };
-              }).filter(function(q) {
-                return !!q;
-              }).sort(function(a, b) {
-                return a.score - b.score;
-              }).map(function(point, i, finderPatterns) {
-                if (i > MAX_FINDERPATTERNS_TO_SEARCH) {
-                  return null;
-                }
-                var otherPoints = finderPatterns.filter(function(p, ii) {
-                  return i !== ii;
-                }).map(function(p) {
-                  return { x: p.x, y: p.y, score: p.score + Math.pow(p.size - point.size, 2) / point.size, size: p.size };
-                }).sort(function(a, b) {
+              finderPatternQuads.push.apply(
+                finderPatternQuads,
+                activeFinderPatternQuads.filter(function (q) {
+                  return q.bottom.y - q.top.y >= 2;
+                }),
+              );
+              alignmentPatternQuads.push.apply(
+                alignmentPatternQuads,
+                activeAlignmentPatternQuads,
+              );
+              var finderPatternGroups = finderPatternQuads
+                .filter(function (q) {
+                  return q.bottom.y - q.top.y >= 2;
+                })
+                .map(function (q) {
+                  var x =
+                    (q.top.startX +
+                      q.top.endX +
+                      q.bottom.startX +
+                      q.bottom.endX) /
+                    4;
+                  var y2 = (q.top.y + q.bottom.y + 1) / 2;
+                  if (!matrix.get(Math.round(x), Math.round(y2))) {
+                    return;
+                  }
+                  var lengths = [
+                    q.top.endX - q.top.startX,
+                    q.bottom.endX - q.bottom.startX,
+                    q.bottom.y - q.top.y + 1,
+                  ];
+                  var size = sum(lengths) / lengths.length;
+                  var score = scorePattern(
+                    { x: Math.round(x), y: Math.round(y2) },
+                    [1, 1, 3, 1, 1],
+                    matrix,
+                  );
+                  return { score, x, y: y2, size };
+                })
+                .filter(function (q) {
+                  return !!q;
+                })
+                .sort(function (a, b) {
+                  return a.score - b.score;
+                })
+                .map(function (point, i, finderPatterns) {
+                  if (i > MAX_FINDERPATTERNS_TO_SEARCH) {
+                    return null;
+                  }
+                  var otherPoints = finderPatterns
+                    .filter(function (p, ii) {
+                      return i !== ii;
+                    })
+                    .map(function (p) {
+                      return {
+                        x: p.x,
+                        y: p.y,
+                        score:
+                          p.score +
+                          Math.pow(p.size - point.size, 2) / point.size,
+                        size: p.size,
+                      };
+                    })
+                    .sort(function (a, b) {
+                      return a.score - b.score;
+                    });
+                  if (otherPoints.length < 2) {
+                    return null;
+                  }
+                  var score =
+                    point.score + otherPoints[0].score + otherPoints[1].score;
+                  return {
+                    points: [point].concat(otherPoints.slice(0, 2)),
+                    score,
+                  };
+                })
+                .filter(function (q) {
+                  return !!q;
+                })
+                .sort(function (a, b) {
                   return a.score - b.score;
                 });
-                if (otherPoints.length < 2) {
-                  return null;
-                }
-                var score = point.score + otherPoints[0].score + otherPoints[1].score;
-                return { points: [point].concat(otherPoints.slice(0, 2)), score };
-              }).filter(function(q) {
-                return !!q;
-              }).sort(function(a, b) {
-                return a.score - b.score;
-              });
               if (finderPatternGroups.length === 0) {
                 return null;
               }
-              var _a = reorderFinderPatterns(finderPatternGroups[0].points[0], finderPatternGroups[0].points[1], finderPatternGroups[0].points[2]), topRight = _a.topRight, topLeft = _a.topLeft, bottomLeft = _a.bottomLeft;
-              var alignment = findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, bottomLeft);
+              var _a = reorderFinderPatterns(
+                  finderPatternGroups[0].points[0],
+                  finderPatternGroups[0].points[1],
+                  finderPatternGroups[0].points[2],
+                ),
+                topRight = _a.topRight,
+                topLeft = _a.topLeft,
+                bottomLeft = _a.bottomLeft;
+              var alignment = findAlignmentPattern(
+                matrix,
+                alignmentPatternQuads,
+                topRight,
+                topLeft,
+                bottomLeft,
+              );
               var result = [];
               if (alignment) {
                 result.push({
-                  alignmentPattern: { x: alignment.alignmentPattern.x, y: alignment.alignmentPattern.y },
+                  alignmentPattern: {
+                    x: alignment.alignmentPattern.x,
+                    y: alignment.alignmentPattern.y,
+                  },
                   bottomLeft: { x: bottomLeft.x, y: bottomLeft.y },
                   dimension: alignment.dimension,
                   topLeft: { x: topLeft.x, y: topLeft.y },
-                  topRight: { x: topRight.x, y: topRight.y }
+                  topRight: { x: topRight.x, y: topRight.y },
                 });
               }
               var midTopRight = recenterLocation(matrix, topRight);
               var midTopLeft = recenterLocation(matrix, topLeft);
               var midBottomLeft = recenterLocation(matrix, bottomLeft);
-              var centeredAlignment = findAlignmentPattern(matrix, alignmentPatternQuads, midTopRight, midTopLeft, midBottomLeft);
+              var centeredAlignment = findAlignmentPattern(
+                matrix,
+                alignmentPatternQuads,
+                midTopRight,
+                midTopLeft,
+                midBottomLeft,
+              );
               if (centeredAlignment) {
                 result.push({
-                  alignmentPattern: { x: centeredAlignment.alignmentPattern.x, y: centeredAlignment.alignmentPattern.y },
+                  alignmentPattern: {
+                    x: centeredAlignment.alignmentPattern.x,
+                    y: centeredAlignment.alignmentPattern.y,
+                  },
                   bottomLeft: { x: midBottomLeft.x, y: midBottomLeft.y },
                   topLeft: { x: midTopLeft.x, y: midTopLeft.y },
                   topRight: { x: midTopRight.x, y: midTopRight.y },
-                  dimension: centeredAlignment.dimension
+                  dimension: centeredAlignment.dimension,
                 });
               }
               if (result.length === 0) {
@@ -9976,66 +10582,106 @@ var require_jsQR = __commonJS({
               return result;
             }
             exports2.locate = locate;
-            function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, bottomLeft) {
+            function findAlignmentPattern(
+              matrix,
+              alignmentPatternQuads,
+              topRight,
+              topLeft,
+              bottomLeft,
+            ) {
               var _a;
               var dimension;
               var moduleSize;
               try {
-                _a = computeDimension(topLeft, topRight, bottomLeft, matrix), dimension = _a.dimension, moduleSize = _a.moduleSize;
+                ((_a = computeDimension(topLeft, topRight, bottomLeft, matrix)),
+                  (dimension = _a.dimension),
+                  (moduleSize = _a.moduleSize));
               } catch (e) {
                 return null;
               }
               var bottomRightFinderPattern = {
                 x: topRight.x - topLeft.x + bottomLeft.x,
-                y: topRight.y - topLeft.y + bottomLeft.y
+                y: topRight.y - topLeft.y + bottomLeft.y,
               };
-              var modulesBetweenFinderPatterns = (distance(topLeft, bottomLeft) + distance(topLeft, topRight)) / 2 / moduleSize;
+              var modulesBetweenFinderPatterns =
+                (distance(topLeft, bottomLeft) + distance(topLeft, topRight)) /
+                2 /
+                moduleSize;
               var correctionToTopLeft = 1 - 3 / modulesBetweenFinderPatterns;
               var expectedAlignmentPattern = {
-                x: topLeft.x + correctionToTopLeft * (bottomRightFinderPattern.x - topLeft.x),
-                y: topLeft.y + correctionToTopLeft * (bottomRightFinderPattern.y - topLeft.y)
+                x:
+                  topLeft.x +
+                  correctionToTopLeft *
+                    (bottomRightFinderPattern.x - topLeft.x),
+                y:
+                  topLeft.y +
+                  correctionToTopLeft *
+                    (bottomRightFinderPattern.y - topLeft.y),
               };
-              var alignmentPatterns = alignmentPatternQuads.map(function(q) {
-                var x = (q.top.startX + q.top.endX + q.bottom.startX + q.bottom.endX) / 4;
-                var y = (q.top.y + q.bottom.y + 1) / 2;
-                if (!matrix.get(Math.floor(x), Math.floor(y))) {
-                  return;
-                }
-                var lengths = [q.top.endX - q.top.startX, q.bottom.endX - q.bottom.startX, q.bottom.y - q.top.y + 1];
-                var size = sum(lengths) / lengths.length;
-                var sizeScore = scorePattern({ x: Math.floor(x), y: Math.floor(y) }, [1, 1, 1], matrix);
-                var score = sizeScore + distance({ x, y }, expectedAlignmentPattern);
-                return { x, y, score };
-              }).filter(function(v) {
-                return !!v;
-              }).sort(function(a, b) {
-                return a.score - b.score;
-              });
-              var alignmentPattern = modulesBetweenFinderPatterns >= 15 && alignmentPatterns.length ? alignmentPatterns[0] : expectedAlignmentPattern;
+              var alignmentPatterns = alignmentPatternQuads
+                .map(function (q) {
+                  var x =
+                    (q.top.startX +
+                      q.top.endX +
+                      q.bottom.startX +
+                      q.bottom.endX) /
+                    4;
+                  var y = (q.top.y + q.bottom.y + 1) / 2;
+                  if (!matrix.get(Math.floor(x), Math.floor(y))) {
+                    return;
+                  }
+                  var lengths = [
+                    q.top.endX - q.top.startX,
+                    q.bottom.endX - q.bottom.startX,
+                    q.bottom.y - q.top.y + 1,
+                  ];
+                  var size = sum(lengths) / lengths.length;
+                  var sizeScore = scorePattern(
+                    { x: Math.floor(x), y: Math.floor(y) },
+                    [1, 1, 1],
+                    matrix,
+                  );
+                  var score =
+                    sizeScore + distance({ x, y }, expectedAlignmentPattern);
+                  return { x, y, score };
+                })
+                .filter(function (v) {
+                  return !!v;
+                })
+                .sort(function (a, b) {
+                  return a.score - b.score;
+                });
+              var alignmentPattern =
+                modulesBetweenFinderPatterns >= 15 && alignmentPatterns.length
+                  ? alignmentPatterns[0]
+                  : expectedAlignmentPattern;
               return { alignmentPattern, dimension };
             }
-          }
+          },
           /******/
         ])["default"]
       );
     });
-  }
+  },
 });
 
 // node_modules/qrcode-decoder/dist/index.esm.js
 var import_jsqr = __toESM(require_jsQR());
-var __assign = function() {
-  __assign = Object.assign || function __assign2(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
+var __assign = function () {
+  __assign =
+    Object.assign ||
+    function __assign2(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s)
+          if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+      return t;
+    };
   return __assign.apply(this, arguments);
 };
 function __awaiter(thisArg, _arguments, P, generator) {
-  return new (P || (P = Promise))(function(resolve, reject) {
+  return new (P || (P = Promise))(function (resolve, reject) {
     function fulfilled(value) {
       try {
         step(generator.next(value));
@@ -10051,89 +10697,120 @@ function __awaiter(thisArg, _arguments, P, generator) {
       }
     }
     function step(result) {
-      result.done ? resolve(result.value) : new P(function(resolve2) {
-        resolve2(result.value);
-      }).then(fulfilled, rejected);
+      result.done
+        ? resolve(result.value)
+        : new P(function (resolve2) {
+            resolve2(result.value);
+          }).then(fulfilled, rejected);
     }
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
 }
 function __generator(thisArg, body) {
-  var _ = { label: 0, sent: function() {
-    if (t[0] & 1) throw t[1];
-    return t[1];
-  }, trys: [], ops: [] }, f, y, t, g;
-  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
-    return this;
-  }), g;
+  var _ = {
+      label: 0,
+      sent: function () {
+        if (t[0] & 1) throw t[1];
+        return t[1];
+      },
+      trys: [],
+      ops: [],
+    },
+    f,
+    y,
+    t,
+    g;
+  return (
+    (g = { next: verb(0), throw: verb(1), return: verb(2) }),
+    typeof Symbol === "function" &&
+      (g[Symbol.iterator] = function () {
+        return this;
+      }),
+    g
+  );
   function verb(n) {
-    return function(v) {
+    return function (v) {
       return step([n, v]);
     };
   }
   function step(op) {
     if (f) throw new TypeError("Generator is already executing.");
-    while (_) try {
-      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-      if (y = 0, t) op = [op[0] & 2, t.value];
-      switch (op[0]) {
-        case 0:
-        case 1:
-          t = op;
-          break;
-        case 4:
-          _.label++;
-          return { value: op[1], done: false };
-        case 5:
-          _.label++;
-          y = op[1];
-          op = [0];
-          continue;
-        case 7:
-          op = _.ops.pop();
-          _.trys.pop();
-          continue;
-        default:
-          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-            _ = 0;
-            continue;
-          }
-          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-            _.label = op[1];
-            break;
-          }
-          if (op[0] === 6 && _.label < t[1]) {
-            _.label = t[1];
+    while (_)
+      try {
+        if (
+          ((f = 1),
+          y &&
+            (t =
+              op[0] & 2
+                ? y["return"]
+                : op[0]
+                  ? y["throw"] || ((t = y["return"]) && t.call(y), 0)
+                  : y.next) &&
+            !(t = t.call(y, op[1])).done)
+        )
+          return t;
+        if (((y = 0), t)) op = [op[0] & 2, t.value];
+        switch (op[0]) {
+          case 0:
+          case 1:
             t = op;
             break;
-          }
-          if (t && _.label < t[2]) {
-            _.label = t[2];
-            _.ops.push(op);
-            break;
-          }
-          if (t[2]) _.ops.pop();
-          _.trys.pop();
-          continue;
+          case 4:
+            _.label++;
+            return { value: op[1], done: false };
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+          case 7:
+            op = _.ops.pop();
+            _.trys.pop();
+            continue;
+          default:
+            if (
+              !((t = _.trys), (t = t.length > 0 && t[t.length - 1])) &&
+              (op[0] === 6 || op[0] === 2)
+            ) {
+              _ = 0;
+              continue;
+            }
+            if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) {
+              _.label = op[1];
+              break;
+            }
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+              _.ops.push(op);
+              break;
+            }
+            if (t[2]) _.ops.pop();
+            _.trys.pop();
+            continue;
+        }
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
       }
-      op = body.call(thisArg, _);
-    } catch (e) {
-      op = [6, e];
-      y = 0;
-    } finally {
-      f = t = 0;
-    }
     if (op[0] & 5) throw op[1];
     return { value: op[0] ? op[1] : void 0, done: true };
   }
 }
 var videoSize = {
   width: { min: 360, ideal: 720, max: 1080 },
-  height: { min: 360, ideal: 720, max: 1080 }
+  height: { min: 360, ideal: 720, max: 1080 },
 };
-var QrcodeDecoder = (
+var QrcodeDecoder =
   /** @class */
-  function() {
+  (function () {
     function QrcodeDecoder2() {
       this.timerCapture = null;
       this.canvasElem = null;
@@ -10143,25 +10820,36 @@ var QrcodeDecoder = (
       this.getUserMediaHandler = null;
       this.videoConstraints = {
         // default use rear camera
-        video: __assign(__assign({}, videoSize), { facingMode: { exact: "environment" } }),
-        audio: false
+        video: __assign(__assign({}, videoSize), {
+          facingMode: { exact: "environment" },
+        }),
+        audio: false,
       };
       this.defaultOption = { inversionAttempts: "attemptBoth" };
     }
-    QrcodeDecoder2.prototype.isCanvasSupported = function() {
+    QrcodeDecoder2.prototype.isCanvasSupported = function () {
       var elem = document.createElement("canvas");
       return !!(elem.getContext && elem.getContext("2d"));
     };
-    QrcodeDecoder2.prototype._createImageData = function(target, width, height) {
+    QrcodeDecoder2.prototype._createImageData = function (
+      target,
+      width,
+      height,
+    ) {
       if (!this.canvasElem) {
         this._prepareCanvas(width, height);
       }
       this.gCtx.clearRect(0, 0, width, height);
       this.gCtx.drawImage(target, 0, 0, width, height);
-      var imageData = this.gCtx.getImageData(0, 0, this.canvasElem.width, this.canvasElem.height);
+      var imageData = this.gCtx.getImageData(
+        0,
+        0,
+        this.canvasElem.width,
+        this.canvasElem.height,
+      );
       return imageData;
     };
-    QrcodeDecoder2.prototype._prepareCanvas = function(width, height) {
+    QrcodeDecoder2.prototype._prepareCanvas = function (width, height) {
       if (!this.canvasElem) {
         this.canvasElem = document.createElement("canvas");
         this.canvasElem.style.width = "".concat(width, "px");
@@ -10171,58 +10859,81 @@ var QrcodeDecoder = (
       }
       this.gCtx = this.canvasElem.getContext("2d");
     };
-    QrcodeDecoder2.prototype._captureToCanvas = function(videoElem, options) {
-      return __awaiter(this, void 0, void 0, function() {
+    QrcodeDecoder2.prototype._captureToCanvas = function (videoElem, options) {
+      return __awaiter(this, void 0, void 0, function () {
         var proms, result;
         var _this = this;
-        return __generator(this, function(_a) {
+        return __generator(this, function (_a) {
           switch (_a.label) {
             case 0:
               if (this.timerCapture) {
                 clearTimeout(this.timerCapture);
               }
-              proms = function() {
-                var p = new Promise(function(resolve) {
-                  return __awaiter(_this, void 0, void 0, function() {
+              proms = function () {
+                var p = new Promise(function (resolve) {
+                  return __awaiter(_this, void 0, void 0, function () {
                     var code, imageData;
                     var _this2 = this;
-                    return __generator(this, function(_a2) {
+                    return __generator(this, function (_a2) {
                       if (videoElem.videoWidth && videoElem.videoHeight) {
-                        imageData = this._createImageData(videoElem, videoElem.videoWidth, videoElem.videoHeight);
-                        code = (0, import_jsqr.default)(imageData.data, imageData.width, imageData.height, options);
+                        imageData = this._createImageData(
+                          videoElem,
+                          videoElem.videoWidth,
+                          videoElem.videoHeight,
+                        );
+                        code = (0, import_jsqr.default)(
+                          imageData.data,
+                          imageData.width,
+                          imageData.height,
+                          options,
+                        );
                         if (code) {
                           resolve(code);
                         } else {
-                          this.timerCapture = setTimeout(function() {
-                            return __awaiter(_this2, void 0, void 0, function() {
-                              return __generator(this, function(_a3) {
-                                switch (_a3.label) {
-                                  case 0:
-                                    return [4, this._captureToCanvas(videoElem, options)];
-                                  case 1:
-                                    code = _a3.sent();
-                                    resolve(code);
-                                    return [
-                                      2
-                                      /*return*/
-                                    ];
-                                }
-                              });
-                            });
+                          this.timerCapture = setTimeout(function () {
+                            return __awaiter(
+                              _this2,
+                              void 0,
+                              void 0,
+                              function () {
+                                return __generator(this, function (_a3) {
+                                  switch (_a3.label) {
+                                    case 0:
+                                      return [
+                                        4,
+                                        this._captureToCanvas(
+                                          videoElem,
+                                          options,
+                                        ),
+                                      ];
+                                    case 1:
+                                      code = _a3.sent();
+                                      resolve(code);
+                                      return [
+                                        2,
+                                        /*return*/
+                                      ];
+                                  }
+                                });
+                              },
+                            );
                           }, 500);
                         }
                       } else {
-                        this.timerCapture = setTimeout(function() {
-                          return __awaiter(_this2, void 0, void 0, function() {
-                            return __generator(this, function(_a3) {
+                        this.timerCapture = setTimeout(function () {
+                          return __awaiter(_this2, void 0, void 0, function () {
+                            return __generator(this, function (_a3) {
                               switch (_a3.label) {
                                 case 0:
-                                  return [4, this._captureToCanvas(videoElem, options)];
+                                  return [
+                                    4,
+                                    this._captureToCanvas(videoElem, options),
+                                  ];
                                 case 1:
                                   code = _a3.sent();
                                   resolve(code);
                                   return [
-                                    2
+                                    2,
                                     /*return*/
                                   ];
                               }
@@ -10231,7 +10942,7 @@ var QrcodeDecoder = (
                         }, 500);
                       }
                       return [
-                        2
+                        2,
                         /*return*/
                       ];
                     });
@@ -10247,13 +10958,13 @@ var QrcodeDecoder = (
         });
       });
     };
-    QrcodeDecoder2.prototype.decodeFromCamera = function(videoElem, options) {
+    QrcodeDecoder2.prototype.decodeFromCamera = function (videoElem, options) {
       if (options === void 0) {
         options = {};
       }
-      return __awaiter(this, void 0, void 0, function() {
+      return __awaiter(this, void 0, void 0, function () {
         var opts, stream, e_1, code;
-        return __generator(this, function(_a) {
+        return __generator(this, function (_a) {
           switch (_a.label) {
             case 0:
               opts = __assign(__assign({}, this.defaultOption), options);
@@ -10264,7 +10975,10 @@ var QrcodeDecoder = (
               _a.label = 1;
             case 1:
               _a.trys.push([1, 3, , 7]);
-              return [4, navigator.mediaDevices.getUserMedia(this.videoConstraints)];
+              return [
+                4,
+                navigator.mediaDevices.getUserMedia(this.videoConstraints),
+              ];
             case 2:
               stream = _a.sent();
               return [3, 7];
@@ -10272,13 +10986,16 @@ var QrcodeDecoder = (
               e_1 = _a.sent();
               if (!(e_1.name === "OverconstrainedError")) return [3, 5];
               console.log("[OverconstrainedError] Can not use rear camera.");
-              return [4, navigator.mediaDevices.getUserMedia({
-                video: __assign(__assign({}, videoSize), {
-                  width: opts.width,
-                  height: opts.height
+              return [
+                4,
+                navigator.mediaDevices.getUserMedia({
+                  video: __assign(__assign({}, videoSize), {
+                    width: opts.width,
+                    height: opts.height,
+                  }),
+                  audio: false,
                 }),
-                audio: false
-              })];
+              ];
             case 4:
               stream = _a.sent();
               return [3, 6];
@@ -10301,13 +11018,13 @@ var QrcodeDecoder = (
         });
       });
     };
-    QrcodeDecoder2.prototype.decodeFromVideo = function(videoElem, options) {
+    QrcodeDecoder2.prototype.decodeFromVideo = function (videoElem, options) {
       if (options === void 0) {
         options = {};
       }
-      return __awaiter(this, void 0, void 0, function() {
+      return __awaiter(this, void 0, void 0, function () {
         var opts, code, e_2;
-        return __generator(this, function(_a) {
+        return __generator(this, function (_a) {
           switch (_a.label) {
             case 0:
               opts = __assign(__assign({}, this.defaultOption), options);
@@ -10324,20 +11041,20 @@ var QrcodeDecoder = (
               throw e_2;
             case 4:
               return [
-                2
+                2,
                 /*return*/
               ];
           }
         });
       });
     };
-    QrcodeDecoder2.prototype.decodeFromImage = function(img, options) {
+    QrcodeDecoder2.prototype.decodeFromImage = function (img, options) {
       if (options === void 0) {
         options = {};
       }
-      return __awaiter(this, void 0, void 0, function() {
+      return __awaiter(this, void 0, void 0, function () {
         var imgDom, opts, proms, code;
-        return __generator(this, function(_a) {
+        return __generator(this, function (_a) {
           switch (_a.label) {
             case 0:
               imgDom = null;
@@ -10348,9 +11065,9 @@ var QrcodeDecoder = (
                 imgDom.crossOrigin = options.crossOrigin;
               }
               imgDom.src = img;
-              proms = function() {
-                return new Promise(function(resolve) {
-                  imgDom.onload = function() {
+              proms = function () {
+                return new Promise(function (resolve) {
+                  imgDom.onload = function () {
                     return resolve(true);
                   };
                 });
@@ -10377,19 +11094,28 @@ var QrcodeDecoder = (
         });
       });
     };
-    QrcodeDecoder2.prototype._decodeFromImageElm = function(imgObj, options) {
+    QrcodeDecoder2.prototype._decodeFromImageElm = function (imgObj, options) {
       if (options === void 0) {
         options = {};
       }
       var opts = __assign(__assign({}, this.defaultOption), options);
-      var imageData = this._createImageData(imgObj, imgObj.width, imgObj.height);
-      var code = (0, import_jsqr.default)(imageData.data, imageData.width, imageData.height, opts);
+      var imageData = this._createImageData(
+        imgObj,
+        imgObj.width,
+        imgObj.height,
+      );
+      var code = (0, import_jsqr.default)(
+        imageData.data,
+        imageData.width,
+        imageData.height,
+        opts,
+      );
       if (code) {
         return code;
       }
       return null;
     };
-    QrcodeDecoder2.prototype.stop = function() {
+    QrcodeDecoder2.prototype.stop = function () {
       if (this.stream) {
         var track = this.stream.getTracks()[0];
         track.stop();
@@ -10402,45 +11128,46 @@ var QrcodeDecoder = (
       }
       return this;
     };
-    QrcodeDecoder2.prototype.setGroupId = function(groupId) {
+    QrcodeDecoder2.prototype.setGroupId = function (groupId) {
       if (groupId) {
         this.videoConstraints.video = {
-          advanced: [{ groupId }]
+          advanced: [{ groupId }],
         };
       } else {
         this.videoConstraints.video = true;
       }
       return this;
     };
-    QrcodeDecoder2.prototype.getVideoDevices = function() {
-      return __awaiter(this, void 0, void 0, function() {
+    QrcodeDecoder2.prototype.getVideoDevices = function () {
+      return __awaiter(this, void 0, void 0, function () {
         var devices;
-        return __generator(this, function(_a) {
+        return __generator(this, function (_a) {
           switch (_a.label) {
             case 0:
               if (!navigator.mediaDevices.enumerateDevices) return [3, 2];
               return [4, navigator.mediaDevices.enumerateDevices()];
             case 1:
               devices = _a.sent();
-              return [2, devices.filter(function(item) {
-                if (item.kind === "videoinput") {
-                  return true;
-                }
-                return false;
-              })];
+              return [
+                2,
+                devices.filter(function (item) {
+                  if (item.kind === "videoinput") {
+                    return true;
+                  }
+                  return false;
+                }),
+              ];
             case 2:
-              throw new Error("Current browser doest not support MediaStreamTrack.getSources");
+              throw new Error(
+                "Current browser doest not support MediaStreamTrack.getSources",
+              );
           }
         });
       });
     };
     return QrcodeDecoder2;
-  }()
-);
-export {
-  QrcodeDecoder,
-  QrcodeDecoder as default
-};
+  })();
+export { QrcodeDecoder, QrcodeDecoder as default };
 /*! Bundled license information:
 
 qrcode-decoder/dist/index.esm.js:

@@ -1,5 +1,4 @@
-import {qris} from "/src/lib/qris.js";
-
+import { qris } from "/src/lib/qris.js";
 
 function addSticker(nama, QR, harga, merchant) {
   const obj = JSON.parse(localStorage.getItem("stickerStorage")) || {};
@@ -8,35 +7,38 @@ function addSticker(nama, QR, harga, merchant) {
   localStorage.setItem("stickerStorage", JSON.stringify(obj));
 }
 
-
-
 function generateQris(nama, harga, merchant) {
   qris(localStorage.getItem("QRIS_Utama"), harga)
-.then(data => {
-  addSticker(nama, data.QR, harga, merchant);
-}).catch(e => {alert(e)})
+    .then((data) => {
+      addSticker(nama, data.QR, harga, merchant);
+    })
+    .catch((e) => {
+      alert(e);
+    });
 }
-
 
 submitTambahItem.addEventListener("click", (e) => {
   e.preventDefault();
-  submitTambahItem.classList.add("is-loading")
+  submitTambahItem.classList.add("is-loading");
 
-if(inputHargaItem.value.length < 1 || inputNamaItem.value.length < 1) {
-  setTimeout(() => {
-    submitTambahItem.classList.remove("is-loading")
-    buatStikerMsg.innerHTML = "input field masih kosong"
-    },500)
-} else {
-  try {
-  generateQris(inputNamaItem.value, inputHargaItem.value, namaMerchant.textContent)
-  setTimeout(() => {
-    window.location.reload();
-    submitTambahItem.classList.remove("is-loading")
-    },1300)
-  } catch(e) {
-    console.log(e)
+  if (inputHargaItem.value.length < 1 || inputNamaItem.value.length < 1) {
+    setTimeout(() => {
+      submitTambahItem.classList.remove("is-loading");
+      buatStikerMsg.innerHTML = "input field masih kosong";
+    }, 500);
+  } else {
+    try {
+      generateQris(
+        inputNamaItem.value,
+        inputHargaItem.value,
+        namaMerchant.textContent,
+      );
+      setTimeout(() => {
+        window.location.reload();
+        submitTambahItem.classList.remove("is-loading");
+      }, 1300);
+    } catch (e) {
+      console.log(e);
+    }
   }
-}
-})
-  
+});

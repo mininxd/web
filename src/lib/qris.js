@@ -5,26 +5,28 @@
 export async function qris(qrisCode, nominal) {
   try {
     // Check if we're running in a browser environment
-    if (typeof window !== 'undefined' && typeof fetch !== 'undefined') {
+    if (typeof window !== "undefined" && typeof fetch !== "undefined") {
       // First, extract merchant name from the QRIS code for immediate display
       const qrisInfo = parseQrisData(qrisCode);
-      
+
       // If nominal is 0, just return merchant info without API call
       if (nominal === 0 || nominal === "0") {
         return {
           merchant: qrisInfo.merchantName,
           QR: qrisCode, // Return original code for merchant info
-          harga: 0
+          harga: 0,
         };
       }
-      
+
       // Use fetch for browser environments
       let response;
-      
+
       // Check if we have a local backend running
       try {
         // Try local API first
-        response = await fetch(`/api/qris?qris=${encodeURIComponent(qrisCode)}&nominal=${nominal}`);
+        response = await fetch(
+          `/api/qris?qris=${encodeURIComponent(qrisCode)}&nominal=${nominal}`,
+        );
         if (response.ok) {
           const data = await response.json();
           return data;
@@ -32,15 +34,15 @@ export async function qris(qrisCode, nominal) {
       } catch (localError) {
         console.log("Local API not available, trying public API");
       }
-      
+
       // Fallback to public API
       const apiUrl = `https://api-mininxd.vercel.app/qris?qris=${encodeURIComponent(qrisCode)}&nominal=${nominal}`;
       const apiResponse = await fetch(apiUrl);
-      
+
       if (!apiResponse.ok) {
         throw new Error(`API request failed with status ${apiResponse.status}`);
       }
-      
+
       const data = await apiResponse.json();
       return data;
     } else {
@@ -54,30 +56,26 @@ export async function qris(qrisCode, nominal) {
 }
 
 export async function generateQrisWithOptions(qrisCode, nominal, options = {}) {
-  const {
-    tax = "n",
-    taxtype = "p", 
-    fee = 0
-  } = options;
+  const { tax = "n", taxtype = "p", fee = 0 } = options;
 
   try {
     // Check if we're running in a browser environment
-    if (typeof window !== 'undefined' && typeof fetch !== 'undefined') {
+    if (typeof window !== "undefined" && typeof fetch !== "undefined") {
       // Use fetch for browser environments
       let response;
-      
+
       // Check if we have a local backend running
       try {
         // Try local API first
         response = await fetch(`/api/qris`, {
-          method: 'GET',
+          method: "GET",
           params: {
             qris: qrisCode,
             nominal: nominal,
             tax: tax,
             taxtype: taxtype,
-            fee: fee
-          }
+            fee: fee,
+          },
         });
         if (response.ok) {
           const data = await response.json();
@@ -86,15 +84,15 @@ export async function generateQrisWithOptions(qrisCode, nominal, options = {}) {
       } catch (localError) {
         console.log("Local API not available, trying public API");
       }
-      
+
       // Fallback to public API
       const apiUrl = `https://api-mininxd.vercel.app/qris?qris=${encodeURIComponent(qrisCode)}&nominal=${nominal}&tax=${tax}&taxtype=${taxtype}&fee=${fee}`;
       const apiResponse = await fetch(apiUrl);
-      
+
       if (!apiResponse.ok) {
         throw new Error(`API request failed with status ${apiResponse.status}`);
       }
-      
+
       const data = await apiResponse.json();
       return data;
     } else {
@@ -111,12 +109,12 @@ export async function generateQrisWithOptions(qrisCode, nominal, options = {}) {
  * Helper function that mimics the get_between function from libQris/crc.js
  */
 function getBetween(string, start, end) {
-    string = " " + string;
-    let ini = string.indexOf(start);
-    if (ini == 0) return "";
-    ini += start.length;
-    let len = string.indexOf(end, ini) - ini;
-    return string.substr(ini, len);
+  string = " " + string;
+  let ini = string.indexOf(start);
+  if (ini == 0) return "";
+  ini += start.length;
+  let len = string.indexOf(end, ini) - ini;
+  return string.substr(ini, len);
 }
 
 export function parseQrisData(qrisCode) {
@@ -133,12 +131,12 @@ export function parseQrisData(qrisCode) {
     // Extract merchant name using the same logic as in original dataQris
     let merchantSection = getBetween(qrisCode, "ID59", "60");
     let merchantName = "Unknown Merchant";
-    
+
     if (merchantSection) {
-      // Apply the same logic as the original function: get text between ID59 and 60, 
+      // Apply the same logic as the original function: get text between ID59 and 60,
       // then remove first 2 characters (which should be the length indicator)
       merchantName = merchantSection.substring(2).trim().toUpperCase();
-      
+
       // Additional processing: if the result starts with numbers followed by a space,
       // the actual merchant name might be after that number prefix
       // For example: "082 PUSK MODOPURO" -> "PUSK MODOPURO"
@@ -205,45 +203,51 @@ export function parseQrisData(qrisCode) {
   }
 }
 
-export function generateQrisLocally(qris, qty, tax = "n", taxtype = "p", fee = 0) {
+export function generateQrisLocally(
+  qris,
+  qty,
+  tax = "n",
+  taxtype = "p",
+  fee = 0,
+) {
   // This function implements the same logic as lib/libQris/generator.js
   try {
     // Set defaults as in the original generator
-    tax = "n";     // Ya-Tidak Biaya Layanan
-    taxtype = "p";    // Rupiah(r) / Persen(p)
+    tax = "n"; // Ya-Tidak Biaya Layanan
+    taxtype = "p"; // Rupiah(r) / Persen(p)
 
-    if (typeof fee !== 'string') {
+    if (typeof fee !== "string") {
       fee = fee.toString();
     }
 
     let feeStr = "";
     if (tax == "y") {
-      if (taxtype === 'r') {
-        feeStr = "55020256" + String(fee.length).padStart(2, '0') + fee;
-      } else if (taxtype === 'p') {
-        feeStr = "55020357" + String(fee.length).padStart(2, '0') + fee;
+      if (taxtype === "r") {
+        feeStr = "55020256" + String(fee.length).padStart(2, "0") + fee;
+      } else if (taxtype === "p") {
+        feeStr = "55020357" + String(fee.length).padStart(2, "0") + fee;
       }
     }
 
-    if (typeof qty !== 'string') {
+    if (typeof qty !== "string") {
       qty = qty.toString();
     }
-    
+
     // Remove CRC from original QRIS code
     let qrisModified = qris.substring(0, qris.length - 4);
     // Update version from 010211 to 010212
     let step1 = qrisModified.replace("010211", "010212");
     // Split at the country code marker "5802ID"
     let step2 = step1.split("5802ID");
-    
+
     // Create the amount field (tag 54)
-    let uang = "54" + String(qty.length).padStart(2, '0') + qty;
+    let uang = "54" + String(qty.length).padStart(2, "0") + qty;
 
     // Add fee if applicable, otherwise add country code marker
     if (feeStr === "" || !feeStr) {
-        uang += "5802ID";
+      uang += "5802ID";
     } else {
-        uang += feeStr + "5802ID";
+      uang += feeStr + "5802ID";
     }
 
     // Combine the parts
@@ -266,7 +270,7 @@ function extractPencetak(qrisCode) {
     const pencetakMatch = qrisCode.match(/26\d{2}00\d{2}([A-Z.]+)/);
     if (pencetakMatch) {
       const fullMatch = pencetakMatch[1];
-      const parts = fullMatch.split('.');
+      const parts = fullMatch.split(".");
       // Return the service provider name (e.g., GO-JEK from COM.GO-JEK.WWW)
       if (parts.length >= 2) {
         return parts[1];
@@ -284,7 +288,7 @@ function extractPencetak(qrisCode) {
  * Calculate CRC16 for QRIS code validation
  */
 function calculateCRC16(str) {
-  let crc = 0xFFFF;
+  let crc = 0xffff;
   const strlen = str.length;
   for (let c = 0; c < strlen; c++) {
     crc ^= str.charCodeAt(c) << 8;
@@ -297,7 +301,7 @@ function calculateCRC16(str) {
     }
   }
 
-  let hex = crc & 0xFFFF;
+  let hex = crc & 0xffff;
   hex = hex.toString(16).toUpperCase();
   if (hex.length === 3) hex = "0" + hex;
   return hex;

@@ -1,5 +1,5 @@
 import QRCode from "qrcode";
-import {qris} from "../lib/qris.js";
+import { qris } from "../lib/qris.js";
 import "../lib/modal.js";
 import "./login.js";
 import "./localStorage.js";
@@ -7,7 +7,7 @@ import "./canvas.js";
 import "./isDesktop.js";
 import "./deleteList.js";
 import "./settings.js";
-import 'remixicon/fonts/remixicon.css'
+import "remixicon/fonts/remixicon.css";
 // Define global variables for elements used in imported modules
 const submitTambahItem = document.getElementById("submitTambahItem");
 const inputNamaItem = document.getElementById("inputNamaItem");
@@ -27,80 +27,86 @@ const source = document.getElementById("source");
 const donate = document.getElementById("donate");
 const listQrisCanvas = document.getElementById("listQrisCanvas");
 
-
 // Get Header
 downloadAll.disabled = true;
 downloadAll.classList.add("is-loading");
 
-if(localStorage.getItem("QRIS_Utama")) {
-qris(localStorage.getItem("QRIS_Utama"), 0)
-.then(data => {
-downloadAll.disabled = false;
-downloadAll.classList.remove("is-loading");
+if (localStorage.getItem("QRIS_Utama")) {
+  qris(localStorage.getItem("QRIS_Utama"), 0).then((data) => {
+    downloadAll.disabled = false;
+    downloadAll.classList.remove("is-loading");
 
-namaMerchant.innerHTML = data.merchant;
-namaMerchant.classList.remove("skeleton");
+    namaMerchant.innerHTML = data.merchant;
+    namaMerchant.classList.remove("skeleton");
 
-downloadAll.addEventListener("click", () => {
-  downloadAll.classList.add("is-loading");
-  try {
-      htmlToImage.toPng(listQrisCanvas, { 
-        pixelRatio: 3 
-      }).then(function (blob) {
-        if (window.saveAs) {
-          window.saveAs(blob, `${data.merchant}.png`);
-        } else {
-          FileSaver.saveAs(blob, `${data.merchant}.png`);
-        }
-      });
-    setTimeout(() => {
-  downloadAll.classList.remove("is-loading");
-    },1500)
-    } catch (e) {
-      alert(e);
+    // Check if merchant should be hidden based on saved setting
+    const savedShowMerchant = localStorage.getItem("stickerShowMerchant");
+    const isMerchantEnabled = savedShowMerchant === null ? true : savedShowMerchant === "true";
+
+    if (!isMerchantEnabled) {
+      document.documentElement.classList.add("hide-merchant");
     }
-})
-})
+
+    downloadAll.addEventListener("click", () => {
+      downloadAll.classList.add("is-loading");
+      try {
+        htmlToImage
+          .toPng(listQrisCanvas, {
+            pixelRatio: 3,
+          })
+          .then(function (blob) {
+            if (window.saveAs) {
+              window.saveAs(blob, `${data.merchant}.png`);
+            } else {
+              FileSaver.saveAs(blob, `${data.merchant}.png`);
+            }
+          });
+        setTimeout(() => {
+          downloadAll.classList.remove("is-loading");
+        }, 1500);
+      } catch (e) {
+        alert(e);
+      }
+    });
+  });
 }
 
-submitLogout.addEventListener('click', () => {
+submitLogout.addEventListener("click", () => {
   try {
-  localStorage.removeItem("QRIS_Utama");
-//  localStorage.removeItem("stickerStorage");
-  window.location.reload();
-  } catch(e) {
-  }
-})
-submitLogoutHapus.addEventListener('click', () => {
+    localStorage.removeItem("QRIS_Utama");
+    //  localStorage.removeItem("stickerStorage");
+    window.location.reload();
+  } catch (e) {}
+});
+submitLogoutHapus.addEventListener("click", () => {
   try {
-  localStorage.removeItem("QRIS_Utama");
-  localStorage.removeItem("stickerStorage");
-  window.location.reload();
-  } catch(e) {
-  }
-})
+    localStorage.removeItem("QRIS_Utama");
+    localStorage.removeItem("stickerStorage");
+    window.location.reload();
+  } catch (e) {}
+});
 
-submitLogoutCancel.addEventListener('click', () => {
+submitLogoutCancel.addEventListener("click", () => {
   // Close the logout modal by removing the 'is-active' class
-  const logoutModal = document.getElementById('modalLogout');
-  logoutModal.classList.remove('modal-open');
-})
+  const logoutModal = document.getElementById("modalLogout");
+  logoutModal.classList.remove("modal-open");
+});
 
 submitGantiQris.addEventListener("click", () => {
-  submitGantiQris.classList.add("is-loading")
-  if(inputGantiQris.value.length < 1) {
-  gantiQrisMsg.innerHTML = "Field masih kosong"
-  submitGantiQris.classList.remove("is-loading")
-  gantiQrisMsg.classList.remove("text-error")
+  submitGantiQris.classList.add("is-loading");
+  if (inputGantiQris.value.length < 1) {
+    gantiQrisMsg.innerHTML = "Field masih kosong";
+    submitGantiQris.classList.remove("is-loading");
+    gantiQrisMsg.classList.remove("text-error");
   } else {
-  setTimeout(() => {
-  localStorage.setItem("QRIS_Utama", inputGantiQris.value);
-//  localStorage.removeItem("stickerStorage");
-  submitGantiQris.classList.remove("is-loading")
-  window.location.reload();
-}, 500)
-}
-})
+    setTimeout(() => {
+      localStorage.setItem("QRIS_Utama", inputGantiQris.value);
+      //  localStorage.removeItem("stickerStorage");
+      submitGantiQris.classList.remove("is-loading");
+      window.location.reload();
+    }, 500);
+  }
+});
 
 uploadGantiQris.addEventListener("change", (e) => {
   const file = e.target.files[0];
@@ -130,10 +136,9 @@ uploadGantiQris.addEventListener("change", (e) => {
   reader.readAsDataURL(file);
 });
 
-
 source.addEventListener("click", () => {
-  window.open("https://github.com/mininxd/web/tree/qris", "_blank")
-})
+  window.open("https://github.com/mininxd/web/tree/qris", "_blank");
+});
 donate.addEventListener("click", () => {
-  window.open("https://saweria.co/mininxd", "_blank")
-})
+  window.open("https://saweria.co/mininxd", "_blank");
+});

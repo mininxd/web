@@ -7,9 +7,10 @@
 
 * {
   scroll-behavior: smooth;
-  transition: all 0.3s ease-out;
+  transition: all 0.1s ease-out;
   -webkit-tap-highlight-color: transparent;
 }
+
 body {
   font-family: "Roboto", sans-serif;
   padding-top: 15vh;
@@ -32,7 +33,7 @@ div#navbar button {
   text-align: center;
   border-radius: 4px;
   padding: 10px;
-  margin:3px;
+  margin: 3px;
   font-weight: 600;
 }
 button {
@@ -89,13 +90,12 @@ div#dataTersimpan {
   @apply text-error;
 }
 span.is-danger {
-   @apply badge badge-error text-white;
+  @apply badge badge-error text-white;
 }
 
 .buttonBawah {
   display: flex;
   justify-content: center;
-
 }
 .buttonBawah button {
   margin: 5px;
@@ -130,4 +130,9 @@ input[type="checkbox"] + label .deleteListItem .delItem:nth-child(2) {
 }
 input[type="checkbox"]:checked + label .deleteListItem .delItem:nth-child(2) {
   @apply bg-white text-error;
+}
+
+/* Hide merchant name when checkbox is unchecked */
+.hide-merchant .namaToko {
+  display: none;
 }
