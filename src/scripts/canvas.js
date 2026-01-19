@@ -38,11 +38,22 @@ function createStickerCard(stickerData, index) {
   currencySymbol.textContent = "Rp";
 
   hargaBarangSpan.appendChild(currencySymbol);
-  hargaBarangSpan.appendChild(document.createTextNode(Number(stickerData.harga).toLocaleString("id-ID")));
+  hargaBarangSpan.appendChild(
+    document.createTextNode(Number(stickerData.harga).toLocaleString("id-ID")),
+  );
 
   const namaTokoP = document.createElement("p");
   namaTokoP.classList.add("namaToko");
   namaTokoP.textContent = stickerData.merchant;
+
+  // Check if merchant should be shown based on saved setting
+  const savedShowMerchant = localStorage.getItem("stickerShowMerchant");
+  const isMerchantEnabled =
+    savedShowMerchant === null ? true : savedShowMerchant === "true";
+
+  if (!isMerchantEnabled) {
+    namaTokoP.style.display = "none";
+  }
 
   qrisCanvasDiv.appendChild(namaBarangSpan);
   qrisCanvasDiv.appendChild(canvasElement);
@@ -51,20 +62,24 @@ function createStickerCard(stickerData, index) {
   itemDiv.appendChild(qrisCanvasDiv);
 
   setTimeout(() => {
-    QRCode.toCanvas(document.getElementById(`s${index}`), stickerData.QR, { width: 1080 });
+    QRCode.toCanvas(document.getElementById(`s${index}`), stickerData.QR, {
+      width: 1080,
+    });
   }, 0);
 
   itemDiv.addEventListener("click", () => {
     try {
-      window.htmlToImage.toPng(itemDiv, {
-        pixelRatio: 3
-      }).then(function (blob) {
-        if (window.saveAs) {
-          window.saveAs(blob, `${stickerData.nama}.png`);
-        } else {
-          window.FileSaver.saveAs(blob, `${stickerData.nama}.png`);
-        }
-      });
+      window.htmlToImage
+        .toPng(itemDiv, {
+          pixelRatio: 3,
+        })
+        .then(function (blob) {
+          if (window.saveAs) {
+            window.saveAs(blob, `${stickerData.nama}.png`);
+          } else {
+            window.FileSaver.saveAs(blob, `${stickerData.nama}.png`);
+          }
+        });
     } catch (e) {
       alert(e);
     }
@@ -94,11 +109,9 @@ function renderStickers() {
     }
   });
 
-  setTimeout(() => {
-    initMasonry("#listQrisCanvas");
-  }, 100);
+  // Initialize masonry once after all items are added
+  // The initMasonry function already handles the initial layout
+  initMasonry("#listQrisCanvas");
 }
 
 renderStickers();
-
-

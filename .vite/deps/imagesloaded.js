@@ -1,38 +1,36 @@
-import {
-  __commonJS
-} from "./chunk-5WRI5ZAA.js";
+import { __commonJS } from "./chunk-5WRI5ZAA.js";
 
 // node_modules/ev-emitter/ev-emitter.js
 var require_ev_emitter = __commonJS({
   "node_modules/ev-emitter/ev-emitter.js"(exports, module) {
-    (function(global, factory) {
+    (function (global, factory) {
       if (typeof module == "object" && module.exports) {
         module.exports = factory();
       } else {
         global.EvEmitter = factory();
       }
-    })(typeof window != "undefined" ? window : exports, function() {
-      function EvEmitter() {
-      }
+    })(typeof window != "undefined" ? window : exports, function () {
+      function EvEmitter() {}
       let proto = EvEmitter.prototype;
-      proto.on = function(eventName, listener) {
+      proto.on = function (eventName, listener) {
         if (!eventName || !listener) return this;
-        let events = this._events = this._events || {};
-        let listeners = events[eventName] = events[eventName] || [];
+        let events = (this._events = this._events || {});
+        let listeners = (events[eventName] = events[eventName] || []);
         if (!listeners.includes(listener)) {
           listeners.push(listener);
         }
         return this;
       };
-      proto.once = function(eventName, listener) {
+      proto.once = function (eventName, listener) {
         if (!eventName || !listener) return this;
         this.on(eventName, listener);
-        let onceEvents = this._onceEvents = this._onceEvents || {};
-        let onceListeners = onceEvents[eventName] = onceEvents[eventName] || {};
+        let onceEvents = (this._onceEvents = this._onceEvents || {});
+        let onceListeners = (onceEvents[eventName] =
+          onceEvents[eventName] || {});
         onceListeners[listener] = true;
         return this;
       };
-      proto.off = function(eventName, listener) {
+      proto.off = function (eventName, listener) {
         let listeners = this._events && this._events[eventName];
         if (!listeners || !listeners.length) return this;
         let index = listeners.indexOf(listener);
@@ -41,7 +39,7 @@ var require_ev_emitter = __commonJS({
         }
         return this;
       };
-      proto.emitEvent = function(eventName, args) {
+      proto.emitEvent = function (eventName, args) {
         let listeners = this._events && this._events[eventName];
         if (!listeners || !listeners.length) return this;
         listeners = listeners.slice(0);
@@ -57,20 +55,20 @@ var require_ev_emitter = __commonJS({
         }
         return this;
       };
-      proto.allOff = function() {
+      proto.allOff = function () {
         delete this._events;
         delete this._onceEvents;
         return this;
       };
       return EvEmitter;
     });
-  }
+  },
 });
 
 // node_modules/imagesloaded/imagesloaded.js
 var require_imagesloaded = __commonJS({
   "node_modules/imagesloaded/imagesloaded.js"(exports, module) {
-    (function(window2, factory) {
+    (function (window2, factory) {
       if (typeof module == "object" && module.exports) {
         module.exports = factory(window2, require_ev_emitter());
       } else {
@@ -83,7 +81,8 @@ var require_imagesloaded = __commonJS({
         let console = window2.console;
         function makeArray(obj) {
           if (Array.isArray(obj)) return obj;
-          let isArrayLike = typeof obj == "object" && typeof obj.length == "number";
+          let isArrayLike =
+            typeof obj == "object" && typeof obj.length == "number";
           if (isArrayLike) return [...obj];
           return [obj];
         }
@@ -112,12 +111,12 @@ var require_imagesloaded = __commonJS({
           setTimeout(this.check.bind(this));
         }
         ImagesLoaded.prototype = Object.create(EvEmitter.prototype);
-        ImagesLoaded.prototype.getImages = function() {
+        ImagesLoaded.prototype.getImages = function () {
           this.images = [];
           this.elements.forEach(this.addElementImages, this);
         };
         const elementNodeTypes = [1, 9, 11];
-        ImagesLoaded.prototype.addElementImages = function(elem) {
+        ImagesLoaded.prototype.addElementImages = function (elem) {
           if (elem.nodeName === "IMG") {
             this.addImage(elem);
           }
@@ -138,7 +137,7 @@ var require_imagesloaded = __commonJS({
           }
         };
         const reURL = /url\((['"])?(.*?)\1\)/gi;
-        ImagesLoaded.prototype.addElementBackgroundImages = function(elem) {
+        ImagesLoaded.prototype.addElementBackgroundImages = function (elem) {
           let style = getComputedStyle(elem);
           if (!style) return;
           let matches = reURL.exec(style.backgroundImage);
@@ -150,15 +149,15 @@ var require_imagesloaded = __commonJS({
             matches = reURL.exec(style.backgroundImage);
           }
         };
-        ImagesLoaded.prototype.addImage = function(img) {
+        ImagesLoaded.prototype.addImage = function (img) {
           let loadingImage = new LoadingImage(img);
           this.images.push(loadingImage);
         };
-        ImagesLoaded.prototype.addBackground = function(url, elem) {
+        ImagesLoaded.prototype.addBackground = function (url, elem) {
           let background = new Background(url, elem);
           this.images.push(background);
         };
-        ImagesLoaded.prototype.check = function() {
+        ImagesLoaded.prototype.check = function () {
           this.progressedCount = 0;
           this.hasAnyBroken = false;
           if (!this.images.length) {
@@ -170,12 +169,12 @@ var require_imagesloaded = __commonJS({
               this.progress(image, elem, message);
             });
           };
-          this.images.forEach(function(loadingImage) {
+          this.images.forEach(function (loadingImage) {
             loadingImage.once("progress", onProgress);
             loadingImage.check();
           });
         };
-        ImagesLoaded.prototype.progress = function(image, elem, message) {
+        ImagesLoaded.prototype.progress = function (image, elem, message) {
           this.progressedCount++;
           this.hasAnyBroken = this.hasAnyBroken || !image.isLoaded;
           this.emitEvent("progress", [this, image, elem]);
@@ -189,7 +188,7 @@ var require_imagesloaded = __commonJS({
             console.log(`progress: ${message}`, image, elem);
           }
         };
-        ImagesLoaded.prototype.complete = function() {
+        ImagesLoaded.prototype.complete = function () {
           let eventName = this.hasAnyBroken ? "fail" : "done";
           this.isComplete = true;
           this.emitEvent(eventName, [this]);
@@ -203,7 +202,7 @@ var require_imagesloaded = __commonJS({
           this.img = img;
         }
         LoadingImage.prototype = Object.create(EvEmitter.prototype);
-        LoadingImage.prototype.check = function() {
+        LoadingImage.prototype.check = function () {
           let isComplete = this.getIsImageComplete();
           if (isComplete) {
             this.confirm(this.img.naturalWidth !== 0, "naturalWidth");
@@ -219,30 +218,30 @@ var require_imagesloaded = __commonJS({
           this.img.addEventListener("error", this);
           this.proxyImage.src = this.img.currentSrc || this.img.src;
         };
-        LoadingImage.prototype.getIsImageComplete = function() {
+        LoadingImage.prototype.getIsImageComplete = function () {
           return this.img.complete && this.img.naturalWidth;
         };
-        LoadingImage.prototype.confirm = function(isLoaded, message) {
+        LoadingImage.prototype.confirm = function (isLoaded, message) {
           this.isLoaded = isLoaded;
           let { parentNode } = this.img;
           let elem = parentNode.nodeName === "PICTURE" ? parentNode : this.img;
           this.emitEvent("progress", [this, elem, message]);
         };
-        LoadingImage.prototype.handleEvent = function(event) {
+        LoadingImage.prototype.handleEvent = function (event) {
           let method = "on" + event.type;
           if (this[method]) {
             this[method](event);
           }
         };
-        LoadingImage.prototype.onload = function() {
+        LoadingImage.prototype.onload = function () {
           this.confirm(true, "onload");
           this.unbindEvents();
         };
-        LoadingImage.prototype.onerror = function() {
+        LoadingImage.prototype.onerror = function () {
           this.confirm(false, "onerror");
           this.unbindEvents();
         };
-        LoadingImage.prototype.unbindEvents = function() {
+        LoadingImage.prototype.unbindEvents = function () {
           this.proxyImage.removeEventListener("load", this);
           this.proxyImage.removeEventListener("error", this);
           this.img.removeEventListener("load", this);
@@ -254,7 +253,7 @@ var require_imagesloaded = __commonJS({
           this.img = new Image();
         }
         Background.prototype = Object.create(LoadingImage.prototype);
-        Background.prototype.check = function() {
+        Background.prototype.check = function () {
           this.img.addEventListener("load", this);
           this.img.addEventListener("error", this);
           this.img.src = this.url;
@@ -264,28 +263,28 @@ var require_imagesloaded = __commonJS({
             this.unbindEvents();
           }
         };
-        Background.prototype.unbindEvents = function() {
+        Background.prototype.unbindEvents = function () {
           this.img.removeEventListener("load", this);
           this.img.removeEventListener("error", this);
         };
-        Background.prototype.confirm = function(isLoaded, message) {
+        Background.prototype.confirm = function (isLoaded, message) {
           this.isLoaded = isLoaded;
           this.emitEvent("progress", [this, this.element, message]);
         };
-        ImagesLoaded.makeJQueryPlugin = function(jQuery) {
+        ImagesLoaded.makeJQueryPlugin = function (jQuery) {
           jQuery = jQuery || window2.jQuery;
           if (!jQuery) return;
           $ = jQuery;
-          $.fn.imagesLoaded = function(options, onAlways) {
+          $.fn.imagesLoaded = function (options, onAlways) {
             let instance = new ImagesLoaded(this, options, onAlways);
             return instance.jqDeferred.promise($(this));
           };
         };
         ImagesLoaded.makeJQueryPlugin();
         return ImagesLoaded;
-      }
+      },
     );
-  }
+  },
 });
 export default require_imagesloaded();
 /*! Bundled license information:

@@ -1,0 +1,138 @@
+@import url("./navbar.css");
+@import url("./canvas.css");
+@import url("./fonts.css");
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+* {
+  scroll-behavior: smooth;
+  transition: all 0.1s ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  padding-top: 15vh;
+  background: #eeeff2;
+}
+div.header {
+  padding: 0.75em;
+  margin: 0.25em;
+}
+p {
+  line-height: 18px;
+}
+div#navbar {
+  margin-top: 2em;
+  z-index: 2;
+}
+div#navbar button {
+  font-family: "Poppins", sans-serif;
+  border: none;
+  text-align: center;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 3px;
+  font-weight: 600;
+}
+button {
+  margin-top: 3px;
+}
+#listQrisCanvas {
+  padding: 5px;
+  display: block;
+}
+.modal-content {
+  padding: 2em;
+}
+.modal-content .card {
+  padding: 1.5em !important;
+}
+#loginFirst {
+  padding: 1em;
+}
+div#dataTersimpan {
+  width: 100%;
+  overflow: scroll;
+  word-wrap: break-word;
+  font-size: 14px;
+  color: #d1d1d1;
+  background: #fff !important;
+}
+.msg {
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Helper for loading state mimicking Bulma's is-loading using DaisyUI spinner */
+.is-loading {
+  @apply pointer-events-none opacity-50 relative;
+  color: transparent !important;
+}
+.is-loading::after {
+  @apply loading loading-spinner absolute;
+  content: "";
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  color: currentColor;
+}
+.btn-neutral.is-loading::after {
+  color: white;
+}
+.btn-error.is-loading::after {
+  color: white;
+}
+
+/* Helper for is-danger messages */
+.is-danger {
+  @apply text-error;
+}
+span.is-danger {
+  @apply badge badge-error text-white;
+}
+
+.buttonBawah {
+  display: flex;
+  justify-content: center;
+}
+.buttonBawah button {
+  margin: 5px;
+  width: 30vw;
+}
+.pointer {
+  cursor: pointer;
+}
+.namaToko {
+  font-size: 8px;
+  transform: translateY(2px);
+}
+
+/* Custom checkbox styles for delete list restored using Tailwind @apply */
+input[type="checkbox"] + label .deleteListItem {
+  @apply p-2 text-lg rounded border border-gray-500 font-medium mb-1;
+}
+input[type="checkbox"]:checked + label .deleteListItem {
+  @apply text-white bg-error border-error overflow-scroll;
+}
+
+input[type="checkbox"] + label .deleteListItem::before {
+  content: "☐‎ ‎ ‎ ";
+  @apply mr-1;
+}
+input[type="checkbox"]:checked + label .deleteListItem::before {
+  content: "☒‎ ‎ ‎ ";
+}
+
+input[type="checkbox"] + label .deleteListItem .delItem:nth-child(2) {
+  @apply bg-error text-white p-1 rounded text-sm ml-1;
+}
+input[type="checkbox"]:checked + label .deleteListItem .delItem:nth-child(2) {
+  @apply bg-white text-error;
+}
+
+/* Hide merchant name when checkbox is unchecked */
+.hide-merchant .namaToko {
+  display: none;
+}
