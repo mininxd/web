@@ -1,3 +1,9 @@
+@import url("./canvas.css");
+@import url("./fonts.css");
+@import url("./navbar.css");
+@import "tailwindcss";
+@plugin "daisyui";
+
 * {
   scroll-behavior: smooth;
   transition: all 0.1s ease-out;
