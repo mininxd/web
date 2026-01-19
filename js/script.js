@@ -7,7 +7,7 @@ import "./canvas.js";
 import "./isDesktop.js";
 import "./deleteList.js";
 import "./settings.js";
-
+import 'remixicon/fonts/remixicon.css'
 // Define global variables for elements used in imported modules
 const submitTambahItem = document.getElementById("submitTambahItem");
 const inputNamaItem = document.getElementById("inputNamaItem");
@@ -16,6 +16,7 @@ const namaMerchant = document.getElementById("namaMerchant");
 const buatStikerMsg = document.getElementById("buatStikerMsg");
 const submitLogout = document.getElementById("submitLogout");
 const submitLogoutHapus = document.getElementById("submitLogoutHapus");
+const submitLogoutCancel = document.getElementById("submitLogoutCancel");
 const submitGantiQris = document.getElementById("submitGantiQris");
 const inputGantiQris = document.getElementById("inputGantiQris");
 const gantiQrisMsg = document.getElementById("gantiQrisMsg");
@@ -77,6 +78,12 @@ submitLogoutHapus.addEventListener('click', () => {
   window.location.reload();
   } catch(e) {
   }
+})
+
+submitLogoutCancel.addEventListener('click', () => {
+  // Close the logout modal by removing the 'is-active' class
+  const logoutModal = document.getElementById('modalLogout');
+  logoutModal.classList.remove('is-active');
 })
 
 submitGantiQris.addEventListener("click", () => {

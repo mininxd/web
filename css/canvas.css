@@ -52,8 +52,9 @@
 
 .namaBarang {
   font-size: var(--sticker-font-size);
-  padding: 0;
   overflow-wrap: break-word;
+  padding: 2px;
+  line-height: 1.05;
 }
 
 .hargaBarang {

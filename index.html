@@ -47,15 +47,15 @@
 <span>Klik pada stiker untuk mendownload stiker satuan</span>
 </div>
 
-<div id="navbar" class="flex justify-start px-1">
-<button class="js-modal-trigger button p-2 is-dark" data-target="modalBuatStiker">Buat Stiker</button>
-  <button class="js-modal-trigger button p-2 is-dark" data-target="modalGantiQris">Ubah kode QRIS</button>
-  <button class="js-modal-trigger button p-2 is-dark" data-target="modalFontSize">Ukuran Font</button>
-<button class="js-modal-trigger button p-2 is-danger" data-target="modalLogout">Logout</button>
+<div id="navbar" class="flex md:justify-start justify-around px-1">
+<button class="js-modal-trigger button p-2 md:w-[75px] w-full is-dark" data-target="modalBuatStiker"><i class="ri-add-fill"></i></button>
+  <button class="js-modal-trigger button p-2 md:w-[75px] w-full is-dark" data-target="modalGantiQris"><i class="ri-reset-left-fill"></i></button>
+  <button class="js-modal-trigger button p-2 md:w-[75px] w-full is-dark" data-target="modalFontSize"><i class="ri-settings-3-fill"></i></button>
+<button class="js-modal-trigger button p-2 md:w-[75px] w-full is-danger" data-target="modalLogout"><i class="ri-expand-right-line"></i></button>
 </div>
 
 
-<div class="canvasWrapper mb-6 lg:px-6 md:px-6">
+<div class="canvasWrapper mb-6 lg:w-full md:w-full">
 <div id="gridCanvas" class="p-0">
 <div id="listQrisCanvas" class="mb-2 gap-1">
 </div>
@@ -87,9 +87,10 @@
   <div class="modal-background"></div>
   <div class="modal-content">
     <div class="p-3 card">
-        <h1 class="is-4 title">Logout dengan hapus semua stiker?</h1>
+        <h1 class="is-4 title">Keluar dengan hapus semua stiker?</h1>
         <button id="submitLogoutHapus" class="button is-fullwidth is-danger">Hapus</button>
         <button id="submitLogout" class="button is-fullwidth is-dark">Tidak</button>
+        <button id="submitLogoutCancel" class="button is-fullwidth is-dark">Batalkan</button>
       </div>
   </div>
 </div>
@@ -117,7 +118,7 @@
       <ul id="itemListToDelete">
       </ul>
       <button id="deleteItemBtn" class="is-fullwidth button is-dark">OK</button><br>
-<span class="msg">Experimental, <br> Coba hapus item satu per satu untuk menghindari terhapus semua</span>
+<span class="">Experimental, <br> Coba hapus item satu per satu untuk menghindari terhapus semua</span>
       </div>
   </div>
 </div>
@@ -128,7 +129,7 @@
         <h1 class="is-3 title">Pengaturan</h1>
 
         <label>Ukuran Font</label>
-        <input id="inputFontSize" type="range" min="8" max="40" step="1" class="input is-fullwidth my-1">
+        <input id="inputFontSize" type="range" min="8" max="40" step="1" class="input is-fullwidth">
         <div class="has-text-centered">
           <span id="valueFontSize" class="title is-4">16px</span>
         </div>
@@ -138,7 +139,7 @@
           Tampilkan Mata Uang (Rp)
         </label>
         <br><br>
-        <button class="button is-fullwidth is-dark" aria-label="close">Tutup</button>
+        <button class="button is-fullwidth is-dark" aria-label="close">OK</button>
       </div>
   </div>
   <button class="modal-close is-large" aria-label="close"></button>
