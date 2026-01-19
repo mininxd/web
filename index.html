@@ -125,13 +125,19 @@
   <div class="modal-background"></div>
   <div class="modal-content">
       <div class="p-3 card">
-        <h1 class="is-3 title">Ukuran Font</h1>
-        <label>Geser untuk mengubah ukuran</label>
+        <h1 class="is-3 title">Pengaturan</h1>
+
+        <label>Ukuran Font</label>
         <input id="inputFontSize" type="range" min="8" max="40" step="1" class="input is-fullwidth my-1">
         <div class="has-text-centered">
           <span id="valueFontSize" class="title is-4">16px</span>
         </div>
         <br>
+        <label class="checkbox">
+          <input id="inputShowCurrency" type="checkbox" checked>
+          Tampilkan Mata Uang (Rp)
+        </label>
+        <br><br>
         <button class="button is-fullwidth is-dark" aria-label="close">Tutup</button>
       </div>
   </div>

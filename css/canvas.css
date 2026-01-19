@@ -2,6 +2,10 @@
   --sticker-font-size: 16px;
 }
 
+.hide-currency .currency-symbol {
+  display: none;
+}
+
 .qrisCanvas {
   user-select: none;
   font-family: "Poppins", sans-serif;

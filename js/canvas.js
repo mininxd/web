@@ -32,7 +32,13 @@ function createStickerCard(stickerData, index) {
 
   const hargaBarangSpan = document.createElement("span");
   hargaBarangSpan.classList.add("hargaBarang");
-  hargaBarangSpan.textContent = `Rp${Number(stickerData.harga).toLocaleString("id-ID")}`;
+
+  const currencySymbol = document.createElement("span");
+  currencySymbol.classList.add("currency-symbol");
+  currencySymbol.textContent = "Rp";
+
+  hargaBarangSpan.appendChild(currencySymbol);
+  hargaBarangSpan.appendChild(document.createTextNode(Number(stickerData.harga).toLocaleString("id-ID")));
 
   const namaTokoP = document.createElement("p");
   namaTokoP.classList.add("namaToko");
