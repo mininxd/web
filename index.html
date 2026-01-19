@@ -50,6 +50,7 @@
 <div id="navbar" class="flex justify-start px-1">
 <button class="js-modal-trigger button p-2 is-dark" data-target="modalBuatStiker">Buat Stiker</button>
   <button class="js-modal-trigger button p-2 is-dark" data-target="modalGantiQris">Ubah kode QRIS</button>
+  <button class="js-modal-trigger button p-2 is-dark" data-target="modalFontSize">Ukuran Font</button>
 <button class="js-modal-trigger button p-2 is-danger" data-target="modalLogout">Logout</button>
 </div>
 
@@ -119,6 +120,22 @@
 <span class="msg">Experimental, <br> Coba hapus item satu per satu untuk menghindari terhapus semua</span>
       </div>
   </div>
+</div>
+<div id="modalFontSize" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+      <div class="p-3 card">
+        <h1 class="is-3 title">Ukuran Font</h1>
+        <label>Geser untuk mengubah ukuran</label>
+        <input id="inputFontSize" type="range" min="8" max="40" step="1" class="input is-fullwidth my-1">
+        <div class="has-text-centered">
+          <span id="valueFontSize" class="title is-4">16px</span>
+        </div>
+        <br>
+        <button class="button is-fullwidth is-dark" aria-label="close">Tutup</button>
+      </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
 </div>
 </body>
 </html>

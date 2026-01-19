@@ -6,6 +6,7 @@ import "./localStorage.js";
 import "./canvas.js";
 import "./isDesktop.js";
 import "./deleteList.js";
+import "./settings.js";
 
 // Define global variables for elements used in imported modules
 const submitTambahItem = document.getElementById("submitTambahItem");
