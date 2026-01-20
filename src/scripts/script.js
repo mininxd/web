@@ -7,6 +7,7 @@ import "./canvas.js";
 import "./isDesktop.js";
 import "./deleteList.js";
 import "./settings.js";
+import "./debug.js";
 import "remixicon/fonts/remixicon.css";
 
 import "../styles/navbar.css";
@@ -144,9 +145,13 @@ uploadGantiQris.addEventListener("change", (e) => {
   reader.readAsDataURL(file);
 });
 
+
+/*
 source.addEventListener("click", () => {
   window.open("https://github.com/mininxd/web/tree/qris", "_blank");
 });
 donate.addEventListener("click", () => {
   window.open("https://saweria.co/mininxd", "_blank");
 });
+
+*/
