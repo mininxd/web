@@ -54,6 +54,7 @@
   font-size: var(--sticker-font-size);
   overflow-wrap: break-word;
   padding: 2px;
+  padding-top: 8px;
   line-height: 1.05;
 }
 
