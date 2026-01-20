@@ -49,18 +49,18 @@
     <div style="display: none" id="content">
       <div class="header">
         <h1 class="text-2xl font-bold">Halo,</h1>
-        <h1 id="namaMerchant" class="text-4xl font-black skeleton w-1/2 h-8">
+        <h1 id="namaMerchant" class="text-4xl font-black skeleton h-8">
           Merchant
         </h1>
-        <h1 class="mt-12">Klik pada stiker untuk mendownload stiker satuan</h1>
       </div>
+        <h1 class="mt-6 px-4">Klik pada stiker untuk mendownload stiker satuan</h1>
 
       <div id="navbar" class="flex w-full px-1">
         <button
           class="js-modal-trigger btn p-2 btn-neutral flex-1 md:flex-0"
           data-target="modalBuatStiker"
         >
-          <i class="md:px-4 ri-add-fill"></i>
+          <i class="md:px-4 text-[18px] ri-add-fill"></i>
         </button>
 
         <button
@@ -209,6 +209,17 @@
       <div class="modal-box">
         <h1 class="text-xl font-bold pb-3">Pengaturan</h1>
 
+        <label>Nama Merchant</label>
+        <div class="md:join w-full gap-2 mb-4">
+          <input
+            id="inputCustomMerchant"
+            type="text"
+            placeholder="Default"
+            class="md:join-item input input-bordered w-full font-bold"
+          />
+          <button id="btnSaveMerchant" class="btn btn-neutral md:join-item md:w-fit w-full">Simpan</button>
+        </div>
+
         <label>Ukuran Font</label>
         <input
           id="inputFontSize"
@@ -223,6 +234,18 @@
         </div>
         <br />
 
+
+<!--- Under dev--->
+        <label class="hidden label cursor-pointer justify-start gap-2 pt-2">
+          <input
+            id="inputUseMasonry"
+            type="checkbox"
+            checked
+            class="checkbox"
+          />
+          <h1 class="label-text">Masonry Layout</h1>
+        </label>
+
         <label class="label cursor-pointer justify-start gap-2 pt-2">
           <input
             id="inputShowCurrency"
@@ -232,7 +255,7 @@
           />
           <h1 class="label-text">Tampilkan Mata Uang (Rp)</h1>
         </label>
-
+<br>
         <label class="label cursor-pointer justify-start gap-2 pt-2">
           <input
             id="inputShowMerchant"

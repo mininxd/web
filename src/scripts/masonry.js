@@ -4,23 +4,35 @@ import imagesLoaded from "imagesloaded";
 let masonryInstance = null;
 
 export function initMasonry(containerSelector) {
+  // Prevent multiple instances or memory leaks
+  if (masonryInstance) {
+    masonryInstance.destroy();
+  }
+
   const container = document.querySelector(containerSelector);
 
   if (!container) {
     return null;
   }
 
-  masonryInstance = new Masonry(container, {
-    itemSelector: ".item",
-    columnWidth: ".item",
-    percentPosition: true,
-    gutter: 8,
-    horizontalOrder: true,
-  });
+  try {
+    masonryInstance = new Masonry(container, {
+      itemSelector: ".item",
+      columnWidth: ".item",
+      percentPosition: true,
+      gutter: 8,
+      horizontalOrder: true,
+    });
 
-  imagesLoaded(container, () => {
-    masonryInstance.layout();
-  });
+    imagesLoaded(container, () => {
+      if (masonryInstance) {
+        masonryInstance.layout();
+      }
+    });
+  } catch (e) {
+    console.error("Masonry init failed:", e);
+    return null;
+  }
 
   return masonryInstance;
 }

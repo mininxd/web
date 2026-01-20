@@ -13,6 +13,7 @@ import "remixicon/fonts/remixicon.css";
 import "../styles/navbar.css";
 import "../styles/canvas.css";
 import "../styles/fonts.css";
+import "../styles/settings.css";
 import "../styles/theme.css";
 
 
@@ -44,7 +45,8 @@ if (localStorage.getItem("QRIS_Utama")) {
     downloadAll.disabled = false;
     downloadAll.classList.remove("is-loading");
 
-    namaMerchant.innerHTML = data.merchant;
+    const savedMerchantName = localStorage.getItem("stickerMerchantName");
+    namaMerchant.innerHTML = savedMerchantName || data.merchant;
     namaMerchant.classList.remove("skeleton");
 
     // Check if merchant should be hidden based on saved setting

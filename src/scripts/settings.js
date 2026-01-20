@@ -1,12 +1,54 @@
+import { initMasonry, destroyMasonry } from "./masonry.js";
+
 const inputFontSize = document.getElementById("inputFontSize");
 const valueFontSize = document.getElementById("valueFontSize");
 const inputShowCurrency = document.getElementById("inputShowCurrency");
 const inputShowMerchant = document.getElementById("inputShowMerchant");
+const inputCustomMerchant = document.getElementById("inputCustomMerchant");
+const btnSaveMerchant = document.getElementById("btnSaveMerchant");
+const inputUseMasonry = document.getElementById("inputUseMasonry");
 
 // Load from localStorage or use default
 const savedFontSize = localStorage.getItem("stickerFontSize") || 16;
 const savedShowCurrency = localStorage.getItem("stickerShowCurrency");
 const savedShowMerchant = localStorage.getItem("stickerShowMerchant");
+const savedMerchantName = localStorage.getItem("stickerMerchantName");
+const savedUseMasonry = localStorage.getItem("stickerUseMasonry");
+
+// Custom Merchant Logic
+if (inputCustomMerchant && btnSaveMerchant) {
+  if (savedMerchantName) {
+    inputCustomMerchant.value = savedMerchantName;
+  }
+
+  btnSaveMerchant.addEventListener("click", () => {
+    const value = inputCustomMerchant.value.trim();
+    if (value) {
+      localStorage.setItem("stickerMerchantName", value);
+    } else {
+      localStorage.removeItem("stickerMerchantName");
+    }
+    window.location.reload();
+  });
+}
+
+// Masonry Checkbox Logic
+if (inputUseMasonry) {
+  const isMasonryEnabled =
+    savedUseMasonry === null ? true : savedUseMasonry === "true";
+  inputUseMasonry.checked = isMasonryEnabled;
+
+  inputUseMasonry.addEventListener("change", (e) => {
+    const checked = e.target.checked;
+    localStorage.setItem("stickerUseMasonry", checked);
+
+    if (checked) {
+      initMasonry("#listQrisCanvas");
+    } else {
+      destroyMasonry();
+    }
+  });
+}
 
 // Set initial value
 if (inputFontSize) {

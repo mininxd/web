@@ -44,7 +44,8 @@ function createStickerCard(stickerData, index) {
 
   const namaTokoP = document.createElement("p");
   namaTokoP.classList.add("namaToko");
-  namaTokoP.textContent = stickerData.merchant;
+  const savedMerchantName = localStorage.getItem("stickerMerchantName");
+  namaTokoP.textContent = savedMerchantName || stickerData.merchant;
 
   // Check if merchant should be shown based on saved setting
   const savedShowMerchant = localStorage.getItem("stickerShowMerchant");
@@ -111,7 +112,13 @@ function renderStickers() {
 
   // Initialize masonry once after all items are added
   // The initMasonry function already handles the initial layout
-  initMasonry("#listQrisCanvas");
+  const savedUseMasonry = localStorage.getItem("stickerUseMasonry");
+  const isMasonryEnabled =
+    savedUseMasonry === null ? true : savedUseMasonry === "true";
+
+  if (isMasonryEnabled) {
+    initMasonry("#listQrisCanvas");
+  }
 }
 
 renderStickers();

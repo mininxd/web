@@ -1,6 +1,7 @@
 @import url("./canvas.css");
 @import url("./fonts.css");
 @import url("./navbar.css");
+@import url("./settings.css");
 @import "tailwindcss";
 @plugin "daisyui";
 
