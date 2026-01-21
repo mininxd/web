@@ -1,107 +1,30 @@
 // QRIS library
-// Located at /src/lib/qris.js
-// This file is imported by frontend JavaScript files to interact with QRIS functionality
+import { pad, toCRC16, dataQris } from "./generator/crcData.js";
+import generateQris from "./generator/gen.js";
+
+function priceAfterTax(harga, fee = 0, taxtype = "p") {
+  harga = Number(harga);
+  fee = Number(fee);
+  if (taxtype === "r") {
+    harga += fee;
+  } else if (taxtype === "p") {
+    harga = harga + harga * (fee / 100);
+  }
+  return harga;
+}
+
 
 export async function qris(qrisCode, nominal) {
   try {
-    // Check if we're running in a browser environment
-    if (typeof window !== "undefined" && typeof fetch !== "undefined") {
-      // First, extract merchant name from the QRIS code for immediate display
-      const qrisInfo = parseQrisData(qrisCode);
+      const qrisData = dataQris(qrisCode);
+      const output = await generateQris(qrisCode, nominal, "n", "p", 0);
+      const merchant = qrisData.merchantName;
 
-      // If nominal is 0, just return merchant info without API call
-      if (nominal === 0 || nominal === "0") {
-        return {
-          merchant: qrisInfo.merchantName,
-          QR: qrisCode, // Return original code for merchant info
-          harga: 0,
-        };
-      }
-
-      // Use fetch for browser environments
-      let response;
-
-      // Check if we have a local backend running
-      try {
-        // Try local API first
-        response = await fetch(
-          `/api/qris?qris=${encodeURIComponent(qrisCode)}&nominal=${nominal}`,
-        );
-        if (response.ok) {
-          const data = await response.json();
-          return data;
-        }
-      } catch (localError) {
-        console.log("Local API not available, trying public API");
-      }
-
-      // Fallback to public API
-      const apiUrl = `https://api-mininxd.vercel.app/qris?qris=${encodeURIComponent(qrisCode)}&nominal=${nominal}`;
-      const apiResponse = await fetch(apiUrl);
-
-      if (!apiResponse.ok) {
-        throw new Error(`API request failed with status ${apiResponse.status}`);
-      }
-
-      const data = await apiResponse.json();
-      return data;
-    } else {
-      // For environments without fetch (Node.js), create a mock response or throw error
-      throw new Error("fetch is not available in this environment");
-    }
-  } catch (error) {
-    console.error("Error in qris function:", error);
-    throw error;
-  }
-}
-
-export async function generateQrisWithOptions(qrisCode, nominal, options = {}) {
-  const { tax = "n", taxtype = "p", fee = 0 } = options;
-
-  try {
-    // Check if we're running in a browser environment
-    if (typeof window !== "undefined" && typeof fetch !== "undefined") {
-      // Use fetch for browser environments
-      let response;
-
-      // Check if we have a local backend running
-      try {
-        // Try local API first
-        response = await fetch(`/api/qris`, {
-          method: "GET",
-          params: {
-            qris: qrisCode,
-            nominal: nominal,
-            tax: tax,
-            taxtype: taxtype,
-            fee: fee,
-          },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          return data;
-        }
-      } catch (localError) {
-        console.log("Local API not available, trying public API");
-      }
-
-      // Fallback to public API
-      const apiUrl = `https://api-mininxd.vercel.app/qris?qris=${encodeURIComponent(qrisCode)}&nominal=${nominal}&tax=${tax}&taxtype=${taxtype}&fee=${fee}`;
-      const apiResponse = await fetch(apiUrl);
-
-      if (!apiResponse.ok) {
-        throw new Error(`API request failed with status ${apiResponse.status}`);
-      }
-
-      const data = await apiResponse.json();
-      return data;
-    } else {
-      // For environments without fetch (Node.js), create a mock response or throw error
-      throw new Error("fetch is not available in this environment");
-    }
-  } catch (error) {
-    console.error("Error in generateQrisWithOptions function:", error);
-    throw error;
+      const harga = priceAfterTax(nominal, 0, "p");
+      const result = { merchant, QR: output, harga };
+      return result;
+  } catch (e) {
+    console.log("Error in routes/qris.js:/ :", e);
   }
 }
 
