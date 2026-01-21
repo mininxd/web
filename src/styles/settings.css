@@ -1,3 +1,20 @@
 #btnSaveMerchant {
   transform: aytranslateY(-40px) !important;
 }
+
+/* Font selection styles */
+#fontStyleFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+#fontStyleFilter .btn {
+  flex: 1;
+  min-width: fit-content;
+}
+
+#selectFont {
+  font-weight: 500;
+}

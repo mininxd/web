@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Archivo",
+    "file": "Archivo-VariableFont_wdth,wght.woff2"
+  },
+  {
+    "name": "Cabin",
+    "file": "Cabin-VariableFont_wdth,wght.woff2"
+  },
+  {
+    "name": "Inter",
+    "file": "Inter-VariableFont_opsz,wght.woff2"
+  },
+  {
+    "name": "Jost",
+    "file": "Jost-VariableFont_wght.woff2"
+  },
+  {
+    "name": "Montserrat",
+    "file": "Montserrat-VariableFont_wght.woff2"
+  },
+  {
+    "name": "Nunito",
+    "file": "Nunito-VariableFont_wght.woff2"
+  },
+  {
+    "name": "OpenSans",
+    "file": "OpenSans-VariableFont_wdth,wght.woff2"
+  },
+  {
+    "name": "PlusJakartaSans",
+    "file": "PlusJakartaSans-VariableFont_wght.woff2"
+  },
+  {
+    "name": "PublicSans",
+    "file": "PublicSans-VariableFont_wght.woff2"
+  },
+  {
+    "name": "Raleway",
+    "file": "Raleway-VariableFont_wght.woff2"
+  },
+  {
+    "name": "Roboto",
+    "file": "Roboto-VariableFont_wdth,wght.woff2"
+  },
+  {
+    "name": "Roboto Mono",
+    "file": "RobotoMono-VariableFont_wght.woff2"
+  }
+]

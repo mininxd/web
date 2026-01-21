@@ -8,6 +8,7 @@ import "./isDesktop.js";
 import "./deleteList.js";
 import "./settings.js";
 import "./debug.js";
+import "./fontLoader.js";
 import "remixicon/fonts/remixicon.css";
 
 import "../styles/navbar.css";
@@ -15,7 +16,6 @@ import "../styles/canvas.css";
 import "../styles/fonts.css";
 import "../styles/settings.css";
 import "../styles/theme.css";
-
 
 // Define global variables for elements used in imported modules
 const submitTambahItem = document.getElementById("submitTambahItem");
@@ -93,6 +93,7 @@ submitLogoutHapus.addEventListener("click", () => {
   try {
     localStorage.removeItem("QRIS_Utama");
     localStorage.removeItem("stickerStorage");
+    localStorage.removeItem("stickerMerchantName");
     window.location.reload();
   } catch (e) {}
 });
@@ -146,7 +147,6 @@ uploadGantiQris.addEventListener("change", (e) => {
   };
   reader.readAsDataURL(file);
 });
-
 
 /*
 source.addEventListener("click", () => {

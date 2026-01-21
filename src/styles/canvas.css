@@ -1,5 +1,9 @@
 :root {
-  --sticker-font-size: 16px;
+  --sticker-product-size: 16px;
+  --sticker-price-size: 16px;
+  --sticker-font-family: "Poppins", sans-serif;
+  --sticker-font-style: normal;
+  --sticker-font-weight: 900;
 }
 
 .hide-currency .currency-symbol {
@@ -8,8 +12,9 @@
 
 .qrisCanvas {
   user-select: none;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
+  font-family: var(--sticker-font-family);
+  font-weight: var(--sticker-font-weight);
+  font-style: var(--sticker-font-style);
   background: #fff;
   width: 100%;
   padding-bottom: 5px;
@@ -51,7 +56,7 @@
 }
 
 .namaBarang {
-  font-size: var(--sticker-font-size);
+  font-size: var(--sticker-product-size);
   overflow-wrap: break-word;
   padding: 2px;
   padding-top: 8px;
@@ -59,5 +64,5 @@
 }
 
 .hargaBarang {
-  font-size: var(--sticker-font-size);
+  font-size: var(--sticker-price-size);
 }

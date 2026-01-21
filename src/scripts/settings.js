@@ -1,7 +1,12 @@
 import { initMasonry, destroyMasonry } from "./masonry.js";
 
-const inputFontSize = document.getElementById("inputFontSize");
-const valueFontSize = document.getElementById("valueFontSize");
+const inputProductSize = document.getElementById("inputProductSize");
+const valueProductSize = document.getElementById("valueProductSize");
+const inputPriceSize = document.getElementById("inputPriceSize");
+const valuePriceSize = document.getElementById("valuePriceSize");
+const inputFontWeight = document.getElementById("inputFontWeight");
+const valueFontWeight = document.getElementById("valueFontWeight");
+const inputSortHeight = document.getElementById("inputSortHeight");
 const inputShowCurrency = document.getElementById("inputShowCurrency");
 const inputShowMerchant = document.getElementById("inputShowMerchant");
 const inputCustomMerchant = document.getElementById("inputCustomMerchant");
@@ -10,6 +15,12 @@ const inputUseMasonry = document.getElementById("inputUseMasonry");
 
 // Load from localStorage or use default
 const savedFontSize = localStorage.getItem("stickerFontSize") || 16;
+const savedProductSize =
+  localStorage.getItem("stickerProductSize") || savedFontSize;
+const savedPriceSize =
+  localStorage.getItem("stickerPriceSize") || savedFontSize;
+const savedFontWeight = localStorage.getItem("stickerFontWeight") || 600;
+const savedSortHeight = localStorage.getItem("stickerSortHeight");
 const savedShowCurrency = localStorage.getItem("stickerShowCurrency");
 const savedShowMerchant = localStorage.getItem("stickerShowMerchant");
 const savedMerchantName = localStorage.getItem("stickerMerchantName");
@@ -50,23 +61,23 @@ if (inputUseMasonry) {
   });
 }
 
-// Set initial value
-if (inputFontSize) {
-  inputFontSize.value = savedFontSize;
-  valueFontSize.textContent = `${savedFontSize}px`;
+// Product Size Logic
+if (inputProductSize) {
+  inputProductSize.value = savedProductSize;
+  valueProductSize.textContent = `${savedProductSize}px`;
   document.documentElement.style.setProperty(
-    "--sticker-font-size",
-    `${savedFontSize}px`,
+    "--sticker-product-size",
+    `${savedProductSize}px`,
   );
 
-  inputFontSize.addEventListener("input", (e) => {
+  inputProductSize.addEventListener("input", (e) => {
     const size = e.target.value;
-    valueFontSize.textContent = `${size}px`;
+    valueProductSize.textContent = `${size}px`;
     document.documentElement.style.setProperty(
-      "--sticker-font-size",
+      "--sticker-product-size",
       `${size}px`,
     );
-    localStorage.setItem("stickerFontSize", size);
+    localStorage.setItem("stickerProductSize", size);
 
     // Update masonry layout when font size changes
     if (window.updateMasonryLayout) {
@@ -74,6 +85,84 @@ if (inputFontSize) {
     }
   });
 }
+
+// Price Size Logic
+if (inputPriceSize) {
+  inputPriceSize.value = savedPriceSize;
+  valuePriceSize.textContent = `${savedPriceSize}px`;
+  document.documentElement.style.setProperty(
+    "--sticker-price-size",
+    `${savedPriceSize}px`,
+  );
+
+  inputPriceSize.addEventListener("input", (e) => {
+    const size = e.target.value;
+    valuePriceSize.textContent = `${size}px`;
+    document.documentElement.style.setProperty(
+      "--sticker-price-size",
+      `${size}px`,
+    );
+    localStorage.setItem("stickerPriceSize", size);
+
+    // Update masonry layout when font size changes
+    if (window.updateMasonryLayout) {
+      window.updateMasonryLayout();
+    }
+  });
+}
+
+// Font Weight Logic
+const getFontWeightLabel = (weight) => {
+  const labels = {
+    400: "Normal",
+    500: "Medium",
+    600: "Semi Bold",
+    700: "Bold",
+    800: "Extra Bold",
+    900: "Black",
+  };
+  return labels[weight] || weight;
+};
+
+if (inputFontWeight) {
+  inputFontWeight.value = savedFontWeight;
+  valueFontWeight.textContent = getFontWeightLabel(savedFontWeight);
+  document.documentElement.style.setProperty(
+    "--sticker-font-weight",
+    savedFontWeight,
+  );
+
+  inputFontWeight.addEventListener("input", (e) => {
+    const weight = e.target.value;
+    valueFontWeight.textContent = getFontWeightLabel(weight);
+    document.documentElement.style.setProperty("--sticker-font-weight", weight);
+    localStorage.setItem("stickerFontWeight", weight);
+
+    // Update masonry layout when font weight changes
+    if (window.updateMasonryLayout) {
+      window.updateMasonryLayout();
+    }
+  });
+}
+
+/*
+// Sort Height Logic
+if (inputSortHeight) {
+  const isSortEnabled =
+    savedSortHeight === null ? false : savedSortHeight === "true";
+  inputSortHeight.checked = isSortEnabled;
+
+
+  inputSortHeight.addEventListener("change", (e) => {
+    const checked = e.target.checked;
+    localStorage.setItem("stickerSortHeight", checked);
+
+    if (window.renderStickers) {
+      window.renderStickers();
+    }
+  });
+}
+*/
 
 // Currency checkbox logic
 if (inputShowCurrency) {

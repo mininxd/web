@@ -53,7 +53,9 @@
           Merchant
         </h1>
       </div>
-        <h1 class="mt-6 px-4">Klik pada stiker untuk mendownload stiker satuan</h1>
+      <h1 class="mt-6 px-4">
+        Klik pada stiker untuk mendownload stiker satuan
+      </h1>
 
       <div id="navbar" class="flex w-full px-1">
         <button
@@ -217,57 +219,100 @@
             placeholder="Default"
             class="md:join-item input input-bordered w-full font-bold"
           />
-          <button id="btnSaveMerchant" class="btn btn-neutral md:join-item md:w-fit w-full">Simpan</button>
+          <button
+            id="btnSaveMerchant"
+            class="btn btn-neutral md:join-item md:w-fit w-full"
+          >
+            Simpan
+          </button>
         </div>
 
-        <label>Ukuran Font</label>
-        <input
-          id="inputFontSize"
-          type="range"
-          min="8"
-          max="40"
-          step="1"
-          class="range w-full"
-        />
-        <div class="text-center">
-          <span id="valueFontSize" class="text-xl font-bold">16px</span>
+        <div class="text-xs">
+          <div class="flex justify-between pt-1">
+            <label class="label">Font Nama Produk</label>
+            <span id="valueProductSize" class="text-s">16px</span>
+          </div>
+          <input
+            id="inputProductSize"
+            type="range"
+            min="5"
+            max="40"
+            step="1"
+            class="range range-xs w-full"
+          />
+
+          <div class="flex justify-between pt-1">
+            <label class="label">Font Harga</label>
+            <span id="valuePriceSize" class="text-s">16px</span>
+          </div>
+          <input
+            id="inputPriceSize"
+            type="range"
+            min="5"
+            max="40"
+            step="1"
+            class="range range-xs w-full"
+          />
         </div>
-        <br />
+        <!--- Slider Setting --->
+        <div class="pb-2">
+          <label class="hidden label cursor-pointer justify-start gap-2 pt-2">
+            <input
+              id="inputUseMasonry"
+              type="checkbox"
+              checked
+              class="checkbox"
+            />
+            <h1 class="label-text">Masonry Layout</h1>
+          </label>
 
+          <label class="label text-sm cursor-pointer justify-start gap-2 pt-2">
+            <input
+              id="inputShowCurrency"
+              type="checkbox"
+              checked
+              class="checkbox checkbox-sm"
+            />
+            <h1 class="label-text">Tampilkan Mata Uang (Rp)</h1>
+          </label>
+          <br />
+          <label class="label text-sm cursor-pointer justify-start gap-2 pt-2">
+            <input
+              id="inputShowMerchant"
+              type="checkbox"
+              checked
+              class="checkbox checkbox-sm"
+            />
+            <h1 class="label-text">Tampilkan Nama Merchant</h1>
+          </label>
+        </div>
 
-<!--- Under dev--->
-        <label class="hidden label cursor-pointer justify-start gap-2 pt-2">
+        <div class="pb-2">
+          <label class="label text-sm">Pilih Font</label>
+          <select id="selectFont" class="select w-full">
+            <option value="" disabled selected>Memuat font...</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <div class="flex justify-between">
+            <label class="label text-xs">Ketebalan Font</label>
+            <span id="valueFontWeight" class="text-xs">Normal</span>
+          </div>
           <input
-            id="inputUseMasonry"
-            type="checkbox"
-            checked
-            class="checkbox"
+            id="inputFontWeight"
+            type="range"
+            min="400"
+            max="900"
+            step="100"
+            class="range range-xs w-full"
           />
-          <h1 class="label-text">Masonry Layout</h1>
-        </label>
+        </div>
 
-        <label class="label cursor-pointer justify-start gap-2 pt-2">
-          <input
-            id="inputShowCurrency"
-            type="checkbox"
-            checked
-            class="checkbox"
-          />
-          <h1 class="label-text">Tampilkan Mata Uang (Rp)</h1>
-        </label>
-<br>
-        <label class="label cursor-pointer justify-start gap-2 pt-2">
-          <input
-            id="inputShowMerchant"
-            type="checkbox"
-            checked
-            class="checkbox"
-          />
-          <h1 class="label-text">Tampilkan Nama Merchant</h1>
-        </label>
-
-        <br /><br />
-        <button class="btn w-full btn-neutral modal-close" aria-label="close">
+        <button
+          class="btn btn-md w-full btn-neutral modal-close"
+          aria-label="close"
+        >
           OK
         </button>
       </div>
@@ -277,9 +322,9 @@
     </div>
     <div id="debug_element" class="hidden px-4 pb-6 my-4">
       <div id="debug_component" class="flex gap-2 w-full">
-          <input id="inputDebugData" class="flex-1 input input-neutral"/>
-  <button id="setDebugData" class="w-12 btn btn-neutral">Set</button>
-  <button id="copyDebugData" class="w-12 btn btn-neutral">Copy</button>
+        <input id="inputDebugData" class="flex-1 input input-neutral" />
+        <button id="setDebugData" class="w-12 btn btn-neutral">Set</button>
+        <button id="copyDebugData" class="w-12 btn btn-neutral">Copy</button>
       </div>
       <button id="resetDebugData" class="btn btn-neutral">Reset Data</button>
     </div>

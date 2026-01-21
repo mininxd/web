@@ -26,5 +26,7 @@ if (resetDebugData) {
   resetDebugData.addEventListener("click", () => {
     localStorage.removeItem("stickerStorage");
     localStorage.removeItem("QRIS_Utama");
+    localStorage.removeItem("stickerMerchantName");
+    window.location.reload();
   });
 }

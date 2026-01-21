@@ -110,6 +110,23 @@ function renderStickers() {
     }
   });
 
+  // Sort if enabled
+  const savedSortHeight = localStorage.getItem("stickerSortHeight");
+  if (savedSortHeight === "true") {
+    const items = Array.from(listQrisCanvas.children);
+    items.sort((a, b) => {
+      // Get the .qrisCanvas element inside the item to measure content height
+      const contentA = a.querySelector(".qrisCanvas");
+      const contentB = b.querySelector(".qrisCanvas");
+      const heightA = contentA ? contentA.offsetHeight : 0;
+      const heightB = contentB ? contentB.offsetHeight : 0;
+      return heightB - heightA; // Descending
+    });
+
+    // Re-append in order
+    items.forEach((item) => listQrisCanvas.appendChild(item));
+  }
+
   // Initialize masonry once after all items are added
   // The initMasonry function already handles the initial layout
   const savedUseMasonry = localStorage.getItem("stickerUseMasonry");
@@ -120,5 +137,8 @@ function renderStickers() {
     initMasonry("#listQrisCanvas");
   }
 }
+
+// Expose to window for settings.js
+window.renderStickers = renderStickers;
 
 renderStickers();
