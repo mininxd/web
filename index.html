@@ -19,7 +19,7 @@
       </div>
       <div id="loginWrapper" class="p-4 card bg-base-100 shadow-xl">
         <label class="label">
-          <span class="label-text">Upload QRIS atau QRIS Sticker</span>
+          <span class="label-text">Upload QRIS</span>
         </label>
         <input
           id="fileInput"
@@ -29,7 +29,7 @@
         />
         <p id="fileInputMsg" class="opacity-40 text-xs text-right mb-2"></p>
 
-<div class="divider text-sm text-gray-500">ATAU</div>
+        <div class="divider text-sm text-gray-500">ATAU</div>
         <label class="label">
           <span class="label-text">Masukan kode QRIS manual</span>
         </label>
@@ -40,7 +40,7 @@
           class="input input-bordered w-full mb-4"
         />
         <button id="submitLogin" class="btn btn-neutral w-full">Masuk</button>
-        <span id="submitLoginMsg" class="msg"></span>
+        <p id="submitLoginMsg" class="pt-2 opacity-40 text-sm text-center"></p>
         <br />
       </div>
       <br />
@@ -170,8 +170,13 @@
           type="file"
           class="file-input file-input-bordered w-full my-1"
         />
-        <p id="uploadGantiQrisMsg" class="pb-2 text-right text-xs opacity-40"></p>
-       <label class="label text-sm pt-2">     atau masukan kode QRIS manual      </label> 
+        <p
+          id="uploadGantiQrisMsg"
+          class="pb-2 text-right text-xs opacity-40"
+        ></p>
+        <label class="label text-sm pt-2">
+          atau masukan kode QRIS manual
+        </label>
         <input
           id="inputGantiQris"
           autocomplete="off"

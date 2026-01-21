@@ -132,6 +132,9 @@ input[type="checkbox"]:checked + label .deleteListItem .delItem:nth-child(2) {
   @apply bg-white text-error;
 }
 
+input::placeholder {
+  opacity: 0.5;
+}
 /* Hide merchant name when checkbox is unchecked */
 .hide-merchant .namaToko {
   display: none;
