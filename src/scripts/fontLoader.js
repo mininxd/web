@@ -45,7 +45,7 @@ async function registerCustomFonts(fonts) {
       const fontFace = new FontFace(font.value, `url(/fonts/${font.file})`);
       await fontFace.load();
       document.fonts.add(fontFace);
-      console.log(`[v0] Font loaded: ${font.name}`);
+  //    console.log(`[v0] Font loaded: ${font.name}`);
     } catch (error) {
       console.error(`[v0] Failed to load font: ${font.name}`, error);
     }

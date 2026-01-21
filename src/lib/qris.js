@@ -1,5 +1,5 @@
 // QRIS library
-import { pad, toCRC16, dataQris } from "./generator/crcData.js";
+import { pad, toCRC16, dataQris } from "./generator/crc.js";
 import generateQris from "./generator/gen.js";
 
 function priceAfterTax(harga, fee = 0, taxtype = "p") {
@@ -141,7 +141,7 @@ export function generateQrisLocally(
   // This function implements the same logic as lib/libQris/generator.js
   try {
     // Set defaults as in the original generator
-    tax = "n"; // Ya-Tidak Biaya Layanan
+    tax = "n"; // (n)tidak / (y)ya
     taxtype = "p"; // Rupiah(r) / Persen(p)
 
     if (typeof fee !== "string") {
