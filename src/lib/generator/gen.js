@@ -7,7 +7,7 @@ function generateQris(qris, qty, tax, taxtype, fee) {
     fee = fee.toString();
   }
 
-//  console.log(fee);
+  //  console.log(fee);
   if (tax == "y") {
     if (taxtype === "r") {
       fee = "55020256" + String(fee.length).padStart(2, "0") + fee;

@@ -13,16 +13,15 @@ function priceAfterTax(harga, fee = 0, taxtype = "p") {
   return harga;
 }
 
-
 export async function qris(qrisCode, nominal) {
   try {
-      const qrisData = dataQris(qrisCode);
-      const output = await generateQris(qrisCode, nominal, "n", "p", 0);
-      const merchant = qrisData.merchantName;
+    const qrisData = dataQris(qrisCode);
+    const output = await generateQris(qrisCode, nominal, "n", "p", 0);
+    const merchant = qrisData.merchantName;
 
-      const harga = priceAfterTax(nominal, 0, "p");
-      const result = { merchant, QR: output, harga };
-      return result;
+    const harga = priceAfterTax(nominal, 0, "p");
+    const result = { merchant, QR: output, harga };
+    return result;
   } catch (e) {
     console.log("Error in routes/qris.js:/ :", e);
   }
